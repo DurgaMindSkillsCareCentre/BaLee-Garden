@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>BAALEE GARDEN SUPER APP</title>
+<style>
+  :root{
+    --bg:#050505; --panel:#0f0f0f; --line:#262626; --gold:#c8a84b; --text:#f3efe4; --muted:#9a9a9a;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+  .top{
+    position:sticky;top:0;z-index:100;background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.45);
+    padding:12px 10px 10px;
+  }
+  .brand{text-align:center;color:var(--gold);font-weight:900;font-size:20px;letter-spacing:1px}
+  .sub{text-align:center;color:#8c8c8c;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:800;margin-top:3px}
+  .tabs{display:flex;overflow-x:auto;background:#050505;border-bottom:1px solid #222;position:sticky;top:74px;z-index:95}
+  .tab{flex:none;background:transparent;border:none;color:#666;padding:13px 14px;font-weight:900;text-transform:uppercase;font-size:10px;white-space:nowrap;cursor:pointer}
+  .tab.on{color:var(--gold);border-bottom:2px solid var(--gold);background:#0d0d0d}
+  iframe{width:100%;height:calc(100vh - 128px);border:none;display:block;background:#050505}
+  .note{
+    color:#8a8a8a;font-size:10px;line-height:1.5;padding:10px 12px 14px;border-top:1px solid #1d1d1d;background:#080808
+  }
+  .miniBar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:8px 10px;border-top:1px solid #1d1d1d;background:#090909}
+  .miniBtn{
+    border:none;border-radius:999px;padding:8px 12px;font-size:10px;font-weight:900;cursor:pointer;
+    background:#151515;color:#f0ebe0;border:1px solid #333;text-transform:uppercase
+  }
+  .miniBtn.primary{background:linear-gradient(135deg,var(--gold),#8a6d29);color:#000}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="brand">BAALEE GARDEN SUPER APP</div>
+    <div class="sub">Original WebApp + CRM Pro + AI Engine</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab on" data-tab="original">Original WebApp</button>
+    <button class="tab" data-tab="crm">CRM Pro</button>
+    <button class="tab" data-tab="ai">AI Engine</button>
+  </div>
+
+  <iframe id="frame" src="original.html"></iframe>
+
+  <div class="miniBar">
+    <button class="miniBtn primary" onclick="openTab('original.html', this)">Open Original</button>
+    <button class="miniBtn" onclick="openTab('crm.html', this)">Open CRM</button>
+    <button class="miniBtn" onclick="openTab('ai.html', this)">Open AI</button>
+  </div>
+
+  <div class="note">
+    Upload all 4 files into the same GitHub repository root. Keep the filenames exactly as shown.
+  </div>
+
+<script>
+const tabs = document.querySelectorAll('.tab');
+function setActive(tabName){
+  tabs.forEach(b => b.classList.toggle('on', b.dataset.tab === tabName));
+}
+function openTab(file, el){
+  document.getElementById('frame').src = file;
+  if (el && el.classList) {
+    document.querySelectorAll('.miniBtn').forEach(b => b.classList.remove('primary'));
+    el.classList.add('primary');
+  }
+  if (file === 'original.html') setActive('original');
+  if (file === 'crm.html') setActive('crm');
+  if (file === 'ai.html') setActive('ai');
+}
+tabs.forEach(btn => btn.addEventListener('click', ()=> openTab(btn.dataset.tab + '.html', btn)));
+</script>
+</body>
+</html>

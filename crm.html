@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>CRM PRO VERSION — BAALEE GARDEN</title>
+<style>
+  :root{
+    --bg:#050505; --panel:#0d0d0d; --panel2:#121212; --line:#262626;
+    --gold:#c8a84b; --gold2:#8a6d29; --text:#f3efe4; --muted:#9a9a9a;
+    --hot:#ff6b6b; --warm:#ffd166; --cold:#8fc98f; --blue:#4aa3ff;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+  .top{
+    position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.45);
+    padding:14px 12px 10px;
+  }
+  .brand{font-size:20px;font-weight:900;color:var(--gold);text-align:center;letter-spacing:1px}
+  .sub{text-align:center;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8c8c8c;font-weight:800;margin-top:3px}
+  .wrap{max-width:1400px;margin:0 auto}
+  .controls{
+    padding:12px;border-bottom:1px solid #1f1f1f;background:#080808;
+    display:grid;grid-template-columns:1fr;gap:10px
+  }
+  .grid-3{display:grid;grid-template-columns:1fr;gap:10px}
+  .box{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px
+  }
+  .label{display:block;color:var(--gold);font-weight:900;font-size:9px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  input,select,textarea{
+    width:100%;border:1px solid #303030;background:#090909;color:#fff;border-radius:10px;
+    padding:11px 12px;font-size:14px;outline:none
+  }
+  textarea{min-height:92px;resize:vertical;font-family:monospace}
+  .btnbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn{
+    width:100%;border:none;border-radius:12px;padding:12px 10px;font-weight:900;cursor:pointer;
+    text-transform:uppercase;font-size:10px;letter-spacing:.5px
+  }
+  .btn:active{transform:scale(.98)}
+  .primary{background:linear-gradient(135deg,var(--gold),var(--gold2),var(--gold));color:#000}
+  .blue{background:linear-gradient(135deg,#2d8cff,#0a66c2,#2d8cff);color:#fff}
+  .green{background:linear-gradient(135deg,#27ae60,#145a32,#27ae60);color:#fff}
+  .orange{background:linear-gradient(135deg,#e67e22,#8a4f13,#e67e22);color:#fff}
+  .dark{background:#151515;color:#f0ebe0;border:1px solid #343434}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;padding:5px 9px;
+    border-radius:999px;background:#111;border:1px solid #2a2a2a;color:#d9d9d9
+  }
+  .pill.hot{background:#260808;border-color:#5c1d1d;color:#ffb2b2}
+  .pill.warm{background:#241c06;border-color:#5a4811;color:#ffe19c}
+  .pill.cold{background:#091b0f;border-color:#174327;color:#a8e5bd}
+  .pill.blue{background:#08111d;border-color:#173a66;color:#a6d1ff}
+  .stats{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .tabs{
+    display:flex;overflow-x:auto;background:#050505;border-bottom:1px solid #222;position:sticky;top:74px;z-index:45
+  }
+  .tab{
+    flex:none;background:transparent;border:none;color:#666;padding:13px 15px;font-weight:900;
+    text-transform:uppercase;font-size:10px;white-space:nowrap
+  }
+  .tab.on{color:var(--gold);border-bottom:2px solid var(--gold);background:#0d0d0d}
+  .content{padding:12px}
+  .panel{display:none}
+  .panel.on{display:block}
+  .row{display:grid;grid-template-columns:1fr;gap:10px}
+  .card{
+    background:var(--panel);border:1px solid #262626;border-radius:14px;padding:12px
+  }
+  .card h3{margin:0 0 8px;font-size:15px}
+  .muted{color:var(--muted)}
+  .small{font-size:11px;line-height:1.55}
+  .pipeline{
+    display:grid;grid-template-columns:1fr;gap:10px
+  }
+  .col{
+    background:var(--panel);border:1px solid #272727;border-radius:14px;padding:10px
+  }
+  .col h4{margin:0 0 8px;font-size:13px;color:var(--gold)}
+  .lead{
+    background:#090909;border:1px solid #262626;border-radius:12px;padding:10px;margin-bottom:8px
+  }
+  .leadTop{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+  .leadTitle{font-weight:900}
+  .leadText{font-family:monospace;white-space:pre-wrap;word-break:break-word;font-size:12px;color:#ddd;line-height:1.55}
+  .leadActions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+  .leadActions .btn{padding:9px 8px;font-size:9px}
+  .toolbar{
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px
+  }
+  .mini{
+    background:#0b0b0b;border:1px solid #2a2a2a;border-radius:12px;padding:10px
+  }
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid #212121;padding:8px 6px;font-size:12px;text-align:left;vertical-align:top}
+  th{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
+  .progress{
+    height:10px;border-radius:999px;background:#141414;border:1px solid #2a2a2a;overflow:hidden
+  }
+  .progress > div{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,var(--cold),var(--warm),var(--hot))
+  }
+  .footer{
+    color:#888;font-size:10px;line-height:1.55;padding:14px 12px 22px
+  }
+  .searchlinks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .searchlinks a{
+    display:block;text-decoration:none;text-align:center;padding:10px 9px;border-radius:11px;
+    border:1px solid #2c2c2c;background:#111;color:#fff;font-size:11px;font-weight:800
+  }
+  .modal-backdrop{
+    position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:center;justify-content:center;
+    padding:14px;z-index:999
+  }
+  .modal-backdrop.show{display:flex}
+  .modal{
+    width:min(100%,860px);max-height:92vh;overflow:auto;background:#0b0b0b;border:1px solid #3a3a3a;
+    border-radius:16px;padding:14px;box-shadow:0 20px 80px rgba(0,0,0,.7)
+  }
+  .modalHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .modalTitle{font-weight:900;color:var(--gold);font-size:15px}
+  .xbtn{background:#1a1408;color:var(--gold);border:1px solid #5a471d;border-radius:10px;padding:8px 10px;font-weight:900}
+  .leadItem{
+    background:#090909;border:1px solid #272727;border-radius:12px;padding:10px;margin-bottom:8px
+  }
+  .leadItem .leadActions{grid-template-columns:1fr 1fr}
+  .board{
+    display:grid;grid-template-columns:1fr;gap:10px
+  }
+  .board .mini{min-height:140px}
+  @media (min-width:900px){
+    .controls{grid-template-columns:1.1fr .9fr .9fr}
+    .grid-3{grid-template-columns:1fr 1fr 1fr}
+    .row{grid-template-columns:1.2fr .8fr}
+    .pipeline{grid-template-columns:repeat(4,1fr)}
+    .searchlinks{grid-template-columns:repeat(4,1fr)}
+    .board{grid-template-columns:1.2fr .8fr}
+    .tabs{top:76px}
+  }
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="wrap">
+    <div class="brand">CRM PRO VERSION</div>
+    <div class="sub">BAALEE GARDEN • LEAD PIPELINE • FOLLOW-UP • WHATSAPP CLOSER</div>
+  </div>
+</div>
+
+<div class="controls wrap">
+  <div class="box">
+    <span class="label">Buyer type</span>
+    <select id="buyerType">
+      <option>Local Buyer</option>
+      <option>Local Investor</option>
+      <option>NRI Investor</option>
+    </select>
+    <div class="small muted" style="margin-top:8px">Local means Tamil Nadu, Tamil community anywhere in India, and nearby commercial buyers.</div>
+  </div>
+
+  <div class="box">
+    <span class="label">Lead source / title</span>
+    <input id="leadTitle" placeholder="Example: Facebook post, broker note, Google query" />
+    <div style="height:8px"></div>
+    <input id="leadUrl" placeholder="Optional URL or source link" />
+    <div style="height:8px"></div>
+    <input id="followUp" type="date" />
+  </div>
+
+  <div class="box">
+    <span class="label">Buyer text / requirement</span>
+    <textarea id="leadText" placeholder="Paste buyer requirement, post text, ad text, WhatsApp message, email, or notes here..."></textarea>
+  </div>
+
+  <div class="box" style="grid-column:1/-1">
+    <div class="btnbar">
+      <button class="btn primary" onclick="addLead()">➕ Add Lead</button>
+      <button class="btn blue" onclick="openSearchPack()">🌐 Search Pack</button>
+      <button class="btn green" onclick="scoreLead()">⚡ Score Lead</button>
+      <button class="btn orange" onclick="generateReply()">💬 Reply</button>
+      <button class="btn dark" onclick="openDashboard()">📊 Dashboard</button>
+      <button class="btn dark" onclick="exportCSV()">⬇ Export CSV</button>
+    </div>
+    <div style="height:10px"></div>
+    <div class="stats">
+      <span class="pill blue" id="modePill">MODE: READY</span>
+      <span class="pill cold" id="totalPill">TOTAL: 0</span>
+      <span class="pill warm" id="hotPill">HOT: 0</span>
+      <span class="pill" id="warmPill">WARM: 0</span>
+      <span class="pill right" id="statePill">IDLE</span>
+    </div>
+    <div style="height:10px"></div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <div class="small muted" style="margin-top:8px">
+      Use the pipeline every day: capture → score → reply → follow up → close.
+    </div>
+  </div>
+</div>
+
+<div class="tabs wrap">
+  <button class="tab on" data-tab="pipeline">Pipeline</button>
+  <button class="tab" data-tab="search">Search</button>
+  <button class="tab" data-tab="calendar">Follow-up</button>
+  <button class="tab" data-tab="settings">Settings</button>
+</div>
+
+<div class="content wrap">
+  <section class="panel on" id="panel-pipeline">
+    <div class="pipeline" id="pipeline"></div>
+  </section>
+
+  <section class="panel" id="panel-search">
+    <div class="row">
+      <div class="card">
+        <h3>Buyer search pack</h3>
+        <div class="small muted">These links help you find real public signals. Use them to discover new leads, then bring them back into the CRM.</div>
+        <div style="height:10px"></div>
+        <div class="searchlinks" id="searchLinks"></div>
+      </div>
+      <div class="card">
+        <h3>Smart query ladder</h3>
+        <table>
+          <thead><tr><th>Level</th><th>Query style</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Strict location + buyer intent</td></tr>
+            <tr><td>2</td><td>Balanced commercial interest</td></tr>
+            <tr><td>3</td><td>Semantic broadening</td></tr>
+            <tr><td>4</td><td>Ultra-safe fallback</td></tr>
+          </tbody>
+        </table>
+        <div style="height:10px"></div>
+        <div class="toolbar">
+          <button class="btn dark" onclick="refreshSearchPack()">🔄 Refresh Links</button>
+          <button class="btn dark" onclick="openGooglePack()">🔎 Open Google Pack</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-calendar">
+    <div class="row">
+      <div class="card">
+        <h3>Follow-up tracker</h3>
+        <div class="small muted">Use the dashboard to track today’s leads, and follow up on the selected date.</div>
+        <div style="height:10px"></div>
+        <div class="board">
+          <div class="mini">
+            <span class="label">Next follow-up</span>
+            <div id="nextFollowup" class="small">No lead selected.</div>
+          </div>
+          <div class="mini">
+            <span class="label">Reminder note</span>
+            <div id="followNote" class="small">Click a lead in the dashboard to load it here.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Quick actions</h3>
+        <div class="btnbar">
+          <button class="btn dark" onclick="openDashboard()">📊 Open Dashboard</button>
+          <button class="btn dark" onclick="markSelected('Contacted')">📞 Mark Contacted</button>
+          <button class="btn dark" onclick="markSelected('Follow-up')">🔁 Mark Follow-up</button>
+          <button class="btn dark" onclick="markSelected('Closed')">✅ Mark Closed</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-settings">
+    <div class="row">
+      <div class="card">
+        <h3>WhatsApp reply template</h3>
+        <textarea id="replyTemplate">Hi, thanks for your enquiry.
+
+We have a premium corner commercial plot near Alagar Kovil, Madurai.
+
+• Corner advantage
+• Highway access
+• Direct owner
+• Commercial investment potential
+
+If your requirement is still active, I can share location and brochure.</textarea>
+        <div style="height:10px"></div>
+        <div class="btnbar">
+          <button class="btn dark" onclick="copyTemplate()">📋 Copy Template</button>
+          <button class="btn dark" onclick="openWhatsappReply()">📲 Open WhatsApp</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Scoring rules</h3>
+        <table>
+          <thead><tr><th>Signal</th><th>Points</th></tr></thead>
+          <tbody>
+            <tr><td>urgent / immediate</td><td>+20</td></tr>
+            <tr><td>need land / required</td><td>+20</td></tr>
+            <tr><td>buyer / want to buy</td><td>+15</td></tr>
+            <tr><td>commercial / plot / land</td><td>+10</td></tr>
+            <tr><td>Madurai / Alagar Kovil</td><td>+10</td></tr>
+            <tr><td>highway / frontage / junction</td><td>+10</td></tr>
+            <tr><td>investment</td><td>+10</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <div class="modalHead">
+      <div class="modalTitle" id="modalTitle">Dashboard</div>
+      <button class="xbtn" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<div class="footer wrap">
+  Built as a GitHub-friendly single-file CRM. It works offline using localStorage. No backend is required for lead tracking, scoring, reply generation, CSV export, and follow-up notes.
+</div>
+
+<script>
+const STORE_KEY = "crmProLeads_v1";
+let selectedLeadId = null;
+let leads = loadLeads();
+
+function $(id){ return document.getElementById(id); }
+
+function loadLeads(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  }catch(e){
+    return [];
+  }
+}
+function saveLeads(){
+  localStorage.setItem(STORE_KEY, JSON.stringify(leads));
+}
+function normalize(s){ return String(s || "").toLowerCase(); }
+
+function scoreText(text){
+  const t = normalize(text);
+  let score = 0;
+  const hits = [];
+  const add = (cond, pts, label) => { if(cond){ score += pts; hits.push(label); } };
+
+  add(t.includes("urgent"), 20, "urgent");
+  add(t.includes("immediate"), 20, "immediate");
+  add(t.includes("need land") || t.includes("land required") || t.includes("require land"), 20, "need land");
+  add(t.includes("buyer") || t.includes("want to buy") || t.includes("looking for land"), 15, "buyer intent");
+  add(t.includes("commercial"), 10, "commercial");
+  add(t.includes("land") || t.includes("plot"), 10, "land/plot");
+  add(t.includes("madurai"), 10, "madurai");
+  add(t.includes("alagar kovil") || t.includes("alagarkovil"), 10, "alagar kovil");
+  add(t.includes("highway") || t.includes("junction") || t.includes("frontage"), 10, "highway/frontage");
+  add(t.includes("investment") || t.includes("investor"), 10, "investment");
+
+  const label = score >= 60 ? "HOT" : score >= 30 ? "WARM" : "COLD";
+  return {score, label, hits};
+}
+
+function updatePills(){
+  $("totalPill").textContent = `TOTAL: ${leads.length}`;
+  $("hotPill").textContent = `HOT: ${leads.filter(x => x.label === "HOT").length}`;
+  $("warmPill").textContent = `WARM: ${leads.filter(x => x.label === "WARM").length}`;
+  $("statePill").textContent = selectedLeadId ? "LEAD SELECTED" : "IDLE";
+  $("statePill").className = "pill " + (selectedLeadId ? "blue" : "");
+}
+
+function renderPipeline(){
+  const stages = [
+    {name:"New", color:"cold"},
+    {name:"Contacted", color:"blue"},
+    {name:"Follow-up", color:"warm"},
+    {name:"Closed", color:"hot"}
+  ];
+  const wrap = $("pipeline");
+  wrap.innerHTML = stages.map(stage => {
+    const items = leads.filter(l => l.stage === stage.name);
+    const html = items.length ? items.map(renderLeadCard).join("") : `<div class="small muted">No leads here.</div>`;
+    return `<div class="col"><h4>${stage.name} (${items.length})</h4>${html}</div>`;
+  }).join("");
+  updatePills();
+}
+
+function renderLeadCard(l){
+  const sClass = l.label === "HOT" ? "hot" : l.label === "WARM" ? "warm" : "cold";
+  return `
+  <div class="lead" data-id="${l.id}">
+    <div class="leadTop">
+      <div class="leadTitle">${escapeHtml(l.title || "Lead")}</div>
+      <div class="stats">
+        <span class="pill ${sClass}">${l.label} • ${l.score}/100</span>
+        <span class="pill blue">${escapeHtml(l.buyerType || "Buyer")}</span>
+      </div>
+    </div>
+    <div class="small muted">${escapeHtml(l.source || "")}</div>
+    <div class="leadText">${escapeHtml((l.text || "").slice(0, 260))}${(l.text || "").length > 260 ? "…" : ""}</div>
+    <div class="leadActions">
+      <button class="btn dark" onclick="selectLead('${l.id}')">Select</button>
+      <button class="btn dark" onclick="copyLead('${l.id}')">Copy</button>
+      <button class="btn dark" onclick="openLead('${l.id}')">Open</button>
+      <button class="btn dark" onclick="quickReply('${l.id}')">Reply</button>
+    </div>
+  </div>`;
+}
+
+function escapeHtml(s){
+  return String(s ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function leadFromInputs(){
+  const title = $("leadTitle").value.trim() || "New Lead";
+  const text = $("leadText").value.trim();
+  const source = $("leadTitle").value.trim();
+  const url = $("leadUrl").value.trim();
+  const buyerType = $("buyerType").value;
+  const followUp = $("followUp").value || "";
+  const scored = scoreText(`${title}\n${text}\n${buyerType}`);
+  return {
+    id: Date.now().toString(),
+    title, text, source, url, buyerType, followUp,
+    score: scored.score,
+    label: scored.label,
+    hits: scored.hits,
+    stage: "New",
+    notes: "",
+    ts: new Date().toISOString()
+  };
+}
+
+function addLead(){
+  const text = $("leadText").value.trim();
+  const title = $("leadTitle").value.trim();
+  if(!text && !title){
+    toast("Enter lead title or text");
+    return;
+  }
+  const lead = leadFromInputs();
+  leads.unshift(lead);
+  saveLeads();
+  renderPipeline();
+  renderSearchPack();
+  toast("Lead added");
+}
+
+function scoreLead(){
+  const text = $("leadText").value.trim();
+  if(!text){ toast("Paste lead text first"); return; }
+  const s = scoreText(text);
+  $("modePill").textContent = `MODE: ${s.label}`;
+  $("modePill").className = "pill " + (s.label === "HOT" ? "hot" : s.label === "WARM" ? "warm" : "cold");
+  $("progressBar").style.width = s.label === "HOT" ? "90%" : s.label === "WARM" ? "55%" : "25%";
+  toast(`${s.label} lead scored`);
+  updateSelectedSummary(s);
+}
+
+function updateSelectedSummary(s){
+  $("followNote").textContent = `Score: ${s.score}/100\nMatched: ${s.hits.join(", ") || "None"}`;
+  $("nextFollowup").textContent = $("followUp").value ? `Follow-up date: ${$("followUp").value}` : "No follow-up date set.";
+}
+
+function selectLead(id){
+  selectedLeadId = id;
+  const lead = leads.find(x => x.id === id);
+  if(!lead) return;
+  $("leadTitle").value = lead.title || "";
+  $("leadText").value = lead.text || "";
+  $("leadUrl").value = lead.url || "";
+  $("buyerType").value = lead.buyerType || "Local Buyer";
+  $("followUp").value = lead.followUp || "";
+  $("modePill").textContent = `MODE: ${lead.label}`;
+  $("modePill").className = "pill " + (lead.label === "HOT" ? "hot" : lead.label === "WARM" ? "warm" : "cold");
+  $("followNote").textContent = `Selected: ${lead.title}\nStage: ${lead.stage}\nScore: ${lead.score}/100`;
+  $("nextFollowup").textContent = lead.followUp ? `Follow-up date: ${lead.followUp}` : "No follow-up date set.";
+  updatePills();
+  toast("Lead selected");
+  openTab("pipeline");
+}
+
+function setStage(stage){
+  if(!selectedLeadId){ toast("Select a lead first"); return; }
+  const lead = leads.find(x => x.id === selectedLeadId);
+  if(!lead) return;
+  lead.stage = stage;
+  lead.followUp = $("followUp").value || lead.followUp || "";
+  saveLeads();
+  renderPipeline();
+  toast(`Marked ${stage}`);
+}
+
+function markSelected(stage){
+  setStage(stage);
+}
+
+function copyLead(id){
+  const lead = leads.find(x => x.id === id);
+  if(!lead) return;
+  const text = `${lead.title}\n${lead.text}\n${lead.url || ""}`.trim();
+  navigator.clipboard?.writeText(text);
+  toast("Lead copied");
+}
+
+function openLead(id){
+  const lead = leads.find(x => x.id === id);
+  if(!lead || !lead.url){ toast("No URL"); return; }
+  window.open(lead.url, "_blank", "noopener,noreferrer");
+}
+
+function generateReply(){
+  const buyerType = $("buyerType").value;
+  const base = $("replyTemplate").value.trim();
+  const leadText = $("leadText").value.trim();
+  const score = scoreText(leadText || $("leadTitle").value || "");
+  let extra = "";
+
+  if(buyerType === "Local Buyer"){
+    extra = "\n\nBest fit: direct, simple, location-first message.";
+  }else if(buyerType === "Local Investor"){
+    extra = "\n\nBest fit: ROI, appreciation, and commercial potential.";
+  }else{
+    extra = "\n\nBest fit: long-term investment, global buyer, and high-growth corridor positioning.";
+  }
+
+  const reply = `${base}\n\nLead score: ${score.label} (${score.score}/100)\nMatched: ${score.hits.join(", ") || "None"}${extra}`;
+  $("replyTemplate").value = reply;
+  navigator.clipboard?.writeText(reply);
+  toast("Reply generated and copied");
+  $("modePill").textContent = `MODE: ${score.label}`;
+  $("modePill").className = "pill " + (score.label === "HOT" ? "hot" : score.label === "WARM" ? "warm" : "cold");
+}
+
+function openWhatsappReply(){
+  const msg = $("replyTemplate").value || "";
+  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank", "noopener,noreferrer");
+}
+
+function copyTemplate(){
+  const t = $("replyTemplate").value || "";
+  navigator.clipboard?.writeText(t);
+  toast("Template copied");
+}
+
+function openSearchPack(){
+  openTab("search");
+  openGooglePack();
+}
+
+function refreshSearchPack(){
+  renderSearchPack();
+  toast("Search pack refreshed");
+}
+
+function openGooglePack(){
+  const q = buildQuery();
+  const urls = [
+    `https://www.google.com/search?q=${encodeURIComponent(q.semantic)}`,
+    `https://www.bing.com/search?q=${encodeURIComponent(q.semantic)}`,
+    `https://duckduckgo.com/?q=${encodeURIComponent(q.semantic)}`,
+    `https://www.google.com/search?q=${encodeURIComponent(q.strict)}`
+  ];
+  urls.forEach((u,i)=>setTimeout(()=>window.open(u,"_blank","noopener,noreferrer"), i*750));
+  toast("Search pack opened");
+}
+
+function buildQuery(){
+  const buyerType = $("buyerType").value;
+  const title = $("leadTitle").value.trim() || "commercial land";
+  const location = $("leadUrl").value.trim() ? $("leadUrl").value.trim() : "Madurai Alagar Kovil";
+  const focus = buyerType === "NRI Investor"
+    ? "NRI investor commercial land"
+    : buyerType === "Local Investor"
+      ? "local investor commercial land"
+      : "local buyer commercial land";
+
+  return {
+    strict: `${location} ${title} buyer requirement`,
+    balanced: `${location} ${focus} wanted`,
+    semantic: `${focus} near ${location} investment opportunity`,
+    broad: `commercial land buyer wanted ${location} highway frontage`
+  };
+}
+
+function renderSearchPack(){
+  const q = buildQuery();
+  const links = [
+    ["Google", `https://www.google.com/search?q=${encodeURIComponent(q.semantic)}`],
+    ["Bing", `https://www.bing.com/search?q=${encodeURIComponent(q.semantic)}`],
+    ["DuckDuckGo", `https://duckduckgo.com/?q=${encodeURIComponent(q.semantic)}`],
+    ["Reddit", `https://www.reddit.com/search/?q=${encodeURIComponent(q.semantic)}&sort=new&t=month`],
+    ["HN", `https://hn.algolia.com/?query=${encodeURIComponent(q.semantic)}`],
+    ["Google News", `https://news.google.com/search?q=${encodeURIComponent(q.semantic)}`],
+    ["Google Strict", `https://www.google.com/search?q=${encodeURIComponent(q.strict)}`],
+    ["Google Broad", `https://www.google.com/search?q=${encodeURIComponent(q.broad)}`]
+  ];
+  $("searchLinks").innerHTML = links.map(([n,u]) => `<a href="${u}" target="_blank" rel="noopener noreferrer">${n}</a>`).join("");
+}
+
+function buildDashboardHtml(){
+  const hot = leads.filter(x => x.label === "HOT").length;
+  const warm = leads.filter(x => x.label === "WARM").length;
+  const cold = leads.filter(x => x.label === "COLD").length;
+  const total = leads.length;
+  const selected = leads.find(x => x.id === selectedLeadId);
+  const summary = selected ? `
+    <div class="card">
+      <h3>Selected lead</h3>
+      <div class="stats">
+        <span class="pill ${selected.label.toLowerCase()}">${selected.label} • ${selected.score}/100</span>
+        <span class="pill blue">${escapeHtml(selected.buyerType || "")}</span>
+        <span class="pill">${escapeHtml(selected.stage || "New")}</span>
+      </div>
+      <div style="height:8px"></div>
+      <div class="small muted">${escapeHtml(selected.title || "")}</div>
+      <div class="leadText">${escapeHtml(selected.text || "")}</div>
+      <div class="toolbar">
+        <button class="btn dark" onclick="setStage('Contacted')">Mark Contacted</button>
+        <button class="btn dark" onclick="setStage('Follow-up')">Mark Follow-up</button>
+        <button class="btn dark" onclick="setStage('Closed')">Mark Closed</button>
+        <button class="btn dark" onclick="deleteSelected()">Delete</button>
+      </div>
+    </div>
+  ` : `<div class="card"><div class="muted">Select a lead to view details.</div></div>`;
+
+  const list = leads.length ? leads.map(l => `
+    <div class="leadItem">
+      <div class="leadTop">
+        <div class="stats">
+          <span class="pill ${l.label.toLowerCase()}">${l.label} • ${l.score}/100</span>
+          <span class="pill blue">${escapeHtml(l.buyerType)}</span>
+          <span class="pill">${escapeHtml(l.stage)}</span>
+        </div>
+        <div class="muted" style="font-size:9px">${escapeHtml(l.followUp || "")}</div>
+      </div>
+      <div class="small muted">${escapeHtml(l.title || "")}</div>
+      <div class="leadText">${escapeHtml((l.text || "").slice(0, 420))}${(l.text || "").length > 420 ? "…" : ""}</div>
+      <div class="leadActions">
+        <button class="btn dark" onclick="selectLead('${l.id}')">Select</button>
+        <button class="btn dark" onclick="copyLead('${l.id}')">Copy</button>
+        <button class="btn dark" onclick="openLead('${l.id}')">Open</button>
+        <button class="btn dark" onclick="quickReply('${l.id}')">Reply</button>
+      </div>
+    </div>
+  `).join("") : `<div class="card"><div class="muted">No leads saved yet.</div></div>`;
+
+  return `
+    <div class="board">
+      <div class="mini">
+        <span class="label">Summary</span>
+        <div class="stats">
+          <span class="pill hot">HOT: ${hot}</span>
+          <span class="pill warm">WARM: ${warm}</span>
+          <span class="pill cold">COLD: ${cold}</span>
+          <span class="pill blue">TOTAL: ${total}</span>
+        </div>
+        <div style="height:10px"></div>
+        <div class="btnbar">
+          <button class="btn dark" onclick="clearAll()">🧹 Clear All</button>
+          <button class="btn dark" onclick="exportCSV()">⬇ Export CSV</button>
+        </div>
+      </div>
+      <div class="mini">
+        <span class="label">Quick follow-up note</span>
+        <div id="dashboardNote" class="small muted">${selected ? escapeHtml(selected.title) : "Select a lead and use quick actions."}</div>
+      </div>
+      <div class="mini">${summary}</div>
+      <div class="mini">
+        <span class="label">All leads</span>
+        <div>${list}</div>
+      </div>
+    </div>
+  `;
+}
+
+function openDashboard(){
+  $("modalTitle").textContent = "CRM Dashboard";
+  $("modalBody").innerHTML = buildDashboardHtml();
+  $("modal").classList.add("show");
+}
+function closeModal(){ $("modal").classList.remove("show"); }
+
+function deleteSelected(){
+  if(!selectedLeadId) return;
+  leads = leads.filter(x => x.id !== selectedLeadId);
+  selectedLeadId = null;
+  saveLeads();
+  renderPipeline();
+  openDashboard();
+  toast("Lead deleted");
+}
+
+function clearAll(){
+  if(!confirm("Clear all leads?")) return;
+  leads = [];
+  selectedLeadId = null;
+  saveLeads();
+  renderPipeline();
+  openDashboard();
+  toast("All cleared");
+}
+
+function quickReply(id){
+  const l = leads.find(x => x.id === id);
+  if(!l) return;
+  const type = l.buyerType || $("buyerType").value;
+  let reply = $("replyTemplate").value || "";
+  if(type === "Local Buyer") reply += "\n\nBest for direct local buyers.";
+  if(type === "Local Investor") reply += "\n\nBest for investors seeking growth and income.";
+  if(type === "NRI Investor") reply += "\n\nBest for global or NRI investment positioning.";
+  navigator.clipboard?.writeText(reply);
+  window.open("https://wa.me/?text=" + encodeURIComponent(reply), "_blank", "noopener,noreferrer");
+}
+
+function exportCSV(){
+  const rows = [["title","buyerType","stage","label","score","followUp","source","url","text","ts"]]
+    .concat(leads.map(l => [
+      l.title, l.buyerType, l.stage, l.label, l.score, l.followUp, l.source, l.url,
+      (l.text || "").replace(/\n/g," "), l.ts
+    ]));
+  const csv = rows.map(r => r.map(v => `"${String(v ?? "").replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "crm_pro_leads.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function markLeadStage(id, stage){
+  const l = leads.find(x => x.id === id);
+  if(!l) return;
+  l.stage = stage;
+  saveLeads();
+  renderPipeline();
+}
+
+function toast(msg){
+  $("statePill").textContent = msg.toUpperCase();
+  setTimeout(() => {
+    $("statePill").textContent = selectedLeadId ? "LEAD SELECTED" : "IDLE";
+  }, 1500);
+}
+
+function openTab(name){
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.tab === name));
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("on"));
+  $("panel-" + name).classList.add("on");
+}
+
+document.querySelectorAll(".tab").forEach(btn => {
+  btn.addEventListener("click", ()=> openTab(btn.dataset.tab));
+});
+
+function init(){
+  $("followUp").value = new Date().toISOString().slice(0,10);
+  renderPipeline();
+  renderSearchPack();
+  updatePills();
+  if(leads.length === 0){
+    $("progressBar").style.width = "15%";
+  }
+}
+init();
+</script>
+</body>
+</html>
