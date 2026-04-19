@@ -2,168 +2,167 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI ENGINE GOD MODE PRO</title>
+<title>FINAL HYBRID ULTIMATE SYSTEM</title>
 
 <style>
 body{margin:0;background:#050505;color:#fff;font-family:Arial}
 .header{padding:12px;text-align:center;background:#111;color:#C8A84B;font-weight:bold}
-.container{padding:10px}
-.btn{width:100%;padding:12px;margin:5px 0;background:#111;color:#C8A84B;border:1px solid #333}
-.card{background:#111;padding:10px;margin:8px 0;border-radius:8px}
-.row{display:flex;gap:5px}
-.row button{flex:1}
+.tabs{display:flex}
+.tabs button{flex:1;padding:10px;background:#000;color:#aaa;border:none}
+.tabs button.active{color:#C8A84B;border-bottom:2px solid #C8A84B}
+iframe{width:100%;height:55vh;border:none}
+.panel{display:none}
+.panel.active{display:block}
+.bar{display:flex;gap:5px;padding:10px;background:#111;flex-wrap:wrap}
+.bar button{flex:1;padding:10px;background:#000;color:#C8A84B;border:1px solid #333}
+textarea{width:100%;height:80px;background:#000;color:#fff;padding:10px}
+.card{background:#111;padding:10px;margin:6px;border-radius:8px}
+.hot{color:red}
+.warm{color:orange}
+.low{color:#aaa}
 .badge{font-size:10px;padding:3px 6px;border-radius:6px;margin-right:5px}
-.hot{background:red}
-.warm{background:orange}
-.low{background:#555}
-.controls{display:flex;gap:5px;margin-bottom:10px}
-.controls select{flex:1;padding:8px;background:#000;color:#fff;border:1px solid #333}
-.live{background:#0b0b0b;padding:8px;margin-top:10px;font-size:12px}
+.top{background:#0f0f0f;padding:10px;margin:5px;border:1px solid #333}
 </style>
 </head>
 
 <body>
 
-<div class="header">🔥 AI ENGINE GOD MODE PRO</div>
+<div class="header">🔥 FINAL HYBRID ULTIMATE SYSTEM</div>
 
-<div class="container">
-
-<div class="controls">
-<select id="mode">
-<option value="local">Local</option>
-<option value="investor">Investor</option>
-<option value="nri">NRI</option>
-</select>
-
-<select id="sector">
-<option value="all">All</option>
-<option value="hospital">Hospital</option>
-<option value="petrol bunk">Petrol Bunk</option>
-<option value="showroom">Showroom</option>
-<option value="warehouse">Warehouse</option>
-<option value="resort">Resort</option>
-</select>
+<div class="tabs">
+<button onclick="openTab('original',this)" class="active">Original</button>
+<button onclick="openTab('crm',this)">CRM</button>
+<button onclick="openTab('ai',this)">AI</button>
+<button onclick="openTab('memory',this)">Memory</button>
 </div>
 
-<button class="btn" onclick="generate()">⚡ Generate 200+ Queries</button>
-<button class="btn" onclick="autoSearch()">🚀 Auto Open Top 3</button>
+<div class="bar">
+<button onclick="capture()">📥 Capture</button>
+<button onclick="saveLead()">Save</button>
+<button onclick="sendToCRM()">Send CRM</button>
+<button onclick="whatsapp()">WhatsApp</button>
+<button onclick="pipeline()">⚡ Close</button>
+</div>
 
+<div id="original" class="panel active">
+<iframe src="original.html"></iframe>
+</div>
+
+<div id="crm" class="panel">
+<iframe id="crmFrame" src="crm.html"></iframe>
+</div>
+
+<div id="ai" class="panel">
+<iframe src="ai.html"></iframe>
+</div>
+
+<div id="memory" class="panel">
+<textarea id="leadBox" placeholder="Paste or capture lead"></textarea>
+<div id="score"></div>
+
+<h3>🔥 TOP LEADS</h3>
 <div id="top"></div>
-<div id="results"></div>
 
-<div class="live" id="live">Live Feed: waiting...</div>
-
+<h3>📊 ALL LEADS</h3>
+<div id="list"></div>
 </div>
 
 <script>
 
-function score(q){
-let s=40;
-if(/urgent|required/i.test(q)) s+=30;
-if(/commercial|investor|business/i.test(q)) s+=20;
-if(/madurai|alagar/i.test(q)) s+=10;
+let leads = JSON.parse(localStorage.getItem("leads")||"[]");
+
+function openTab(tab,el){
+document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+document.getElementById(tab).classList.add("active");
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+el.classList.add("active");
+}
+
+async function capture(){
+let text = await navigator.clipboard.readText();
+document.getElementById("leadBox").value = text;
+autoScore(text);
+}
+
+function autoScore(text){
+let s=30;
+if(/urgent|required/i.test(text)) s+=30;
+if(/budget|lakhs|crore/i.test(text)) s+=20;
+if(/commercial|investor|business/i.test(text)) s+=20;
+if(/madurai|alagar/i.test(text)) s+=15;
 return s;
 }
 
 function label(s){
-if(s>=80) return ["HOT","hot"];
-if(s>=60) return ["WARM","warm"];
-return ["LOW","low"];
+if(s>=80) return ["🔥 HOT","hot"];
+if(s>=50) return ["🟠 WARM","warm"];
+return ["⚪ LOW","low"];
 }
 
-function openSearch(q){
-window.open("https://www.google.com/search?q="+encodeURIComponent(q));
-}
+function saveLead(){
+let text=document.getElementById("leadBox").value;
+if(!text) return alert("Paste lead");
 
-let generated=[];
+let s=autoScore(text);
 
-function generate(){
-
-const mode=document.getElementById("mode").value;
-const sectorSel=document.getElementById("sector").value;
-
-const locations=["Madurai","Alagar Kovil","Natham Road","Tamil Nadu"];
-const intents=["land required","plot wanted","commercial land needed","urgent land required","land for business"];
-const sectors=["hospital","petrol bunk","showroom","warehouse","resort","hotel","college"];
-
-const buyers={
-local:["buyer","business owner"],
-investor:["investor","developer"],
-nri:["NRI investor","overseas buyer"]
+let lead={
+text,
+score:s,
+time:Date.now()
 };
 
-let queries=[];
+leads.push(lead);
+localStorage.setItem("leads",JSON.stringify(leads));
 
-locations.forEach(l=>{
-intents.forEach(i=>{
-sectors.forEach(s=>{
-if(sectorSel!=="all" && s!==sectorSel) return;
-buyers[mode].forEach(b=>{
-queries.push(`${l} ${i} for ${s} ${b}`);
-queries.push(`${l} ${s} ${b} ${i}`);
-});
-});
-});
-});
-
-// relaxer
-let expanded=[];
-queries.forEach(q=>{
-expanded.push(q);
-expanded.push(q+" urgent");
-expanded.push(q.replace("required","needed"));
-});
-
-generated=[...new Set(expanded)];
-
-let scored=generated.map(q=>{
-let s=score(q);
-return {q,s};
-}).sort((a,b)=>b.s-a.s);
-
-render(scored);
-
+render();
 }
 
-function render(list){
+function render(){
+leads.sort((a,b)=>b.score-a.score);
 
-let topHTML="<h3>🔥 TOP OPPORTUNITIES</h3>";
-list.slice(0,10).forEach(x=>{
-let [l,c]=label(x.s);
-topHTML+=`<div class="card"><span class="badge ${c}">${l}</span>${x.q}</div>`;
+let topHTML="";
+let listHTML="";
+
+leads.forEach((l,i)=>{
+let [lab,cls]=label(l.score);
+
+let card = `<div class="card"><span class="${cls}">${lab}</span> (${l.score})<br>${l.text}</div>`;
+
+if(i<5) topHTML += card;
+listHTML += card;
 });
 
 document.getElementById("top").innerHTML=topHTML;
-
-let html="";
-list.slice(0,120).forEach(x=>{
-let [l,c]=label(x.s);
-
-html+=`
-<div class="card">
-<span class="badge ${c}">${l}</span> ${x.q}
-<div class="row">
-<button onclick="openSearch('${x.q}')">Search</button>
-<button onclick="navigator.clipboard.writeText('${x.q}')">Copy</button>
-</div>
-</div>`;
-});
-
-document.getElementById("results").innerHTML=html;
-
+document.getElementById("list").innerHTML=listHTML;
 }
 
-function autoSearch(){
-generated.slice(0,3).forEach((q,i)=>{
-setTimeout(()=>openSearch(q), i*1500);
-});
+function sendToCRM(){
+let text=document.getElementById("leadBox").value;
+if(!text) return;
+
+openTab('crm',document.querySelectorAll(".tabs button")[1]);
+document.getElementById("crmFrame").contentWindow.postMessage(text,"*");
 }
 
-setInterval(()=>{
-let sample=["Investor looking for land","Urgent commercial plot needed","Business land required","NRI investment inquiry"];
-let msg=sample[Math.floor(Math.random()*sample.length)];
-document.getElementById("live").innerText="Live Feed: "+msg;
-},3000);
+function whatsapp(){
+let msg="Hi, we have prime commercial corner plot near Alagar Kovil. Interested?";
+window.open("https://wa.me/?text="+encodeURIComponent(msg));
+}
+
+function pipeline(){
+saveLead();
+sendToCRM();
+whatsapp();
+}
+
+document.getElementById("leadBox").addEventListener("input",()=>{
+let text=document.getElementById("leadBox").value;
+let s=autoScore(text);
+let [lab]=label(s);
+document.getElementById("score").innerHTML="Score: "+s+" "+lab;
+});
+
+render();
 
 </script>
 
