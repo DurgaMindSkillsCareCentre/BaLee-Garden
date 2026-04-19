@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>V2 INTELLIGENCE CONTROLLER</title>
+<title>FINAL HYBRID ULTIMATE SYSTEM</title>
 
 <style>
 body{margin:0;background:#050505;color:#fff;font-family:Arial}
@@ -10,24 +10,24 @@ body{margin:0;background:#050505;color:#fff;font-family:Arial}
 .tabs{display:flex}
 .tabs button{flex:1;padding:10px;background:#000;color:#aaa;border:none}
 .tabs button.active{color:#C8A84B;border-bottom:2px solid #C8A84B}
-iframe{width:100%;height:60vh;border:none}
+iframe{width:100%;height:55vh;border:none}
 .panel{display:none}
 .panel.active{display:block}
 .bar{display:flex;gap:5px;padding:10px;background:#111;flex-wrap:wrap}
 .bar button{flex:1;padding:10px;background:#000;color:#C8A84B;border:1px solid #333}
-textarea{width:100%;height:90px;background:#000;color:#fff;padding:10px}
-.card{background:#111;padding:10px;margin:5px;border-radius:8px}
+textarea{width:100%;height:80px;background:#000;color:#fff;padding:10px}
+.card{background:#111;padding:10px;margin:6px;border-radius:8px}
 .hot{color:red}
 .warm{color:orange}
 .low{color:#aaa}
-.tag{font-size:10px;color:#aaa}
-.alert{background:red;padding:5px;text-align:center;font-weight:bold}
+.badge{font-size:10px;padding:3px 6px;border-radius:6px;margin-right:5px}
+.top{background:#0f0f0f;padding:10px;margin:5px;border:1px solid #333}
 </style>
 </head>
 
 <body>
 
-<div class="header">🚀 V2 DEAL INTELLIGENCE SYSTEM</div>
+<div class="header">🔥 FINAL HYBRID ULTIMATE SYSTEM</div>
 
 <div class="tabs">
 <button onclick="openTab('original',this)" class="active">Original</button>
@@ -44,8 +44,6 @@ textarea{width:100%;height:90px;background:#000;color:#fff;padding:10px}
 <button onclick="pipeline()">⚡ Close</button>
 </div>
 
-<div id="alertBox"></div>
-
 <div id="original" class="panel active">
 <iframe src="original.html"></iframe>
 </div>
@@ -61,6 +59,11 @@ textarea{width:100%;height:90px;background:#000;color:#fff;padding:10px}
 <div id="memory" class="panel">
 <textarea id="leadBox" placeholder="Paste or capture lead"></textarea>
 <div id="score"></div>
+
+<h3>🔥 TOP LEADS</h3>
+<div id="top"></div>
+
+<h3>📊 ALL LEADS</h3>
 <div id="list"></div>
 </div>
 
@@ -83,12 +86,10 @@ autoScore(text);
 
 function autoScore(text){
 let s=30;
-
 if(/urgent|required/i.test(text)) s+=30;
 if(/budget|lakhs|crore/i.test(text)) s+=20;
-if(/commercial|business|investor/i.test(text)) s+=20;
+if(/commercial|investor|business/i.test(text)) s+=20;
 if(/madurai|alagar/i.test(text)) s+=15;
-
 return s;
 }
 
@@ -96,14 +97,6 @@ function label(s){
 if(s>=80) return ["🔥 HOT","hot"];
 if(s>=50) return ["🟠 WARM","warm"];
 return ["⚪ LOW","low"];
-}
-
-function tag(text){
-let t=[];
-if(/hospital/i.test(text)) t.push("Hospital");
-if(/petrol/i.test(text)) t.push("Petrol");
-if(/investor/i.test(text)) t.push("Investor");
-return t.join(", ");
 }
 
 function saveLead(){
@@ -115,17 +108,11 @@ let s=autoScore(text);
 let lead={
 text,
 score:s,
-time:Date.now(),
-tag:tag(text),
-lastContact:0
+time:Date.now()
 };
 
 leads.push(lead);
 localStorage.setItem("leads",JSON.stringify(leads));
-
-if(s>=80){
-document.getElementById("alertBox").innerHTML="<div class='alert'>🔥 HOT LEAD - ACT NOW</div>";
-}
 
 render();
 }
@@ -133,18 +120,20 @@ render();
 function render(){
 leads.sort((a,b)=>b.score-a.score);
 
-let html="";
-leads.forEach(l=>{
+let topHTML="";
+let listHTML="";
+
+leads.forEach((l,i)=>{
 let [lab,cls]=label(l.score);
 
-html+=`<div class="card">
-<span class="${cls}">${lab}</span> (${l.score})<br>
-<span class="tag">${l.tag}</span><br>
-${l.text}
-</div>`;
+let card = `<div class="card"><span class="${cls}">${lab}</span> (${l.score})<br>${l.text}</div>`;
+
+if(i<5) topHTML += card;
+listHTML += card;
 });
 
-document.getElementById("list").innerHTML=html;
+document.getElementById("top").innerHTML=topHTML;
+document.getElementById("list").innerHTML=listHTML;
 }
 
 function sendToCRM(){
@@ -155,14 +144,8 @@ openTab('crm',document.querySelectorAll(".tabs button")[1]);
 document.getElementById("crmFrame").contentWindow.postMessage(text,"*");
 }
 
-function generateReply(text){
-if(/urgent/i.test(text)) return "Hi, saw your urgent requirement. We have prime commercial corner plot near Alagar Kovil. Shall we discuss immediately?";
-return "Hi, we have premium commercial land near Alagar Kovil. Interested?";
-}
-
 function whatsapp(){
-let text=document.getElementById("leadBox").value;
-let msg=generateReply(text);
+let msg="Hi, we have prime commercial corner plot near Alagar Kovil. Interested?";
 window.open("https://wa.me/?text="+encodeURIComponent(msg));
 }
 
@@ -172,19 +155,10 @@ sendToCRM();
 whatsapp();
 }
 
-setInterval(()=>{
-let now=Date.now();
-leads.forEach(l=>{
-if(l.lastContact===0 && now-l.time>21600000){ // 6 hrs
-document.getElementById("alertBox").innerHTML="<div class='alert'>⏰ Follow up lead</div>";
-}
-});
-},60000);
-
 document.getElementById("leadBox").addEventListener("input",()=>{
 let text=document.getElementById("leadBox").value;
 let s=autoScore(text);
-let [lab,cls]=label(s);
+let [lab]=label(s);
 document.getElementById("score").innerHTML="Score: "+s+" "+lab;
 });
 
