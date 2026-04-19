@@ -8,7 +8,7 @@
 body{margin:0;background:#050505;color:#fff;font-family:Arial}
 .header{padding:12px;text-align:center;background:#111;color:#C8A84B;font-weight:bold}
 .container{padding:10px}
-.btn{width:100%;padding:12px;margin:5px 0;background:#111;color:#C8A84B;border:1px solid #333}
+.btn{width:100%;padding:12px;margin:6px 0;background:#111;color:#C8A84B;border:1px solid #333}
 .card{background:#111;padding:10px;margin:8px 0;border-radius:8px}
 .row{display:flex;gap:5px}
 .row button{flex:1}
@@ -17,8 +17,8 @@ body{margin:0;background:#050505;color:#fff;font-family:Arial}
 .warm{background:orange}
 .low{background:#555}
 .controls{display:flex;gap:5px;margin-bottom:10px}
-.controls select{flex:1;padding:8px;background:#000;color:#fff;border:1px solid #333}
-.live{background:#0b0b0b;padding:8px;margin-top:10px;font-size:12px}
+.controls select{flex:1;padding:10px;background:#000;color:#fff;border:1px solid #333}
+.top{background:#0f0f0f;padding:10px;margin-top:10px}
 </style>
 </head>
 
@@ -51,11 +51,13 @@ body{margin:0;background:#050505;color:#fff;font-family:Arial}
 <div id="top"></div>
 <div id="results"></div>
 
-<div class="live" id="live">Live Feed: waiting...</div>
+<div id="live" style="margin-top:10px;font-size:12px;">Live Feed: waiting...</div>
 
 </div>
 
 <script>
+
+let generated = [];
 
 function score(q){
 let s=40;
@@ -70,12 +72,6 @@ if(s>=80) return ["HOT","hot"];
 if(s>=60) return ["WARM","warm"];
 return ["LOW","low"];
 }
-
-function openSearch(q){
-window.open("https://www.google.com/search?q="+encodeURIComponent(q));
-}
-
-let generated=[];
 
 function generate(){
 
@@ -106,7 +102,6 @@ queries.push(`${l} ${s} ${b} ${i}`);
 });
 });
 
-// relaxer
 let expanded=[];
 queries.forEach(q=>{
 expanded.push(q);
@@ -116,13 +111,9 @@ expanded.push(q.replace("required","needed"));
 
 generated=[...new Set(expanded)];
 
-let scored=generated.map(q=>{
-let s=score(q);
-return {q,s};
-}).sort((a,b)=>b.s-a.s);
+let scored=generated.map(q=>({q,s:score(q)})).sort((a,b)=>b.s-a.s);
 
 render(scored);
-
 }
 
 function render(list){
@@ -130,7 +121,7 @@ function render(list){
 let topHTML="<h3>🔥 TOP OPPORTUNITIES</h3>";
 list.slice(0,10).forEach(x=>{
 let [l,c]=label(x.s);
-topHTML+=`<div class="card"><span class="badge ${c}">${l}</span>${x.q}</div>`;
+topHTML+=`<div class="card"><span class="badge ${c}">${l}</span> ${x.q}</div>`;
 });
 
 document.getElementById("top").innerHTML=topHTML;
@@ -143,25 +134,38 @@ html+=`
 <div class="card">
 <span class="badge ${c}">${l}</span> ${x.q}
 <div class="row">
-<button onclick="openSearch('${x.q}')">Search</button>
-<button onclick="navigator.clipboard.writeText('${x.q}')">Copy</button>
+<button onclick="search('${x.q}')">Search</button>
+<button onclick="copy('${x.q}')">Copy</button>
 </div>
 </div>`;
 });
 
 document.getElementById("results").innerHTML=html;
+}
 
+function search(q){
+window.open("https://www.google.com/search?q="+encodeURIComponent(q));
+}
+
+function copy(q){
+navigator.clipboard.writeText(q);
+alert("Copied");
 }
 
 function autoSearch(){
 generated.slice(0,3).forEach((q,i)=>{
-setTimeout(()=>openSearch(q), i*1500);
+setTimeout(()=>search(q), i*1500);
 });
 }
 
 setInterval(()=>{
-let sample=["Investor looking for land","Urgent commercial plot needed","Business land required","NRI investment inquiry"];
-let msg=sample[Math.floor(Math.random()*sample.length)];
+let arr=[
+"Investor looking for land",
+"Urgent commercial plot needed",
+"NRI investment inquiry",
+"Business expansion land required"
+];
+let msg=arr[Math.floor(Math.random()*arr.length)];
 document.getElementById("live").innerText="Live Feed: "+msg;
 },3000);
 
