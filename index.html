@@ -1,167 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Connected Lead System — BAALEE GARDEN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V2 INTELLIGENCE CONTROLLER</title>
+
 <style>
-body{margin:0;background:#050505;color:#f3efe4;font-family:Arial,sans-serif}
-.top{position:sticky;top:0;background:linear-gradient(180deg,#1a1408,#0f0b03);border-bottom:2px solid #c8a84b;padding:12px;text-align:center}
-.brand{color:#c8a84b;font-weight:900;font-size:20px}
-.sub{color:#8c8c8c;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:800;margin-top:3px}
-.tabs{display:flex;overflow-x:auto;background:#050505;border-bottom:1px solid #222}
-.tabs button{flex:none;background:transparent;border:none;color:#666;padding:13px 14px;font-weight:900;text-transform:uppercase;font-size:10px;white-space:nowrap}
-.tabs button.on{color:#c8a84b;border-bottom:2px solid #c8a84b;background:#0d0d0d}
-.bar{display:flex;gap:8px;flex-wrap:wrap;padding:10px;border-bottom:1px solid #1f1f1f;background:#080808}
-.btn{border:none;border-radius:12px;padding:10px 12px;font-weight:900;cursor:pointer;text-transform:uppercase;font-size:10px;letter-spacing:.5px;background:#151515;color:#f0ebe0;border:1px solid #343434}
-.btn.primary{background:linear-gradient(135deg,#c8a84b,#8a6d29);color:#000}
-.btn.blue{background:linear-gradient(135deg,#2d8cff,#0a66c2);color:#fff}
-.pill{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;background:#111;border:1px solid #2a2a2a;color:#d9d9d9;font-size:10px;font-weight:800}
-.grid{display:grid;grid-template-columns:1fr;gap:8px;padding:10px}
-.card{background:#0f0f0f;border:1px solid #262626;border-radius:14px;padding:12px}
-iframe{width:100%;height:78vh;border:0;display:block;background:#050505}
+body{margin:0;background:#050505;color:#fff;font-family:Arial}
+.header{padding:12px;text-align:center;background:#111;color:#C8A84B;font-weight:bold}
+.tabs{display:flex}
+.tabs button{flex:1;padding:10px;background:#000;color:#aaa;border:none}
+.tabs button.active{color:#C8A84B;border-bottom:2px solid #C8A84B}
+iframe{width:100%;height:60vh;border:none}
 .panel{display:none}
-.panel.on{display:block}
-.note{color:#888;font-size:10px;line-height:1.55;padding:12px}
-.inputRow{display:grid;gap:8px}
-input,textarea{width:100%;border:1px solid #303030;background:#090909;color:#fff;border-radius:10px;padding:11px 12px;font-size:14px;outline:none}
-textarea{min-height:88px;resize:vertical;font-family:monospace}
-.list{display:grid;gap:8px}
-.lead{background:#090909;border:1px solid #262626;border-radius:12px;padding:10px}
-.leadTop{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
-.leadText{font-family:monospace;font-size:12px;white-space:pre-wrap;word-break:break-word;color:#ddd;line-height:1.5;margin-top:6px}
-.leadActs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:8px}
-.leadActs .btn{padding:9px 8px;font-size:9px}
-@media(min-width:900px){.grid{grid-template-columns:1.1fr .9fr}iframe{height:82vh}}
+.panel.active{display:block}
+.bar{display:flex;gap:5px;padding:10px;background:#111;flex-wrap:wrap}
+.bar button{flex:1;padding:10px;background:#000;color:#C8A84B;border:1px solid #333}
+textarea{width:100%;height:90px;background:#000;color:#fff;padding:10px}
+.card{background:#111;padding:10px;margin:5px;border-radius:8px}
+.hot{color:red}
+.warm{color:orange}
+.low{color:#aaa}
+.tag{font-size:10px;color:#aaa}
+.alert{background:red;padding:5px;text-align:center;font-weight:bold}
 </style>
 </head>
+
 <body>
-<div class="top"><div class="brand">CONNECTED LEAD SYSTEM</div><div class="sub">AUTO LEAD SYNC • UNIFIED MEMORY • ONE-CLICK PIPELINE</div></div>
+
+<div class="header">🚀 V2 DEAL INTELLIGENCE SYSTEM</div>
+
 <div class="tabs">
-  <button class="on" data-tab="original">Original WebApp</button>
-  <button data-tab="crm">CRM Pro</button>
-  <button data-tab="ai">AI Engine</button>
-  <button data-tab="memory">Unified Memory</button>
+<button onclick="openTab('original',this)" class="active">Original</button>
+<button onclick="openTab('crm',this)">CRM</button>
+<button onclick="openTab('ai',this)">AI</button>
+<button onclick="openTab('memory',this)">Memory</button>
 </div>
+
 <div class="bar">
-  <button class="btn primary" onclick="saveLeadFromBox()">⬇ Save lead</button>
-  <button class="btn blue" onclick="sendToCrm()">➡ Send to CRM</button>
-  <button class="btn" onclick="pipelineFlow()">⚡ One-click pipeline</button>
-  <button class="btn" onclick="copyMemory()">📋 Copy memory</button>
-  <span class="pill" id="memCount">MEMORY: 0</span>
-  <span class="pill" id="syncState">SYNC: READY</span>
+<button onclick="capture()">📥 Capture</button>
+<button onclick="saveLead()">Save</button>
+<button onclick="sendToCRM()">Send CRM</button>
+<button onclick="whatsapp()">WhatsApp</button>
+<button onclick="pipeline()">⚡ Close</button>
 </div>
-<div class="grid">
-  <div class="card">
-    <div class="panel on" id="panel-original"><iframe id="frame" src="original.html"></iframe></div>
-    <div class="panel" id="panel-crm"><iframe id="frame2" src="crm.html"></iframe></div>
-    <div class="panel" id="panel-ai"><iframe id="frame3" src="ai.html"></iframe></div>
-    <div class="panel" id="panel-memory">
-      <div class="inputRow">
-        <input id="leadTitle" placeholder="Lead title / source" />
-        <input id="leadUrl" placeholder="Optional source URL" />
-        <textarea id="leadText" placeholder="Paste lead text here"></textarea>
-      </div>
-      <div style="height:8px"></div>
-      <div class="bar" style="padding:0;background:transparent;border:0">
-        <button class="btn primary" onclick="saveLeadFromBox()">Save lead</button>
-        <button class="btn blue" onclick="sendToCrm()">Send to CRM</button>
-        <button class="btn" onclick="clearMemory()">Clear</button>
-      </div>
-      <div style="height:10px"></div>
-      <div class="list" id="memoryList"></div>
-    </div>
-  </div>
-  <div class="card">
-    <div style="font-weight:900;margin-bottom:8px;font-size:15px">How it works</div>
-    <div style="font-size:11px;line-height:1.6;color:#9a9a9a">
-      1) Use the Original WebApp or AI Engine to find a lead.<br><br>
-      2) Save it into Unified Memory here.<br><br>
-      3) Send the lead into CRM Pro with one click for scoring and reply.
-    </div>
-  </div>
+
+<div id="alertBox"></div>
+
+<div id="original" class="panel active">
+<iframe src="original.html"></iframe>
 </div>
-<div class="note">Keep all three main files untouched. This connector only coordinates them and stores shared memory in the browser.</div>
+
+<div id="crm" class="panel">
+<iframe id="crmFrame" src="crm.html"></iframe>
+</div>
+
+<div id="ai" class="panel">
+<iframe src="ai.html"></iframe>
+</div>
+
+<div id="memory" class="panel">
+<textarea id="leadBox" placeholder="Paste or capture lead"></textarea>
+<div id="score"></div>
+<div id="list"></div>
+</div>
 
 <script>
-let memory = JSON.parse(localStorage.getItem("connectedLeadMemory_v1") || "[]");
-let selectedIndex = -1;
 
-function saveStore(){ localStorage.setItem("connectedLeadMemory_v1", JSON.stringify(memory)); render(); }
-function $(id){ return document.getElementById(id); }
-function esc(s){ return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
-function toast(t){ $("syncState").textContent = "SYNC: " + String(t).toUpperCase(); setTimeout(()=>$("syncState").textContent="SYNC: READY",1200); }
+let leads = JSON.parse(localStorage.getItem("leads")||"[]");
 
-document.querySelectorAll(".tabs button").forEach(btn => btn.addEventListener("click", () => openTab(btn.dataset.tab)));
-function openTab(name){
-  document.querySelectorAll(".tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab===name));
-  document.querySelectorAll(".panel").forEach(p => p.classList.remove("on"));
-  $("panel-"+name).classList.add("on");
+function openTab(tab,el){
+document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+document.getElementById(tab).classList.add("active");
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+el.classList.add("active");
 }
-function render(){
-  saveStore();
-  $("memCount").textContent = "MEMORY: " + memory.length;
-  $("memoryList").innerHTML = memory.length ? memory.map((m,i)=>`
-    <div class="lead">
-      <div class="leadTop">
-        <div><span class="pill">${i+1}</span> <span class="pill">${esc(m.title || "Lead")}</span></div>
-        <div class="pill">${esc(new Date(m.ts).toLocaleString())}</div>
-      </div>
-      <div class="leadText">${esc((m.text || "").slice(0,260))}${(m.text||"").length>260?"...":""}</div>
-      <div class="leadActs">
-        <button class="btn" onclick="selectLead(${i})">Select</button>
-        <button class="btn blue" onclick="sendLead(${i})">CRM</button>
-        <button class="btn" onclick="delLead(${i})">Delete</button>
-      </div>
-    </div>
-  `).join("") : `<div class="pill">No leads saved yet.</div>`;
+
+async function capture(){
+let text = await navigator.clipboard.readText();
+document.getElementById("leadBox").value = text;
+autoScore(text);
 }
-function saveLeadFromBox(){
-  const title = $("leadTitle").value.trim() || "Lead";
-  const url = $("leadUrl").value.trim();
-  const text = $("leadText").value.trim();
-  if(!title && !text){ toast("empty"); return; }
-  memory.unshift({id:Date.now(), title, url, text, ts:new Date().toISOString()});
-  if(memory.length > 100) memory.length = 100;
-  render();
-  toast("saved");
+
+function autoScore(text){
+let s=30;
+
+if(/urgent|required/i.test(text)) s+=30;
+if(/budget|lakhs|crore/i.test(text)) s+=20;
+if(/commercial|business|investor/i.test(text)) s+=20;
+if(/madurai|alagar/i.test(text)) s+=15;
+
+return s;
 }
-function selectLead(i){
-  selectedIndex = i;
-  const m = memory[i];
-  $("leadTitle").value = m.title || "";
-  $("leadUrl").value = m.url || "";
-  $("leadText").value = m.text || "";
-  openTab("memory");
+
+function label(s){
+if(s>=80) return ["🔥 HOT","hot"];
+if(s>=50) return ["🟠 WARM","warm"];
+return ["⚪ LOW","low"];
 }
-function sendLead(i){
-  const m = memory[i];
-  if(!m) return;
-  const data = {type:"connected-lead", payload: JSON.stringify(m)};
-  try{
-    document.getElementById("frame2").contentWindow.postMessage(data, "*");
-    toast("sent");
-    openTab("crm");
-  }catch(e){ toast("blocked"); }
+
+function tag(text){
+let t=[];
+if(/hospital/i.test(text)) t.push("Hospital");
+if(/petrol/i.test(text)) t.push("Petrol");
+if(/investor/i.test(text)) t.push("Investor");
+return t.join(", ");
 }
-function sendToCrm(){ sendLead(selectedIndex >= 0 ? selectedIndex : 0); }
-function pipelineFlow(){ if(memory.length) sendLead(selectedIndex >= 0 ? selectedIndex : 0); }
-function copyMemory(){ navigator.clipboard?.writeText(JSON.stringify(memory, null, 2)); toast("copied"); }
-function clearMemory(){ if(confirm("Clear all memory?")){ memory=[]; selectedIndex=-1; render(); toast("cleared"); } }
-function delLead(i){ memory.splice(i,1); if(selectedIndex===i) selectedIndex=-1; render(); toast("deleted"); }
-window.addEventListener("message", (e) => {
-  const d = e.data || {};
-  if(d.type === "save-lead" && d.payload){
-    try{
-      const m = typeof d.payload === "string" ? JSON.parse(d.payload) : d.payload;
-      memory.unshift({id:Date.now(), title:m.title||"Lead", url:m.url||"", text:m.text||"", ts:new Date().toISOString()});
-      if(memory.length > 100) memory.length = 100;
-      render();
-      toast("synced");
-    }catch(_){}
-  }
-});
+
+function saveLead(){
+let text=document.getElementById("leadBox").value;
+if(!text) return alert("Paste lead");
+
+let s=autoScore(text);
+
+let lead={
+text,
+score:s,
+time:Date.now(),
+tag:tag(text),
+lastContact:0
+};
+
+leads.push(lead);
+localStorage.setItem("leads",JSON.stringify(leads));
+
+if(s>=80){
+document.getElementById("alertBox").innerHTML="<div class='alert'>🔥 HOT LEAD - ACT NOW</div>";
+}
+
 render();
+}
+
+function render(){
+leads.sort((a,b)=>b.score-a.score);
+
+let html="";
+leads.forEach(l=>{
+let [lab,cls]=label(l.score);
+
+html+=`<div class="card">
+<span class="${cls}">${lab}</span> (${l.score})<br>
+<span class="tag">${l.tag}</span><br>
+${l.text}
+</div>`;
+});
+
+document.getElementById("list").innerHTML=html;
+}
+
+function sendToCRM(){
+let text=document.getElementById("leadBox").value;
+if(!text) return;
+
+openTab('crm',document.querySelectorAll(".tabs button")[1]);
+document.getElementById("crmFrame").contentWindow.postMessage(text,"*");
+}
+
+function generateReply(text){
+if(/urgent/i.test(text)) return "Hi, saw your urgent requirement. We have prime commercial corner plot near Alagar Kovil. Shall we discuss immediately?";
+return "Hi, we have premium commercial land near Alagar Kovil. Interested?";
+}
+
+function whatsapp(){
+let text=document.getElementById("leadBox").value;
+let msg=generateReply(text);
+window.open("https://wa.me/?text="+encodeURIComponent(msg));
+}
+
+function pipeline(){
+saveLead();
+sendToCRM();
+whatsapp();
+}
+
+setInterval(()=>{
+let now=Date.now();
+leads.forEach(l=>{
+if(l.lastContact===0 && now-l.time>21600000){ // 6 hrs
+document.getElementById("alertBox").innerHTML="<div class='alert'>⏰ Follow up lead</div>";
+}
+});
+},60000);
+
+document.getElementById("leadBox").addEventListener("input",()=>{
+let text=document.getElementById("leadBox").value;
+let s=autoScore(text);
+let [lab,cls]=label(s);
+document.getElementById("score").innerHTML="Score: "+s+" "+lab;
+});
+
+render();
+
 </script>
+
 </body>
 </html>
