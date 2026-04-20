@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>AI ENGINE HYBRID ULTIMATE</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>AI Engine Ultra Pro</title>
 <style>
-  :root{--bg:#050505;--panel:#0d0d0d;--line:#262626;--gold:#c8a84b;--gold2:#8a6d29;--text:#f3efe4;--muted:#9a9a9a;--hot:#ff6b6b;--warm:#ffd166;--cold:#8fc98f;--blue:#4aa3ff;--purple:#a66bff;}
+  :root {
+    --bg:#050505; --panel:#0f0f0f; --panel2:#121212; --line:#272727;
+    --gold:#c8a84b; --gold2:#8a6d29; --text:#f3efe4; --muted:#9a9a9a;
+    --hot:#ff6666; --warm:#ffd166; --cold:#8fc98f; --blue:#4aa3ff; --purple:#a66bff; --green:#27ae60;
+  }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,system-ui,sans-serif}
-  .header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#1a1408,#0f0b03);border-bottom:2px solid var(--gold);padding:12px;text-align:center}
-  .title{font-size:20px;font-weight:900;color:var(--gold);letter-spacing:1px}
-  .sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8c8c8c;font-weight:800;margin-top:3px}
-  .controls,.content{padding:12px}
-  .box,.card,.queryCard,.feedItem,.mini{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
-  .controls{background:#080808;border-bottom:1px solid #1f1f1f;display:grid;grid-template-columns:1fr;gap:10px}
-  .label{display:block;color:var(--gold);font-weight:900;font-size:9px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
-  input,select,textarea{width:100%;border:1px solid #303030;background:#090909;color:#fff;border-radius:10px;padding:11px 12px;font-size:14px;outline:none}
-  textarea{min-height:88px;resize:vertical;font-family:monospace}
-  .btnbar,.queryActs,.feedActs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .btn{width:100%;border:none;border-radius:12px;padding:12px 10px;font-weight:900;cursor:pointer;text-transform:uppercase;font-size:10px;letter-spacing:.5px}
-  .btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2),var(--gold));color:#000}
-  .btn.blue{background:linear-gradient(135deg,#2d8cff,#0a66c2,#2d8cff);color:#fff}
-  .btn.green{background:linear-gradient(135deg,#27ae60,#145a32,#27ae60);color:#fff}
-  .btn.orange{background:linear-gradient(135deg,#e67e22,#8a4f13,#e67e22);color:#fff}
-  .btn.purple{background:linear-gradient(135deg,#7b61ff,#4c2bcf,#7b61ff);color:#fff}
-  .btn.dark{background:#151515;color:#f0ebe0;border:1px solid #343434}
-  .tabs{display:flex;overflow-x:auto;background:#050505;border-bottom:1px solid #222;position:sticky;top:74px;z-index:45}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+  .top{
+    position:sticky;top:0;z-index:100;background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.45);
+    padding:12px 10px 10px
+  }
+  .brand{text-align:center;color:var(--gold);font-weight:900;font-size:20px;letter-spacing:1px}
+  .sub{text-align:center;color:#8c8c8c;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:800;margin-top:3px}
+  .tabs{display:flex;overflow-x:auto;background:#050505;border-bottom:1px solid #222;position:sticky;top:74px;z-index:95}
   .tab{flex:none;background:transparent;border:none;color:#666;padding:13px 15px;font-weight:900;text-transform:uppercase;font-size:10px;white-space:nowrap}
   .tab.on{color:var(--gold);border-bottom:2px solid var(--gold);background:#0d0d0d}
-  .panel{display:none}
-  .panel.on{display:block}
-  .grid,.row,.leadFeed{display:grid;grid-template-columns:1fr;gap:10px}
+  .controls{padding:12px;border-bottom:1px solid #1f1f1f;background:#080808;display:grid;grid-template-columns:1fr;gap:10px}
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+  .label{display:block;color:var(--gold);font-weight:900;font-size:9px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  input,select,textarea{
+    width:100%;border:1px solid #303030;background:#090909;color:#fff;border-radius:10px;padding:11px 12px;font-size:14px;outline:none
+  }
+  textarea{min-height:92px;resize:vertical;font-family:monospace}
+  .btnbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn{
+    width:100%;border:none;border-radius:12px;padding:12px 10px;font-weight:900;cursor:pointer;
+    text-transform:uppercase;font-size:10px;letter-spacing:.5px
+  }
+  .btn:active{transform:scale(.98)}
+  .primary{background:linear-gradient(135deg,var(--gold),var(--gold2),var(--gold));color:#000}
+  .blue{background:linear-gradient(135deg,#2d8cff,#0a66c2,#2d8cff);color:#fff}
+  .green{background:linear-gradient(135deg,#27ae60,#145a32,#27ae60);color:#fff}
+  .orange{background:linear-gradient(135deg,#e67e22,#8a4f13,#e67e22);color:#fff}
+  .purple{background:linear-gradient(135deg,#7b61ff,#4c2bcf,#7b61ff);color:#fff}
+  .dark{background:#151515;color:#f0ebe0;border:1px solid #343434}
   .stats{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
   .pill{display:inline-flex;align-items:center;font-size:10px;font-weight:800;padding:5px 9px;border-radius:999px;background:#111;border:1px solid #2a2a2a;color:#d9d9d9}
   .pill.hot{background:#260808;border-color:#5c1d1d;color:#ffb2b2}
@@ -37,23 +48,36 @@
   .pill.cold{background:#091b0f;border-color:#174327;color:#a8e5bd}
   .pill.blue{background:#08111d;border-color:#173a66;color:#a6d1ff}
   .pill.purple{background:#120a1d;border-color:#4a2d72;color:#d7b8ff}
-  .queryText,.body{font-family:monospace;white-space:pre-wrap;word-break:break-word;font-size:12px;color:#ddd;line-height:1.55}
+  .panel{display:none}
+  .panel.on{display:block}
+  .content{padding:12px}
+  .grid,.row,.leadFeed{display:grid;grid-template-columns:1fr;gap:10px}
+  .card,.queryCard,.feedItem,.mini{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+  .card h3{margin:0 0 8px;font-size:15px}
+  .muted{color:var(--muted)}
+  .small{font-size:11px;line-height:1.55}
   .queryTop,.topline{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+  .queryText,.body{font-family:monospace;white-space:pre-wrap;word-break:break-word;font-size:12px;color:#ddd;line-height:1.55}
+  .queryActs,.feedActs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+  .queryActs .btn,.feedActs .btn{padding:9px 8px;font-size:9px}
   .progress{height:10px;border-radius:999px;background:#141414;border:1px solid #2a2a2a;overflow:hidden}
   .progress > div{height:100%;width:0%;background:linear-gradient(90deg,var(--cold),var(--warm),var(--hot))}
   .searchlinks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .searchlinks a{display:block;text-decoration:none;text-align:center;padding:10px 9px;border-radius:11px;border:1px solid #2c2c2c;background:#111;color:#fff;font-size:11px;font-weight:800}
+  .sectionTitle{font-weight:900;font-size:18px;margin:0 0 10px;color:#fff}
+  .list{display:grid;gap:8px}
+  .tagline{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .footer{color:#888;font-size:10px;line-height:1.55;padding:14px 12px 22px}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid #212121;padding:8px 6px;font-size:12px;text-align:left;vertical-align:top}
+  th{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
   .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:center;justify-content:center;padding:14px;z-index:999}
   .modal-backdrop.show{display:flex}
   .modal{width:min(100%,860px);max-height:92vh;overflow:auto;background:#0b0b0b;border:1px solid #3a3a3a;border-radius:16px;padding:14px}
   .modalHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
   .modalTitle{font-weight:900;color:var(--gold);font-size:15px}
   .xbtn{background:#1a1408;color:var(--gold);border:1px solid #5a471d;border-radius:10px;padding:8px 10px;font-weight:900}
-  .footer{color:#888;font-size:10px;line-height:1.55;padding:14px 12px 22px}
-  table{width:100%;border-collapse:collapse}
-  th,td{border-bottom:1px solid #212121;padding:8px 6px;font-size:12px;text-align:left;vertical-align:top}
-  th{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
-  .sectionTitle{font-weight:900;font-size:18px;margin:0 0 10px;color:#fff}
+  .scoreBig{font-size:22px;font-weight:900;color:var(--gold)}
   @media (min-width:900px){
     .controls{grid-template-columns:1.1fr .9fr .9fr}
     .row{grid-template-columns:1.2fr .8fr}
@@ -65,9 +89,9 @@
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="title">AI ENGINE HYBRID ULTIMATE</div>
-  <div class="sub">FULL AI LOGIC + PREVIOUS ULTIMATE BOT + TOP OPPORTUNITIES + LIVE FEED</div>
+<div class="top">
+  <div class="brand">AI ENGINE ULTRA PRO</div>
+  <div class="sub">query intelligence • deal scoring • live feed • smart reply • auto open</div>
 </div>
 
 <div class="controls">
@@ -81,24 +105,38 @@
     </select>
     <div class="small muted" style="margin-top:8px">Local includes Tamil Nadu, Tamil diaspora anywhere in India, and nearby commercial buyers.</div>
   </div>
+
   <div class="box">
     <span class="label">Sector focus</span>
     <select id="sector" onchange="refreshAll()">
-      <option>All</option><option>Petrol Bunk</option><option>Hospital</option><option>Restaurant</option><option>Warehouse</option><option>Hotel / Resort</option><option>Showroom</option><option>Logistics</option><option>School / College</option><option>IT Park</option><option>Convention Hall</option>
+      <option>All</option>
+      <option>Petrol Bunk</option>
+      <option>Hospital</option>
+      <option>Restaurant</option>
+      <option>Warehouse</option>
+      <option>Hotel / Resort</option>
+      <option>Showroom</option>
+      <option>Logistics</option>
+      <option>School / College</option>
+      <option>IT Park</option>
+      <option>Convention Hall</option>
+      <option>Wellness Center</option>
     </select>
     <div style="height:8px"></div>
     <input id="location" value="Madurai Alagar Kovil" placeholder="Location">
   </div>
+
   <div class="box">
     <span class="label">Lead notes / paste text</span>
     <textarea id="paste" placeholder="Paste buyer requirement, post text, ad text, WhatsApp message, or notes here..."></textarea>
   </div>
+
   <div class="box" style="grid-column:1/-1">
     <div class="btnbar">
-      <button class="btn primary" onclick="generateSuggestions()">🔥 Generate 200+ Queries</button>
+      <button class="btn primary" onclick="generateSuggestions()">🔥 Generate 300+ Queries</button>
       <button class="btn blue" onclick="startLiveFeed()">📡 Start Live Feed</button>
       <button class="btn green" onclick="scorePaste()">⚡ Score Paste</button>
-      <button class="btn orange" onclick="openPlatformLinks()">🌐 Open Platform Links</button>
+      <button class="btn orange" onclick="openPlatformLinks()">🌐 Auto Open Platforms</button>
       <button class="btn purple" onclick="openHotSuggestions()">🚨 HOT Suggestions</button>
       <button class="btn dark" onclick="copySelectedQuery()">📋 Copy Query</button>
     </div>
@@ -113,7 +151,7 @@
     </div>
     <div style="height:10px"></div>
     <div class="progress"><div id="bar"></div></div>
-    <div class="small muted" style="margin-top:8px">Open results in search links, detect a lead, paste it back here, score it, then move it into your CRM.</div>
+    <div class="small muted" style="margin-top:8px">Search engine builds structured queries. Use the top leads first. Open platforms auto if you want broad discovery.</div>
   </div>
 </div>
 
@@ -128,7 +166,7 @@
   <section class="panel on" id="panel-suggestions">
     <div class="card">
       <h3 class="sectionTitle">Deal Intelligence panel</h3>
-      <div class="small muted">Query rotation, HOT deal scoring, deal probability, and smart reply generation.</div>
+      <div class="small muted">Query rotation, HOT deal scoring, deal prediction, and smart reply generation.</div>
       <div style="height:10px"></div>
       <div class="grid" id="suggestions"></div>
     </div>
@@ -140,7 +178,7 @@
         <h3 class="sectionTitle">Auto lead feed simulation</h3>
         <div class="small muted">Simulated live updates for the current target mode. Use this to stay in discovery mode.</div>
         <div style="height:10px"></div>
-        <div class="feedList" id="feedList"></div>
+        <div class="list" id="feedList"></div>
       </div>
       <div class="card">
         <h3 class="sectionTitle">Signal rules</h3>
@@ -153,7 +191,7 @@
             <tr><td>commercial / plot / land</td><td>+10</td></tr>
             <tr><td>Madurai / Alagar Kovil</td><td>+10</td></tr>
             <tr><td>highway / frontage / junction</td><td>+10</td></tr>
-            <tr><td>investment</td><td>+10</td></tr>
+            <tr><td>investment / investor</td><td>+10</td></tr>
             <tr><td>NRI / global</td><td>+10</td></tr>
           </tbody>
         </table>
@@ -220,67 +258,362 @@ If your requirement is still active, I can share location and brochure.</textare
   </section>
 </div>
 
-<div class="modal-backdrop" id="modal"><div class="modal"><div class="modalHead"><div class="modalTitle" id="modalTitle">Deal Score</div><button class="xbtn" onclick="closeModal()">✕</button></div><div id="modalBody"></div></div></div>
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <div class="modalHead">
+      <div class="modalTitle" id="modalTitle">Deal Score</div>
+      <button class="xbtn" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
 
 <div class="footer">
-  Hybrid engine built by combining the advanced controller logic and the earlier visible AI engine. It keeps query generation, top opportunities, live feed simulation, platform links, scoring, deal prediction, and smart replies together in one robust AI tab.
+  Hybrid engine: structured query bank + 300+ combinations, scoring, prediction, live feed, reply engine, and auto-open platform discovery.
 </div>
 
 <script>
-const queryBank={
-  local:{all:["commercial land buyer Tamil Nadu","land required Madurai investor","corner plot buyer in Tamil Nadu","highway frontage land wanted South India","commercial plot wanted India","buyer looking for land in Tamil Nadu","investment land required Madurai","commercial property wanted by local buyer"],petrol:["petrol bunk land required Tamil Nadu","fuel station land wanted Madurai","highway land for petrol pump","petrol bunk dealership land needed","corner plot suitable for fuel station"],hospital:["hospital land required Tamil Nadu","medical center land wanted Madurai","nursing home plot needed","healthcare project land required","hospital expansion land buyer"],restaurant:["restaurant land wanted highway","food outlet land required Tamil Nadu","drive in restaurant plot needed","franchise restaurant land buyer","commercial corner for food chain"],warehouse:["warehouse land required Tamil Nadu","logistics plot wanted Madurai","godown land buyer highway","distribution center plot needed","industrial warehouse land requirement"],hotel:["hotel land required tourism belt","resort plot wanted near temple","hospitality project land buyer","boutique hotel site needed","tourism corridor commercial plot"],showroom:["showroom land required highway","retail outlet plot wanted Tamil Nadu","commercial corner for showroom","brand showroom land buyer","high visibility retail land needed"],logistics:["logistics land required Tamil Nadu","distribution hub plot wanted","truck access land needed","supply chain plot buyer","logistics park land requirement"],school:["school land required Tamil Nadu","college plot wanted Madurai","education campus land buyer","academy land needed","institutional plot requirement"],it:["IT park land required Tamil Nadu","software company plot wanted","tech hub land buyer","startup campus land needed","commercial IT corridor land"]},
-  investor:{all:["commercial land investment Tamil Nadu","highway plot investor India","corner plot appreciation corridor","ROI land investment Madurai","commercial land opportunity South India","land syndicate investor Tamil Nadu","asset backed land investment India","growth corridor commercial plot"],petrol:["petrol bunk land investment Tamil Nadu","fuel station site ROI India","highway service land investor","petrol pump opportunity land","commercial land for fuel business"],hospital:["healthcare land investment Tamil Nadu","hospital project land ROI","medical campus land opportunity","wellness center plot investor","institutional land investment India"],restaurant:["restaurant franchise land investment","food chain highway plot investor","brand outlet land ROI","tourist corridor food court plot","commercial hospitality land"],warehouse:["warehouse land investment Tamil Nadu","logistics asset land ROI","distribution land investor","industrial corner plot opportunity","cargo access commercial land"],hotel:["hotel land investment tourism belt","resort plot investor India","NRI hospitality land ROI","boutique stay land opportunity","temple corridor plot"],school:["education campus investment Tamil Nadu","college land investor","academy plot ROI","institutional land opportunity","school corridor project"],it:["IT park land investment Tamil Nadu","software hub plot ROI","tech campus investor","startup corridor land","future growth commercial land"]},
-  nri:{all:["NRI land investment Tamil Nadu","NRI commercial plot India","overseas Indian property opportunity","global investor commercial land Madurai","NRI buyer for corner plot","Tamil diaspora land investment","foreign-based Indian investor land","international property buyer India"],hotel:["NRI resort land Tamil Nadu","NRI tourism project plot India","global investor hospitality land","overseas buyer resort site","temple corridor hospitality investment"],investor:["NRI commercial land investment opportunity","NRI growth corridor property","global investor ROI land India","cross border land asset","long term appreciation plot"],petrol:["NRI fuel station investment India","NRI highway commercial plot","global investor roadside land","NRI asset backed land","energy corridor land opportunity"]},
-  global:{all:["global investor commercial land India","international property buyer Tamil Nadu","worldwide land investment opportunity","cross border commercial plot","global buyer corner plot","international ROI land India"]}
-};
-const sectorMap={"All":"all","Petrol Bunk":"petrol","Hospital":"hospital","Restaurant":"restaurant","Warehouse":"warehouse","Hotel / Resort":"hotel","Showroom":"showroom","Logistics":"logistics","School / College":"school","IT Park":"it","Convention Hall":"hotel"};
-const platforms=[["Google",q=>`https://www.google.com/search?q=${encodeURIComponent(q)}`],["Bing",q=>`https://www.bing.com/search?q=${encodeURIComponent(q)}`],["DuckDuckGo",q=>`https://duckduckgo.com/?q=${encodeURIComponent(q)}`],["Reddit",q=>`https://www.reddit.com/search/?q=${encodeURIComponent(q)}&sort=new&t=month`],["Facebook",q=>`https://www.facebook.com/search/posts/?q=${encodeURIComponent(q)}`],["OLX",q=>`https://www.olx.in/items/q-${encodeURIComponent(q.replace(/\s+/g,'-'))}`]];
-let selectedQuery="",feedTimer=null,feedItems=[],leadMemory=JSON.parse(localStorage.getItem("dealIntelMemory_v1")||"[]");
-function $(id){return document.getElementById(id)}
-function escapeHtml(s){return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
-function getMode(){return $("mode").value||"local"}
-function getSectorKey(){const s=$("sector").value||"All";return sectorMap[s]||"all"}
-function scoreText(text){const t=String(text||"").toLowerCase();let score=0;const hits=[];const add=(c,p,l)=>{if(c){score+=p;hits.push(l)}};add(t.includes("urgent"),20,"urgent");add(t.includes("immediate"),20,"immediate");add(t.includes("need land")||t.includes("land required")||t.includes("require land"),20,"need land");add(t.includes("buyer")||t.includes("want to buy")||t.includes("looking for land"),15,"buyer intent");add(t.includes("commercial"),10,"commercial");add(t.includes("land")||t.includes("plot"),10,"land/plot");add(t.includes("madurai"),10,"madurai");add(t.includes("alagar kovil")||t.includes("alagarkovil"),10,"alagar kovil");add(t.includes("highway")||t.includes("junction")||t.includes("frontage"),10,"highway/frontage");add(t.includes("investment")||t.includes("investor"),10,"investment");add(t.includes("nri")||t.includes("overseas")||t.includes("global"),10,"nri/global");const label=score>=60?"HOT":score>=30?"WARM":"COLD";return {score,label,hits}}
-function buildQueryList(){const mode=getMode(),sector=getSectorKey(),loc=$("location").value.trim()||"Madurai Alagar Kovil",bank=queryBank[mode]||queryBank.local,list=[];const base=bank[sector]||bank.all||[],narrow=bank.all||[];for(const q of base)list.push(`${loc} ${q}`);for(const q of narrow)if(list.length<50)list.push(`${loc} ${q}`);const extras=[`${loc} commercial land buyer`,`${loc} corner plot investor`,`${loc} highway frontage requirement`,`${loc} investment opportunity`,`${loc} plot wanted`,`${loc} land required`,`${loc} investor wanted`,`${loc} commercial plot wanted`];while(list.length<50){for(const q of extras){if(list.length>=50)break;list.push(q)}}return [...new Set(list)].slice(0,60)}
-function platformQuery(q){return [["Google",`https://www.google.com/search?q=${encodeURIComponent(q)}`],["Facebook",`https://www.facebook.com/search/posts/?q=${encodeURIComponent(q)}`],["Reddit",`https://www.reddit.com/search/?q=${encodeURIComponent(q)}&sort=new&t=month`],["OLX",`https://www.olx.in/items/q-${encodeURIComponent(q.replace(/\s+/g,'-'))}`]]}
-function currentDealScore(){const text=$("paste").value.trim(),q=selectedQuery||buildQueryList()[0]||"",lead=scoreText(text),query=scoreText(q),sectorBonus=getSectorKey()==="all"?4:8;return Math.min(100,Math.round((lead.score*0.55)+(query.score*0.25)+sectorBonus+((getMode()==="nri"||getMode()==="global")?8:0)))}
-function dealPrediction(){const score=currentDealScore();if(score>=80)return{label:"VERY HIGH",action:"Call now and send brochure",cls:"hot"};if(score>=60)return{label:"HIGH",action:"Reply fast and follow up today",cls:"warm"};if(score>=40)return{label:"MEDIUM",action:"Ask one clarifying question",cls:"blue"};return{label:"LOW",action:"Keep in memory and continue discovery",cls:"cold"}}
-function refreshCounters(){$("countPill").textContent=`QUERIES: ${buildQueryList().length}`;const hot=feedItems.filter(x=>x.label==="HOT").length;$("hotPill").textContent=`HOT: ${hot}`;$("modePill").textContent=`MODE: ${getMode().toUpperCase()}`;$("targetPill").textContent=`TARGET: ${$("sector").value.toUpperCase()}`;$("statePill").textContent=feedTimer?"LIVE FEED ON":"IDLE";$("dealPill").textContent=`DEAL: ${currentDealScore()}/100`}
-function renderSuggestions(){const list=buildQueryList();const box=$("suggestions");if(!selectedQuery)selectedQuery=list[0]||"";$("countPill").textContent=`QUERIES: ${list.length}`;box.innerHTML=list.map((q,idx)=>{const s=scoreText(q),cls=s.label==="HOT"?"hot":s.label==="WARM"?"warm":"cold";return `<div class="queryCard"><div class="queryTop"><div><span class="pill ${cls}">${s.label} • ${s.score}/100</span><span class="pill blue">${idx+1}</span></div><div class="pill purple">${escapeHtml(getMode().toUpperCase())}</div></div><div class="queryText">${escapeHtml(q)}</div><div class="queryActs"><button class="btn dark" onclick="openQuery(${idx})">🔎 Search</button><button class="btn dark" onclick="copyQuery(${idx})">📋 Copy</button></div></div>`}).join("");refreshPlatformLinks();refreshCounters()}
-function refreshPlatformLinks(){const q=buildQueryList()[0]||"";$("platformLinks").innerHTML=platforms.map(([n,fn])=>`<a href="${fn(q)}" target="_blank" rel="noopener noreferrer">${n}</a>`).join("")}
-function generateSuggestions(){renderSuggestions();$("bar").style.width="35%";$("statePill").textContent="SUGGESTIONS READY";toast("generated")}
-function openQuery(i){const q=buildQueryList()[i];if(!q)return;selectedQuery=q;platformQuery(q).forEach(([name,url],idx)=>setTimeout(()=>window.open(url,"_blank","noopener,noreferrer"),idx*650));$("bar").style.width="60%";$("statePill").textContent=`OPENED ${q.slice(0,24)}...`;addMemory("query",q);addFeedItem(q)}
-function copyQuery(i){const q=buildQueryList()[i];if(!q)return;selectedQuery=q;navigator.clipboard?.writeText(q);toast("copied")}
-function copySelectedQuery(){if(!selectedQuery)selectedQuery=buildQueryList()[0]||"";if(!selectedQuery){toast("no query");return}navigator.clipboard?.writeText(selectedQuery);toast("copied")}
-function openPlatformLinks(){const q=buildQueryList()[0]||"";platforms.forEach(([n,fn],idx)=>setTimeout(()=>window.open(fn(q),"_blank","noopener,noreferrer"),idx*450));$("statePill").textContent="PLATFORMS OPENED"}
-function openHotSuggestions(){const list=buildQueryList().filter(q=>scoreText(q).label==="HOT").slice(0,20);if(!list.length)list.push(...buildQueryList().slice(0,8));$("suggestions").innerHTML=list.map((q,idx)=>{const s=scoreText(q);return `<div class="queryCard"><div class="queryTop"><div><span class="pill hot">HOT ${s.score}/100</span></div><div class="pill purple">SMART</div></div><div class="queryText">${escapeHtml(q)}</div><div class="queryActs"><button class="btn dark" onclick="openQuery(${idx})">🔎 Search</button><button class="btn dark" onclick="copyQuery(${idx})">📋 Copy</button></div></div>`}).join("");$("modePill").textContent="MODE: HOT ONLY";$("bar").style.width="80%";toast("hot")}
-function addMemory(type,text){leadMemory.unshift({type,text,ts:new Date().toISOString()});if(leadMemory.length>80)leadMemory.length=80;localStorage.setItem("dealIntelMemory_v1",JSON.stringify(leadMemory))}
-function addFeedItem(query){const mode=getMode(),s=scoreText(query),item={ts:new Date().toLocaleTimeString(),mode,query,label:s.label,score:s.score,hits:s.hits,deal:currentDealScore()};feedItems.unshift(item);if(feedItems.length>40)feedItems.length=40;renderFeed();if(s.label==="HOT"){$("bar").style.width="90%";$("statePill").textContent="HOT FEED DETECTED"}}
-function renderFeed(){$("feedList").innerHTML=feedItems.length?feedItems.map((x,idx)=>{const cls=x.label==="HOT"?"hot":x.label==="WARM"?"warm":"cold";return `<div class="feedItem"><div class="topline"><div><span class="pill ${cls}">${x.label} • ${x.score}/100</span><span class="pill blue">${escapeHtml(x.mode.toUpperCase())}</span><span class="pill purple">DEAL ${x.deal}/100</span></div><div class="pill purple">${escapeHtml(x.ts)}</div></div><div class="body">${escapeHtml(x.query)}</div><div class="feedActs"><button class="btn dark" onclick="selectFeed(${idx})">Select</button><button class="btn dark" onclick="openQueryFromFeed(${idx})">Open</button></div></div>`}).join(""):`<div class="mini">No feed items yet. Start live feed or open a query.</div>`;refreshCounters()}
-function selectFeed(i){const item=feedItems[i];if(!item)return;selectedQuery=item.query;$("paste").value=item.query;$("statePill").textContent="FEED SELECTED";refreshCounters()}
-function openQueryFromFeed(i){const item=feedItems[i];if(!item)return;selectedQuery=item.query;platformQuery(item.query).forEach(([n,url],idx)=>setTimeout(()=>window.open(url,"_blank","noopener,noreferrer"),idx*600));addMemory("feed",item.query)}
-function scorePaste(){const text=$("paste").value.trim();if(!text){toast("paste text");return}const s=scoreText(text);$("modePill").textContent=`MODE: ${s.label}`;$("modePill").className="pill "+(s.label==="HOT"?"hot":s.label==="WARM"?"warm":"cold");$("bar").style.width=s.label==="HOT"?"95%":s.label==="WARM"?"60%":"25%";$("statePill").textContent=`${s.label} LEAD`;addFeedItem(text);addMemory("lead",text);const pred=dealPrediction();openModal("Deal Intelligence",`<div class="mini"><span class="label">Scoring result</span><div class="scoreLine"><span class="pill ${s.label==="HOT"?"hot":s.label==="WARM"?"warm":"cold"}">${s.label} • ${s.score}/100</span><span class="pill blue">DEAL ${currentDealScore()}/100</span><span class="pill ${pred.cls}">${pred.label}</span></div><div style="margin-top:10px;font-size:18px;font-weight:900;color:var(--gold);">${pred.action}</div><div class="small muted" style="margin-top:8px;">Matched signals: ${escapeHtml(s.hits.join(", ")||"None")}</div><div style="height:10px"></div><div class="small">Use this as a candidate lead and push it into your CRM pipeline for follow-up and closing.</div></div>`)}
-function buildSmartReply(){const mode=getMode(),sector=$("sector").value,score=currentDealScore(),pred=dealPrediction(),base=$("replyTemplate").value.trim();let tone="";if(mode==="local")tone="Direct local buyer tone";if(mode==="investor")tone="ROI and appreciation tone";if(mode==="nri")tone="NRI investment tone";if(mode==="global")tone="International investor tone";const sectorLine=sector==="All"?"commercial project":sector.toLowerCase();return `${base}
+const queryBank = {};
+const locations = ['Madurai', 'Alagar Kovil', 'Natham Road', 'Tamil Nadu', 'South India', 'Temple corridor', 'Highway belt', 'Tourism zone', 'Commercial corridor', 'Urban fringe'];
+const intents = ['land required', 'plot wanted', 'commercial land needed', 'urgent land requirement', 'investment opportunity', 'buyer looking for land', 'need corner plot', 'site wanted'];
+const sectors = [['petrol-bunk', 'Petrol Bunk', 'fuel station'], ['hospital', 'Hospital', 'medical center'], ['restaurant', 'Restaurant', 'food outlet'], ['warehouse', 'Warehouse', 'logistics hub'], ['resort', 'Resort / Hotel', 'hospitality'], ['showroom', 'Showroom', 'retail outlet'], ['school', 'School / College', 'education campus'], ['it-park', 'IT Park', 'tech campus'], ['convention', 'Convention Hall', 'event venue'], ['wellness', 'Wellness Center', 'rehab center']];
+const buyers = ['buyer', 'investor', 'developer', 'NRI investor', 'business owner', 'franchise partner'];
+
+function buildBanks(){
+  const all = [];
+  for(const loc of locations){
+    for(const intent of intents){
+      for(const sec of sectors){
+        for(const buyer of buyers){
+          all.push(`${loc} ${intent} for ${sec[2]} ${buyer}`);
+          all.push(`${loc} ${sec[2]} ${buyer} ${intent}`);
+        }
+      }
+    }
+  }
+  const extra = [];
+  for(const loc of locations){
+    for(const sec of sectors){
+      extra.push(`${loc} ${sec[2]} land requirement`);
+      extra.push(`${loc} corner plot for ${sec[2]}`);
+      extra.push(`${loc} commercial corner land ${sec[2]}`);
+      extra.push(`${loc} ${sec[2]} investment land`);
+      extra.push(`${loc} ${sec[2]} site needed`);
+    }
+  }
+  return [...new Set([...all, ...extra])];
+}
+
+const queryList = buildBanks().slice(0, 320);
+const platformDefs = [
+  ["Google", q => `https://www.google.com/search?q=${encodeURIComponent(q)}`],
+  ["Facebook", q => `https://www.facebook.com/search/posts/?q=${encodeURIComponent(q)}`],
+  ["Reddit", q => `https://www.reddit.com/search/?q=${encodeURIComponent(q)}&sort=new&t=month`],
+  ["OLX", q => `https://www.olx.in/items/q-${encodeURIComponent(q.replace(/\s+/g,'-'))}`],
+  ["Bing", q => `https://www.bing.com/search?q=${encodeURIComponent(q)}`],
+  ["DuckDuckGo", q => `https://duckduckgo.com/?q=${encodeURIComponent(q)}`]
+];
+
+let selectedQuery = "";
+let feedTimer = null;
+let feedItems = [];
+let leadMemory = JSON.parse(localStorage.getItem("dealIntelMemory_v1") || "[]");
+
+function $(id){ return document.getElementById(id); }
+function escapeHtml(s){ return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+function getMode(){ return $("mode").value || "local"; }
+function getSectorKey(){ return $("sector").value || "All"; }
+
+function sectorWord(){
+  const key = getSectorKey();
+  const found = sectors.find(s => s[1] === key);
+  return found ? found[2] : "commercial";
+}
+
+function scoreText(text){
+  const t = String(text || "").toLowerCase();
+  let score = 0;
+  const hits = [];
+  const add = (cond, pts, label) => { if(cond){ score += pts; hits.push(label); } };
+  add(/urgent|immediate/.test(t), 20, "urgent");
+  add(/need land|land required|require land|wanted/.test(t), 20, "need land");
+  add(/buyer|want to buy|looking for land/.test(t), 15, "buyer intent");
+  add(/commercial/.test(t), 10, "commercial");
+  add(/plot|land|site/.test(t), 10, "land/plot");
+  add(/madurai/.test(t), 10, "madurai");
+  add(/alagar kovil|alagarkovil/.test(t), 10, "alagar kovil");
+  add(/highway|junction|frontage/.test(t), 10, "highway/frontage");
+  add(/investment|investor/.test(t), 10, "investment");
+  add(/nri|overseas|global/.test(t), 10, "nri/global");
+  add(new RegExp(sectorWord().toLowerCase().replace(/\s+/g,'\\s+')).test(t), 12, "sector");
+  const label = score >= 70 ? "HOT" : score >= 40 ? "WARM" : "COLD";
+  return {score, label, hits};
+}
+
+function currentDealScore(){
+  const text = $("paste").value.trim();
+  const q = selectedQuery || queryList[0] || "";
+  const lead = scoreText(text);
+  const query = scoreText(q);
+  const sectorBonus = getSectorKey() === "All" ? 4 : 8;
+  const modeBonus = (getMode() === "nri" || getMode() === "global") ? 8 : 0;
+  return Math.min(100, Math.round((lead.score * 0.55) + (query.score * 0.25) + sectorBonus + modeBonus));
+}
+
+function dealPrediction(){
+  const score = currentDealScore();
+  if(score >= 85) return {label:"VERY HIGH", action:"Call now and send brochure", cls:"hot"};
+  if(score >= 65) return {label:"HIGH", action:"Reply fast and follow up today", cls:"warm"};
+  if(score >= 45) return {label:"MEDIUM", action:"Ask one clarifying question", cls:"blue"};
+  return {label:"LOW", action:"Keep in memory and continue discovery", cls:"cold"};
+}
+
+function refreshCounters(){
+  $("countPill").textContent = `QUERIES: ${queryList.length}`;
+  $("hotPill").textContent = `HOT: ${feedItems.filter(x => x.label === "HOT").length}`;
+  $("modePill").textContent = `MODE: ${getMode().toUpperCase()}`;
+  $("targetPill").textContent = `TARGET: ${getSectorKey().toUpperCase()}`;
+  $("statePill").textContent = feedTimer ? "LIVE FEED ON" : "IDLE";
+  $("dealPill").textContent = `DEAL: ${currentDealScore()}/100`;
+}
+
+function refreshPlatformLinks(){
+  const q = queryList[0] || "";
+  $("platformLinks").innerHTML = platformDefs.map(([n,fn]) => `<a href="${fn(q)}" target="_blank" rel="noopener noreferrer">${n}</a>`).join("");
+}
+
+function renderSuggestions(){
+  const box = $("suggestions");
+  selectedQuery = selectedQuery || queryList[0] || "";
+  $("countPill").textContent = `QUERIES: ${queryList.length}`;
+  box.innerHTML = queryList.map((q, idx) => {
+    const s = scoreText(q);
+    const cls = s.label === "HOT" ? "hot" : s.label === "WARM" ? "warm" : "cold";
+    return `
+      <div class="queryCard">
+        <div class="queryTop">
+          <div><span class="pill ${cls}">${s.label} • ${s.score}/100</span><span class="pill blue">${idx + 1}</span></div>
+          <div class="pill purple">${escapeHtml(getMode().toUpperCase())}</div>
+        </div>
+        <div class="queryText">${escapeHtml(q)}</div>
+        <div class="queryActs">
+          <button class="btn dark" onclick="openQuery(${idx})">🔎 Search</button>
+          <button class="btn dark" onclick="copyQuery(${idx})">📋 Copy</button>
+        </div>
+      </div>`;
+  }).join("");
+  refreshPlatformLinks();
+  refreshCounters();
+}
+
+function renderFeed(){
+  $("feedList").innerHTML = feedItems.length ? feedItems.map((x, idx) => {
+    const cls = x.label === "HOT" ? "hot" : x.label === "WARM" ? "warm" : "cold";
+    return `
+      <div class="feedItem">
+        <div class="topline">
+          <div><span class="pill ${cls}">${x.label} • ${x.score}/100</span><span class="pill blue">${escapeHtml(x.mode.toUpperCase())}</span><span class="pill purple">DEAL ${x.deal}/100</span></div>
+          <div class="pill purple">${escapeHtml(x.ts)}</div>
+        </div>
+        <div class="body">${escapeHtml(x.query)}</div>
+        <div class="feedActs">
+          <button class="btn dark" onclick="selectFeed(${idx})">Select</button>
+          <button class="btn dark" onclick="openQueryFromFeed(${idx})">Open</button>
+        </div>
+      </div>`;
+  }).join("") : `<div class="mini">No feed items yet. Start live feed or open a query.</div>`;
+  refreshCounters();
+}
+
+function addMemory(type, text){
+  leadMemory.unshift({type, text, ts: new Date().toISOString()});
+  if (leadMemory.length > 100) leadMemory.length = 100;
+  localStorage.setItem("dealIntelMemory_v1", JSON.stringify(leadMemory));
+}
+
+function addFeedItem(query){
+  const mode = getMode();
+  const s = scoreText(query);
+  const item = { ts: new Date().toLocaleTimeString(), mode, query, label: s.label, score: s.score, hits: s.hits, deal: currentDealScore() };
+  feedItems.unshift(item);
+  if(feedItems.length > 60) feedItems.length = 60;
+  renderFeed();
+  if(s.label === "HOT") {
+    $("bar").style.width = "92%";
+    $("statePill").textContent = "HOT FEED DETECTED";
+  }
+}
+
+function openQuery(idx){
+  const q = queryList[idx];
+  if(!q) return;
+  selectedQuery = q;
+  platformDefs.forEach(([name, fn], i) => setTimeout(() => window.open(fn(q), "_blank", "noopener,noreferrer"), i * 550));
+  addMemory("query", q);
+  addFeedItem(q);
+  $("bar").style.width = "65%";
+  $("statePill").textContent = `OPENED ${q.slice(0, 24)}...`;
+}
+
+function copyQuery(idx){
+  const q = queryList[idx];
+  if(!q) return;
+  selectedQuery = q;
+  navigator.clipboard?.writeText(q);
+  toast("copied");
+}
+
+function copySelectedQuery(){
+  if(!selectedQuery) selectedQuery = queryList[0] || "";
+  if(!selectedQuery) return toast("no query");
+  navigator.clipboard?.writeText(selectedQuery);
+  toast("copied");
+}
+
+function openPlatformLinks(){
+  const q = queryList[0] || "";
+  platformDefs.forEach(([name, fn], idx) => setTimeout(() => window.open(fn(q), "_blank", "noopener,noreferrer"), idx * 400));
+  $("statePill").textContent = "PLATFORMS OPENED";
+}
+
+function openHotSuggestions(){
+  const hot = queryList.filter(q => scoreText(q).label === "HOT").slice(0, 30);
+  const list = hot.length ? hot : queryList.slice(0, 20);
+  $("suggestions").innerHTML = list.map((q, idx) => {
+    const s = scoreText(q);
+    return `
+      <div class="queryCard">
+        <div class="queryTop"><div><span class="pill hot">HOT ${s.score}/100</span></div><div class="pill purple">SMART</div></div>
+        <div class="queryText">${escapeHtml(q)}</div>
+        <div class="queryActs">
+          <button class="btn dark" onclick="openQuery(${idx})">🔎 Search</button>
+          <button class="btn dark" onclick="copyQuery(${idx})">📋 Copy</button>
+        </div>
+      </div>`;
+  }).join("");
+  $("modePill").textContent = "MODE: HOT ONLY";
+  $("bar").style.width = "80%";
+  toast("hot");
+}
+
+function scorePaste(){
+  const text = $("paste").value.trim();
+  if(!text) return toast("paste text");
+  const s = scoreText(text);
+  $("modePill").textContent = `MODE: ${s.label}`;
+  $("modePill").className = "pill " + (s.label === "HOT" ? "hot" : s.label === "WARM" ? "warm" : "cold");
+  $("bar").style.width = s.label === "HOT" ? "95%" : s.label === "WARM" ? "60%" : "25%";
+  $("statePill").textContent = `${s.label} LEAD`;
+  addFeedItem(text);
+  addMemory("lead", text);
+  const pred = dealPrediction();
+  openModal("Deal Intelligence", `
+    <div class="mini">
+      <span class="label">Scoring result</span>
+      <div class="tagline">
+        <span class="pill ${s.label === "HOT" ? "hot" : s.label === "WARM" ? "warm" : "cold"}">${s.label} • ${s.score}/100</span>
+        <span class="pill blue">DEAL ${currentDealScore()}/100</span>
+        <span class="pill ${pred.cls}">${pred.label}</span>
+      </div>
+      <div class="scoreBig" style="margin-top:10px;">${pred.action}</div>
+      <div class="small muted" style="margin-top:8px;">Matched signals: ${escapeHtml(s.hits.join(", ") || "None")}</div>
+      <div style="height:10px"></div>
+      <div class="small">Use this as a candidate lead and push it into your CRM pipeline for follow-up and closing.</div>
+    </div>
+  `);
+}
+
+function buildSmartReply(){
+  const mode = getMode();
+  const sector = getSectorKey();
+  const score = currentDealScore();
+  const pred = dealPrediction();
+  const base = $("replyTemplate").value.trim();
+  let tone = "";
+  if(mode === "local") tone = "Direct local buyer tone";
+  if(mode === "investor") tone = "ROI and appreciation tone";
+  if(mode === "nri") tone = "NRI investment tone";
+  if(mode === "global") tone = "International investor tone";
+  return `${base}
 
 Deal intelligence:
 • Deal score: ${score}/100
 • Prediction: ${pred.label}
 • Next action: ${pred.action}
 • Mode: ${tone}
-• Best fit: ${sectorLine}
+• Best fit: ${sector === "All" ? "commercial project" : sector.toLowerCase()}
 
-Reply kept concise for fast conversion.`}
-function openReplyWhatsApp(){window.open("https://wa.me/?text="+encodeURIComponent(buildSmartReply()),"_blank","noopener,noreferrer")}
-function copyReply(){navigator.clipboard?.writeText(buildSmartReply());toast("copied")}
-function toast(msg){$("statePill").textContent=String(msg).toUpperCase();setTimeout(()=>{$("statePill").textContent=feedTimer?"LIVE FEED ON":"IDLE"},1200)}
-function openTab(name){document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.tab===name));document.querySelectorAll(".panel").forEach(p=>p.classList.remove("on"));$("panel-"+name).classList.add("on")}
-function openModal(title,body){$("modalTitle").textContent=title;$("modalBody").innerHTML=body;$("modal").classList.add("show")}
-function closeModal(){$("modal").classList.remove("show")}
-document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>openTab(btn.dataset.tab)))
-function refreshAll(){renderSuggestions();renderFeed();refreshCounters();$("dealPill").textContent=`DEAL: ${currentDealScore()}/100`;$("bar").style.width=Math.max(15,Math.min(95,currentDealScore()))+"%";const pred=dealPrediction();$("statePill").textContent=`${pred.label} • ${pred.action}`;if(feedTimer){stopLiveFeed();startLiveFeed()}}
-function startLiveFeed(){stopLiveFeed();renderSuggestions();feedTimer=setInterval(()=>{const list=buildQueryList();if(!list.length)return;const mode=getMode(),sector=$("sector").value,idx=Math.floor(Math.random()*Math.min(list.length,20)),q=list[idx],s=scoreText(q),synthetic=`${q} | ${sector} | ${mode} | ${s.label}`;addFeedItem(synthetic);if(s.label==="HOT"){$("bar").style.width="95%"}$("statePill").textContent="LIVE FEED ON"},3500);$("statePill").textContent="LIVE FEED ON";toast("live")}
-function stopLiveFeed(){if(feedTimer){clearInterval(feedTimer);feedTimer=null}refreshCounters()}
-function init(){renderSuggestions();renderFeed();refreshCounters();$("countPill").textContent=`QUERIES: ${buildQueryList().length}`;$("modePill").textContent=`MODE: ${$("mode").value.toUpperCase()}`;$("targetPill").textContent=`TARGET: ${$("sector").value.toUpperCase()}`;$("dealPill").textContent=`DEAL: ${currentDealScore()}/100`;$("bar").style.width="18%"}
+Reply kept concise for fast conversion.`;
+}
+
+function openReplyWhatsApp(){
+  window.open("https://wa.me/?text=" + encodeURIComponent(buildSmartReply()), "_blank", "noopener,noreferrer");
+}
+function copyReply(){
+  navigator.clipboard?.writeText(buildSmartReply());
+  toast("copied");
+}
+
+function toast(msg){
+  $("statePill").textContent = String(msg).toUpperCase();
+  setTimeout(() => {
+    $("statePill").textContent = feedTimer ? "LIVE FEED ON" : "IDLE";
+  }, 1200);
+}
+
+function openModal(title, body){
+  $("modalTitle").textContent = title;
+  $("modalBody").innerHTML = body;
+  $("modal").classList.add("show");
+}
+function closeModal(){ $("modal").classList.remove("show"); }
+
+function startLiveFeed(){
+  stopLiveFeed();
+  renderSuggestions();
+  feedTimer = setInterval(() => {
+    const q = queryList[Math.floor(Math.random() * Math.min(queryList.length, 40))];
+    const s = scoreText(q);
+    const synthetic = `${q} | ${getSectorKey()} | ${getMode()} | ${s.label}`;
+    addFeedItem(synthetic);
+    if(s.label === "HOT") $("bar").style.width = "95%";
+    $("statePill").textContent = "LIVE FEED ON";
+  }, 3000);
+  $("statePill").textContent = "LIVE FEED ON";
+  toast("live");
+}
+
+function stopLiveFeed(){
+  if(feedTimer){ clearInterval(feedTimer); feedTimer = null; }
+  refreshCounters();
+}
+
+function refreshAll(){
+  renderSuggestions();
+  renderFeed();
+  refreshCounters();
+  $("dealPill").textContent = `DEAL: ${currentDealScore()}/100`;
+  $("bar").style.width = Math.max(15, Math.min(95, currentDealScore())) + "%";
+  const pred = dealPrediction();
+  $("statePill").textContent = `${pred.label} • ${pred.action}`;
+  if(feedTimer){ stopLiveFeed(); startLiveFeed(); }
+}
+
+document.querySelectorAll(".tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.tab === btn.dataset.tab));
+    document.querySelectorAll(".panel").forEach(p => p.classList.remove("on"));
+    $("panel-" + btn.dataset.tab).classList.add("on");
+  });
+});
+
+function init(){
+  renderSuggestions();
+  renderFeed();
+  refreshCounters();
+  $("dealPill").textContent = `DEAL: ${currentDealScore()}/100`;
+  $("bar").style.width = "18%";
+}
 init();
 </script>
 </body>
