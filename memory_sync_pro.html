@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Sync PRO</title>
+<style>
+body{margin:0;background:#050505;color:#fff;font-family:Arial}
+.top{padding:12px;text-align:center;background:#111;border-bottom:2px solid #c8a84b}
+.title{color:#c8a84b;font-weight:bold}
+.wrap{padding:12px}
+.card{background:#111;border:1px solid #333;border-radius:10px;padding:12px;margin-bottom:10px}
+.btn{width:100%;padding:12px;margin-top:8px;background:#000;color:#c8a84b;border:1px solid #333}
+.log{font-size:12px;color:#ccc;margin-top:10px;white-space:pre-wrap}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="title">MEMORY SYNC PRO</div></div>
+
+<div class="wrap">
+
+<div class="card">
+<b>Advanced Sync</b>
+<button class="btn" onclick="proSync()">🔄 Intelligent Merge</button>
+<button class="btn" onclick="dedupe()">🧹 Clean Duplicates</button>
+<button class="btn" onclick="backup()">💾 Backup</button>
+</div>
+
+<div class="card">
+<b>Status</b>
+<div id="log" class="log">Ready...</div>
+</div>
+
+</div>
+
+<script>
+
+function log(t){document.getElementById("log").innerText=t;}
+
+function normalize(text){
+return text.toLowerCase().replace(/[^a-z0-9 ]/g,"").trim();
+}
+
+function getSources(){
+let closing=JSON.parse(localStorage.getItem('closingProLeads_v1')||"[]");
+let crm=JSON.parse(localStorage.getItem('leads')||"[]");
+let mem=JSON.parse(localStorage.getItem('dealIntelMemory_v1')||"[]");
+
+let all=[];
+
+closing.forEach(l=>{
+all.push({
+text:l.text||"",
+score:l.score||0,
+stage:l.stage||"New",
+source:"closing"
+});
+});
+
+crm.forEach(l=>{
+if(typeof l==="string"){
+all.push({text:l,score:0,stage:"New",source:"crm"});
+}else{
+all.push({
+text:l.text||"",
+score:l.score||0,
+stage:l.stage||"New",
+source:"crm"
+});
+}
+});
+
+mem.forEach(m=>{
+all.push({
+text:m.text||"",
+score:0,
+stage:"New",
+source:"memory"
+});
+});
+
+return all.filter(x=>x.text);
+}
+
+function mergeLeads(list){
+let map={};
+
+list.forEach(l=>{
+let key=normalize(l.text);
+
+if(!map[key]){
+map[key]={...l};
+}else{
+let existing=map[key];
+
+// preserve best score
+existing.score=Math.max(existing.score,l.score);
+
+// preserve advanced stage
+let priority=["New","Contacted","Interested","Negotiation","Closed"];
+if(priority.indexOf(l.stage)>priority.indexOf(existing.stage)){
+existing.stage=l.stage;
+}
+
+// combine sources
+existing.source+=","+l.source;
+}
+});
+
+return Object.values(map);
+}
+
+function proSync(){
+let all=getSources();
+let merged=mergeLeads(all);
+
+// add timestamps
+merged=merged.map(l=>({
+...l,
+createdAt:Date.now(),
+nextFollowUp:Date.now()+86400000
+}));
+
+localStorage.setItem('closingProLeads_v1', JSON.stringify(merged));
+
+log("Merged "+merged.length+" leads with intelligence");
+}
+
+function dedupe(){
+let data=JSON.parse(localStorage.getItem('closingProLeads_v1')||"[]");
+let clean=mergeLeads(data);
+localStorage.setItem('closingProLeads_v1', JSON.stringify(clean));
+log("Duplicates cleaned: "+clean.length);
+}
+
+function backup(){
+let data=localStorage.getItem('closingProLeads_v1')||"[]";
+let blob=new Blob([data],{type:"application/json"});
+let a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download="backup_pro.json";
+a.click();
+log("Backup downloaded");
+}
+
+</script>
+
+</body>
+</html>

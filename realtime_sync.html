@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Realtime Sync Layer</title>
+<style>
+body{margin:0;background:#050505;color:#fff;font-family:Arial}
+.top{padding:12px;text-align:center;background:#111;border-bottom:2px solid #c8a84b}
+.title{color:#c8a84b;font-weight:bold}
+.wrap{padding:12px}
+.card{background:#111;border:1px solid #333;border-radius:10px;padding:12px;margin-bottom:10px}
+.log{font-size:12px;color:#ccc;margin-top:10px;white-space:pre-wrap}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="title">REAL-TIME SYNC ENGINE</div></div>
+
+<div class="wrap">
+<div class="card">
+<b>Status</b>
+<div id="log" class="log">Initializing...</div>
+</div>
+</div>
+
+<script>
+
+// Broadcast channel for cross-tab sync
+const channel = new BroadcastChannel('lead_sync_channel');
+
+function log(msg){
+document.getElementById("log").innerText = msg;
+}
+
+// Listen for updates from other tabs
+channel.onmessage = (event) => {
+if(event.data.type === "SYNC_UPDATE"){
+log("Synced from another tab at " + new Date().toLocaleTimeString());
+applyData(event.data.payload);
+}
+};
+
+// Apply incoming data
+function applyData(data){
+if(!data) return;
+localStorage.setItem('closingProLeads_v1', JSON.stringify(data));
+}
+
+// Watch local changes
+window.addEventListener("storage", (e) => {
+if(e.key === "closingProLeads_v1"){
+let data = JSON.parse(e.newValue || "[]");
+channel.postMessage({
+type:"SYNC_UPDATE",
+payload:data
+});
+log("Change broadcasted to other tabs");
+}
+});
+
+// Initial push
+function init(){
+let data = JSON.parse(localStorage.getItem('closingProLeads_v1')||"[]");
+channel.postMessage({
+type:"SYNC_UPDATE",
+payload:data
+});
+log("Realtime sync active");
+}
+
+init();
+
+</script>
+
+</body>
+</html>

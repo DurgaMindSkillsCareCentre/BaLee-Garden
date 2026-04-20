@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Controller — Lead Mission Control</title>
+<style>
+  :root{
+    --bg:#050505; --panel:#101010; --panel2:#0d0d0d; --line:#272727;
+    --gold:#c8a84b; --gold2:#8a6d29; --text:#f5efe1; --muted:#9b9b9b;
+    --hot:#ff5f5f; --warm:#ffcf5a; --cool:#8fc98f; --blue:#4aa3ff; --green:#27ae60;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+  .top{
+    position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);box-shadow:0 10px 28px rgba(0,0,0,.45);
+    padding:12px 12px 10px;text-align:center
+  }
+  .title{font-weight:900;color:var(--gold);font-size:19px;letter-spacing:1px}
+  .sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8a8a8a;font-weight:800;margin-top:3px}
+  .wrap{max-width:1280px;margin:0 auto;padding:12px}
+  .grid{display:grid;grid-template-columns:1fr;gap:10px}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px;
+    box-shadow:0 10px 20px rgba(0,0,0,.18)
+  }
+  .label{display:block;color:var(--gold);font-size:9px;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  .stats{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;padding:5px 9px;
+    border-radius:999px;background:#111;border:1px solid #2a2a2a;color:#d9d9d9
+  }
+  .pill.hot{background:#2a0808;border-color:#5c1d1d;color:#ffb2b2}
+  .pill.warm{background:#241c06;border-color:#5a4811;color:#ffe19c}
+  .pill.cool{background:#081b0f;border-color:#174327;color:#a8e5bd}
+  .pill.blue{background:#08111d;border-color:#173a66;color:#a6d1ff}
+  .pill.purple{background:#120a1d;border-color:#4a2d72;color:#d7b8ff}
+  .btnbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn{
+    width:100%;border:none;border-radius:12px;padding:12px 10px;font-weight:900;cursor:pointer;
+    text-transform:uppercase;font-size:10px;letter-spacing:.5px
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000}
+  .btn.dark{background:#151515;color:#f0ebe0;border:1px solid #343434}
+  .btn.blue{background:linear-gradient(135deg,#2d8cff,#0a66c2);color:#fff}
+  .btn.green{background:linear-gradient(135deg,#27ae60,#145a32);color:#fff}
+  .btn.orange{background:linear-gradient(135deg,#e67e22,#8a4f13);color:#fff}
+  .btn.red{background:linear-gradient(135deg,#a61b1b,#5b0f0f);color:#fff}
+  .sectionTitle{font-weight:900;font-size:18px;margin:0 0 10px;color:#fff}
+  .muted{color:var(--muted)}
+  .small{font-size:11px;line-height:1.55}
+  .bigAction{
+    border:1px solid #2a2a2a;background:linear-gradient(180deg,#111,#0b0b0b);
+    border-radius:18px;padding:14px
+  }
+  .bigAction .headline{font-size:18px;font-weight:900;color:#fff}
+  .bigAction .subline{margin-top:6px;color:#bdbdbd;font-size:12px;line-height:1.5}
+  .queue{display:grid;gap:8px}
+  .lead{
+    background:#0d0d0d;border:1px solid #262626;border-radius:14px;padding:12px
+  }
+  .leadTop{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
+  .leadText{margin-top:8px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+  .leadMeta{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+  .mini{
+    padding:7px 10px;border-radius:999px;border:1px solid #2b2b2b;background:#111;font-size:10px;font-weight:800;color:#d4d4d4
+  }
+  .mini.hot{background:#2a0808;color:#ffb2b2;border-color:#5c1d1d}
+  .mini.warm{background:#241c06;color:#ffe19c;border-color:#5a4811}
+  .mini.cool{background:#081b0f;color:#a8e5bd;border-color:#174327}
+  .mini.blue{background:#08111d;color:#a6d1ff;border-color:#173a66}
+  .leadActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .leadActions .btn{padding:9px 8px;font-size:9px}
+  .note{
+    color:#8a8a8a;font-size:10px;line-height:1.55;padding:8px 2px 0
+  }
+  .table{width:100%;border-collapse:collapse}
+  .table th,.table td{
+    border-bottom:1px solid #212121;padding:8px 6px;font-size:12px;text-align:left;vertical-align:top
+  }
+  .table th{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
+  .twoCol{display:grid;grid-template-columns:1fr;gap:10px}
+  .kbd{
+    display:inline-block;padding:2px 6px;border:1px solid #2f2f2f;border-bottom-width:2px;border-radius:6px;
+    background:#111;color:#ddd;font-size:10px;font-weight:800
+  }
+  .footer{padding:12px 2px 18px;color:#8b8b8b;font-size:10px;line-height:1.55}
+  @media(min-width:900px){
+    .grid{grid-template-columns:1.08fr .92fr}
+    .twoCol{grid-template-columns:1fr 1fr}
+    .btnbar{grid-template-columns:repeat(4,1fr)}
+    .leadActions{grid-template-columns:repeat(4,1fr)}
+  }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="title">LEAD MISSION CONTROL</div>
+    <div class="sub">minimal ui • maximum impact • one screen to execute the day</div>
+  </div>
+
+  <div class="wrap">
+    <div class="grid">
+      <div class="card">
+        <div class="sectionTitle">Today’s command</div>
+        <div class="bigAction" id="nextAction">
+          <div class="headline">Loading…</div>
+          <div class="subline">Scanning your local browser memory for the best next move.</div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="btnbar">
+          <button class="btn primary" onclick="openAI()">Open AI</button>
+          <button class="btn blue" onclick="openCRM()">Open CRM</button>
+          <button class="btn green" onclick="openClosing()">Open Closing</button>
+          <button class="btn dark" onclick="openOriginal()">Open Original</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="btnbar">
+          <button class="btn orange" onclick="openNextHot()">Next HOT Lead</button>
+          <button class="btn dark" onclick="openDueFollowUps()">Due Follow-ups</button>
+          <button class="btn dark" onclick="copyHotLead()">Copy HOT Lead</button>
+          <button class="btn dark" onclick="openWhatsAppHot()">WhatsApp HOT</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="stats" id="stats"></div>
+        <div class="note">This controller reads your current localStorage data from the other tabs. No backend. No file changes. It only coordinates action.</div>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">Daily flow</div>
+        <table class="table">
+          <thead><tr><th>Time</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Morning</td><td>Generate queries, open top 5, save 3 strong leads.</td></tr>
+            <tr><td>Noon</td><td>Score pasted leads, move HOT ones into CRM / Closing.</td></tr>
+            <tr><td>Night</td><td>Follow-up due leads, send WhatsApp, close negotiations.</td></tr>
+          </tbody>
+        </table>
+
+        <div style="height:10px"></div>
+        <div class="twoCol">
+          <div>
+            <div class="sectionTitle">Counts</div>
+            <div class="queue" id="counts"></div>
+          </div>
+          <div>
+            <div class="sectionTitle">Rules</div>
+            <table class="table">
+              <thead><tr><th>Score</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td>80+</td><td>Call now</td></tr>
+                <tr><td>60–79</td><td>WhatsApp now</td></tr>
+                <tr><td>40–59</td><td>Follow-up today</td></tr>
+                <tr><td>&lt;40</td><td>Keep in memory</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <div class="card">
+      <div class="sectionTitle">Top leads</div>
+      <div class="queue" id="leadQueue"></div>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <div class="card">
+      <div class="sectionTitle">Fast links</div>
+      <div class="btnbar">
+        <button class="btn dark" onclick="window.open('ai.html','_blank')">AI Tab</button>
+        <button class="btn dark" onclick="window.open('crm.html','_blank')">CRM Tab</button>
+        <button class="btn dark" onclick="window.open('closing.html','_blank')">Closing Tab</button>
+        <button class="btn dark" onclick="window.open('original.html','_blank')">Original Tab</button>
+      </div>
+      <div class="footer">
+        Shortcut: when you see a HOT lead, press <span class="kbd">Next HOT Lead</span>, then send WhatsApp, then move stage in Closing.
+      </div>
+    </div>
+  </div>
+
+<script>
+function safeParse(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    if(!raw) return fallback;
+    const val = JSON.parse(raw);
+    return Array.isArray(val) ? val : fallback;
+  }catch{
+    return fallback;
+  }
+}
+
+function allLeadObjects(){
+  const closing = safeParse('closingProLeads_v1', []);
+  const mem = safeParse('dealIntelMemory_v1', []);
+  const legacy = safeParse('leads', []);
+  const out = [];
+
+  closing.forEach((l, i) => {
+    if(l && typeof l === 'object'){
+      out.push({
+        source: 'closing',
+        text: l.text || '',
+        score: Number(l.score || 0),
+        stage: l.stage || 'New',
+        label: l.label || (Number(l.score || 0) >= 80 ? 'HOT' : Number(l.score || 0) >= 60 ? 'WARM' : 'COOL'),
+        nextFollowUp: l.nextFollowUp || 0,
+        createdAt: l.createdAt || Date.now(),
+        notes: l.notes || ''
+      });
+    }
+  });
+
+  legacy.forEach(l => {
+    if(l && typeof l === 'object'){
+      out.push({
+        source: 'legacy',
+        text: l.text || String(l || ''),
+        score: Number(l.score || 0),
+        stage: l.stage || 'New',
+        label: l.label || (Number(l.score || 0) >= 80 ? 'HOT' : Number(l.score || 0) >= 60 ? 'WARM' : 'COOL'),
+        nextFollowUp: l.nextFollowUp || 0,
+        createdAt: l.createdAt || l.time || Date.now(),
+        notes: l.notes || ''
+      });
+    }else if(typeof l === 'string'){
+      out.push({
+        source:'legacy',
+        text:l,
+        score:0,
+        stage:'New',
+        label:'COOL',
+        nextFollowUp:0,
+        createdAt:Date.now(),
+        notes:''
+      });
+    }
+  });
+
+  mem.forEach(m => {
+    if(m && typeof m === 'object'){
+      out.push({
+        source: 'memory',
+        text: m.text || '',
+        score: 0,
+        stage: 'Discovery',
+        label: 'COOL',
+        nextFollowUp: 0,
+        createdAt: m.ts ? new Date(m.ts).getTime() || Date.now() : Date.now(),
+        notes: ''
+      });
+    }
+  });
+
+  // De-duplicate by text
+  const seen = new Set();
+  return out.filter(x => {
+    const key = x.text.trim().toLowerCase();
+    if(!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function hotLeads(){
+  return allLeadObjects()
+    .filter(l => l.stage !== 'Closed')
+    .sort((a,b) => (b.score || 0) - (a.score || 0));
+}
+
+function dueFollowUps(){
+  const now = Date.now();
+  return allLeadObjects().filter(l => l.stage !== 'Closed' && l.nextFollowUp && Number(l.nextFollowUp) <= now);
+}
+
+function summary(){
+  const leads = allLeadObjects();
+  const hot = leads.filter(l => (l.score || 0) >= 80 || l.label === 'HOT');
+  const warm = leads.filter(l => (l.score || 0) >= 60 && (l.score || 0) < 80 || l.label === 'WARM');
+  const cool = leads.filter(l => (l.score || 0) < 60);
+  const closed = leads.filter(l => l.stage === 'Closed');
+  return {total: leads.length, hot: hot.length, warm: warm.length, cool: cool.length, closed: closed.length, due: dueFollowUps().length};
+}
+
+function esc(s){
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function render(){
+  const s = summary();
+  document.getElementById('stats').innerHTML = `
+    <span class="pill">TOTAL ${s.total}</span>
+    <span class="pill hot">HOT ${s.hot}</span>
+    <span class="pill warm">WARM ${s.warm}</span>
+    <span class="pill cool">COOL ${s.cool}</span>
+    <span class="pill blue">CLOSED ${s.closed}</span>
+    <span class="pill purple">DUE ${s.due}</span>
+  `;
+
+  document.getElementById('counts').innerHTML = `
+    <div class="mini hot">Ready now: ${s.hot}</div>
+    <div class="mini warm">Needs follow-up: ${s.due}</div>
+    <div class="mini blue">Pipeline: ${s.total}</div>
+  `;
+
+  const queue = hotLeads().slice(0, 6);
+  document.getElementById('leadQueue').innerHTML = queue.length ? queue.map((l, i) => {
+    const cls = (l.score || 0) >= 80 ? 'hot' : (l.score || 0) >= 60 ? 'warm' : 'cool';
+    return `
+      <div class="lead">
+        <div class="leadTop">
+          <div>
+            <span class="pill ${cls}">${l.label || cls.toUpperCase()} • ${l.score || 0}/100</span>
+            <span class="pill blue">${esc(l.stage || 'New')}</span>
+          </div>
+          <div class="pill">${new Date(l.createdAt || Date.now()).toLocaleDateString()}</div>
+        </div>
+        <div class="leadText">${esc(l.text || '')}</div>
+        <div class="leadMeta">
+          ${l.notes ? `<span class="mini blue">Notes present</span>` : ''}
+          ${l.nextFollowUp ? `<span class="mini">Follow-up ${new Date(l.nextFollowUp).toLocaleString()}</span>` : ''}
+        </div>
+        <div class="leadActions">
+          <button class="btn dark" onclick="copyText(${JSON.stringify(l.text || '')})">Copy</button>
+          <button class="btn green" onclick="openWhatsApp(${JSON.stringify(l.text || '')})">WhatsApp</button>
+          <button class="btn blue" onclick="openClosingWithLead(${JSON.stringify(l.text || '')})">Closing</button>
+          <button class="btn orange" onclick="openCRM()">CRM</button>
+        </div>
+      </div>
+    `;
+  }).join('') : '<div class="mini">No leads yet. Open AI, generate queries, and score the results.</div>';
+
+  const next = queue[0];
+  const due = dueFollowUps()[0];
+  const actionBox = document.getElementById('nextAction');
+  if(due){
+    actionBox.innerHTML = `
+      <div class="headline">Follow-up due now</div>
+      <div class="subline">${esc(due.text)}</div>
+    `;
+  }else if(next){
+    actionBox.innerHTML = `
+      <div class="headline">${(next.score || 0) >= 80 ? 'Call this HOT lead' : 'Work the best lead now'}</div>
+      <div class="subline">${esc(next.text)}</div>
+    `;
+  }else{
+    actionBox.innerHTML = `
+      <div class="headline">No lead yet</div>
+      <div class="subline">Open AI, generate queries, and bring the best lead back here.</div>
+    `;
+  }
+}
+
+function copyText(text){
+  navigator.clipboard?.writeText(text);
+}
+
+function openWhatsApp(text){
+  const msg = `Hi, regarding your requirement: ${text}\n\nI have a premium commercial corner plot near Alagar Kovil, Madurai. Shall I share details?`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
+}
+
+function openClosingWithLead(text){
+  localStorage.setItem('controllerSelectedLead_v1', text);
+  window.open('closing.html', '_blank', 'noopener,noreferrer');
+}
+
+function openNextHot(){
+  const lead = hotLeads()[0];
+  if(!lead) return alert('No lead found. Open AI and create leads first.');
+  copyText(lead.text);
+  openWhatsApp(lead.text);
+}
+
+function openDueFollowUps(){
+  const lead = dueFollowUps()[0];
+  if(!lead) return alert('No due follow-up right now.');
+  copyText(lead.text);
+  openWhatsApp(lead.text);
+}
+
+function copyHotLead(){
+  const lead = hotLeads()[0];
+  if(!lead) return alert('No hot lead yet.');
+  copyText(lead.text);
+  alert('HOT lead copied.');
+}
+
+function openAI(){ window.open('ai.html','_blank','noopener,noreferrer'); }
+function openCRM(){ window.open('crm.html','_blank','noopener,noreferrer'); }
+function openClosing(){ window.open('closing.html','_blank','noopener,noreferrer'); }
+function openOriginal(){ window.open('original.html','_blank','noopener,noreferrer'); }
+
+render();
+setInterval(render, 5000);
+</script>
+</body>
+</html>

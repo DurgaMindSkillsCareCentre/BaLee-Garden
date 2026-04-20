@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Insights — Lead Intelligence Dashboard</title>
+<style>
+  :root{
+    --bg:#050505; --panel:#101010; --panel2:#0d0d0d; --line:#272727;
+    --gold:#c8a84b; --gold2:#8a6d29; --text:#f5efe1; --muted:#9b9b9b;
+    --hot:#ff5f5f; --warm:#ffcf5a; --cool:#8fc98f; --blue:#4aa3ff; --green:#27ae60; --purple:#a66bff;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+  .top{
+    position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);box-shadow:0 10px 28px rgba(0,0,0,.45);
+    padding:12px 12px 10px;text-align:center
+  }
+  .title{font-weight:900;color:var(--gold);font-size:19px;letter-spacing:1px}
+  .sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8a8a8a;font-weight:800;margin-top:3px}
+  .wrap{max-width:1280px;margin:0 auto;padding:12px}
+  .grid{display:grid;grid-template-columns:1fr;gap:10px}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px;
+    box-shadow:0 10px 20px rgba(0,0,0,.16)
+  }
+  .sectionTitle{font-weight:900;font-size:18px;margin:0 0 10px;color:#fff}
+  .small{font-size:11px;line-height:1.55}
+  .muted{color:var(--muted)}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;padding:5px 9px;
+    border-radius:999px;background:#111;border:1px solid #2a2a2a;color:#d9d9d9
+  }
+  .pill.hot{background:#2a0808;border-color:#5c1d1d;color:#ffb2b2}
+  .pill.warm{background:#241c06;border-color:#5a4811;color:#ffe19c}
+  .pill.cool{background:#081b0f;border-color:#174327;color:#a8e5bd}
+  .pill.blue{background:#08111d;border-color:#173a66;color:#a6d1ff}
+  .pill.purple{background:#120a1d;border-color:#4a2d72;color:#d7b8ff}
+  .btnbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn{
+    width:100%;border:none;border-radius:12px;padding:12px 10px;font-weight:900;cursor:pointer;
+    text-transform:uppercase;font-size:10px;letter-spacing:.5px;background:#151515;color:#f0ebe0;border:1px solid #343434
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000}
+  .btn.blue{background:linear-gradient(135deg,#2d8cff,#0a66c2);color:#fff;border:none}
+  .btn.green{background:linear-gradient(135deg,#27ae60,#145a32);color:#fff;border:none}
+  .btn.orange{background:linear-gradient(135deg,#e67e22,#8a4f13);color:#fff;border:none}
+  .btn.red{background:linear-gradient(135deg,#a61b1b,#5b0f0f);color:#fff;border:none}
+  .stats{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .barRow{margin-top:8px}
+  .labelRow{display:flex;justify-content:space-between;gap:8px;font-size:11px;margin-bottom:4px;color:#cfcfcf}
+  .meter{height:10px;border-radius:999px;background:#141414;border:1px solid #2a2a2a;overflow:hidden}
+  .meter > div{height:100%;width:0%;background:linear-gradient(90deg,var(--cool),var(--warm),var(--hot))}
+  .metricGrid{display:grid;grid-template-columns:1fr;gap:8px}
+  .metric{
+    background:var(--panel2);border:1px solid #2a2a2a;border-radius:14px;padding:12px
+  }
+  .metric .k{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9a9a9a;font-weight:800}
+  .metric .v{font-size:24px;font-weight:900;color:#fff;margin-top:6px}
+  .metric .s{font-size:11px;color:#bfbfbf;margin-top:4px}
+  .chartList{display:grid;gap:8px}
+  .chartItem{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+  .chartTrack{height:10px;border-radius:999px;background:#141414;border:1px solid #2a2a2a;overflow:hidden;margin-top:4px}
+  .chartTrack > div{height:100%}
+  .mini{background:#090909;border:1px solid #242424;border-radius:12px;padding:10px}
+  .table{width:100%;border-collapse:collapse}
+  .table th,.table td{border-bottom:1px solid #212121;padding:8px 6px;font-size:12px;text-align:left;vertical-align:top}
+  .table th{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
+  .list{display:grid;gap:8px}
+  .lead{
+    background:#0d0d0d;border:1px solid #262626;border-radius:14px;padding:12px
+  }
+  .leadTop{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
+  .leadText{margin-top:8px;font-size:13px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+  .footer{padding:12px 2px 18px;color:#8b8b8b;font-size:10px;line-height:1.55}
+  .queue{display:grid;gap:10px}
+  .smallcaps{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9b9b9b;font-weight:800}
+  .twoCol{display:grid;grid-template-columns:1fr;gap:10px}
+  .bigScore{font-size:28px;font-weight:900;color:var(--gold)}
+  @media(min-width:900px){
+    .grid{grid-template-columns:1.05fr .95fr}
+    .metricGrid{grid-template-columns:repeat(4,1fr)}
+    .twoCol{grid-template-columns:1fr 1fr}
+    .btnbar{grid-template-columns:repeat(4,1fr)}
+  }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="title">INSIGHTS</div>
+    <div class="sub">lead intelligence dashboard • practical frontend analytics</div>
+  </div>
+
+  <div class="wrap">
+    <div class="grid">
+      <div class="card">
+        <div class="sectionTitle">Today at a glance</div>
+        <div class="metricGrid" id="metrics"></div>
+        <div style="height:10px"></div>
+        <div class="stats" id="topPills"></div>
+        <div style="height:10px"></div>
+        <div class="barRow">
+          <div class="labelRow"><span>HOT lead share</span><span id="hotPctText">0%</span></div>
+          <div class="meter"><div id="hotBar"></div></div>
+        </div>
+        <div class="barRow">
+          <div class="labelRow"><span>Follow-up due share</span><span id="duePctText">0%</span></div>
+          <div class="meter"><div id="dueBar"></div></div>
+        </div>
+        <div class="barRow">
+          <div class="labelRow"><span>Pipeline closed share</span><span id="closedPctText">0%</span></div>
+          <div class="meter"><div id="closedBar"></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">Quick actions</div>
+        <div class="btnbar">
+          <button class="btn primary" onclick="openPage('controller.html')">Open Controller</button>
+          <button class="btn blue" onclick="openPage('ai.html')">Open AI</button>
+          <button class="btn green" onclick="openPage('closing.html')">Open Closing</button>
+          <button class="btn orange" onclick="refreshNow()">Refresh Data</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="twoCol">
+          <div class="mini">
+            <div class="smallcaps">Daily priority</div>
+            <div class="bigScore" id="priorityScore">0</div>
+            <div class="small muted" id="priorityText">No leads yet.</div>
+          </div>
+          <div class="mini">
+            <div class="smallcaps">Best move</div>
+            <div class="bigScore" style="font-size:20px" id="bestMove">—</div>
+            <div class="small muted" id="bestMoveText">Open AI and generate leads.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <div class="card">
+      <div class="sectionTitle">Pipeline breakdown</div>
+      <div class="chartList" id="stageCharts"></div>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <div class="twoCol">
+      <div class="card">
+        <div class="sectionTitle">Top HOT leads</div>
+        <div class="list" id="hotLeads"></div>
+      </div>
+      <div class="card">
+        <div class="sectionTitle">Due follow-ups</div>
+        <div class="list" id="dueLeads"></div>
+      </div>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <div class="card">
+      <div class="sectionTitle">Practical routine</div>
+      <table class="table">
+        <thead><tr><th>Time</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Morning</td><td>AI → generate queries, inspect HOT, capture 3 leads.</td></tr>
+          <tr><td>Noon</td><td>Controller → send HOT leads to WhatsApp / Closing.</td></tr>
+          <tr><td>Night</td><td>Closing → follow-up due leads and move stages.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      All calculations use your browser storage only. This dashboard is intentionally simple: it shows what matters, then sends you to the next action.
+    </div>
+  </div>
+
+<script>
+function safeParse(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    if(!raw) return fallback;
+    const val = JSON.parse(raw);
+    return Array.isArray(val) ? val : fallback;
+  }catch{
+    return fallback;
+  }
+}
+
+function allLeadObjects(){
+  const closing = safeParse('closingProLeads_v1', []);
+  const legacy = safeParse('leads', []);
+  const mem = safeParse('dealIntelMemory_v1', []);
+  const out = [];
+
+  for(const l of closing){
+    if(l && typeof l === 'object'){
+      out.push({
+        source:'closing',
+        text:l.text || '',
+        score:Number(l.score || 0),
+        stage:l.stage || 'New',
+        label:l.label || (Number(l.score || 0) >= 80 ? 'HOT' : Number(l.score || 0) >= 60 ? 'WARM' : 'COOL'),
+        nextFollowUp:l.nextFollowUp || 0,
+        createdAt:l.createdAt || Date.now(),
+        notes:l.notes || ''
+      });
+    }
+  }
+
+  for(const l of legacy){
+    if(l && typeof l === 'object'){
+      out.push({
+        source:'legacy',
+        text:l.text || '',
+        score:Number(l.score || 0),
+        stage:l.stage || 'New',
+        label:l.label || (Number(l.score || 0) >= 80 ? 'HOT' : Number(l.score || 0) >= 60 ? 'WARM' : 'COOL'),
+        nextFollowUp:l.nextFollowUp || 0,
+        createdAt:l.createdAt || l.time || Date.now(),
+        notes:l.notes || ''
+      });
+    }else if(typeof l === 'string' && l.trim()){
+      out.push({
+        source:'legacy',
+        text:l,
+        score:0,
+        stage:'New',
+        label:'COOL',
+        nextFollowUp:0,
+        createdAt:Date.now(),
+        notes:''
+      });
+    }
+  }
+
+  for(const m of mem){
+    if(m && typeof m === 'object'){
+      out.push({
+        source:'memory',
+        text:m.text || '',
+        score:0,
+        stage:'Discovery',
+        label:'COOL',
+        nextFollowUp:0,
+        createdAt:m.ts ? (new Date(m.ts).getTime() || Date.now()) : Date.now(),
+        notes:''
+      });
+    }
+  }
+
+  const seen = new Set();
+  return out.filter(x => {
+    const k = (x.text || '').trim().toLowerCase();
+    if(!k || seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+}
+
+function dueFollowUps(){
+  const now = Date.now();
+  return allLeadObjects().filter(l => l.stage !== 'Closed' && l.nextFollowUp && Number(l.nextFollowUp) <= now);
+}
+
+function hotLeads(){
+  return allLeadObjects()
+    .sort((a,b) => (b.score || 0) - (a.score || 0))
+    .filter(l => l.stage !== 'Closed');
+}
+
+function counts(){
+  const all = allLeadObjects();
+  const hot = all.filter(l => (l.score || 0) >= 80 || l.label === 'HOT').length;
+  const warm = all.filter(l => (l.score || 0) >= 60 && (l.score || 0) < 80 || l.label === 'WARM').length;
+  const cool = all.filter(l => (l.score || 0) < 60).length;
+  const closed = all.filter(l => l.stage === 'Closed').length;
+  const newCount = all.filter(l => l.stage === 'New').length;
+  const contacted = all.filter(l => l.stage === 'Contacted').length;
+  const interested = all.filter(l => l.stage === 'Interested').length;
+  const negotiation = all.filter(l => l.stage === 'Negotiation').length;
+  return {all, hot, warm, cool, closed, newCount, contacted, interested, negotiation, due: dueFollowUps().length};
+}
+
+function esc(s){
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function refreshNow(){
+  render();
+}
+
+function openPage(file){
+  window.open(file, '_blank', 'noopener,noreferrer');
+}
+
+function bestMove(c){
+  if(c.due > 0) return ['Follow-up now','Due lead is waiting'];
+  if(c.hot > 0) return ['Call HOT lead','Highest score first'];
+  if(c.interested > 0) return ['Move to negotiation','Warm pipeline is active'];
+  if(c.all.length > 0) return ['Add notes','Continue conversation'];
+  return ['Generate leads','Open AI and create opportunities'];
+}
+
+function priorityScore(c){
+  const score = Math.min(100,
+    (c.hot * 18) +
+    (c.warm * 8) +
+    (c.due * 12) +
+    (c.interested * 10) +
+    (c.negotiation * 15) +
+    (c.closed * 3)
+  );
+  return score;
+}
+
+function render(){
+  const c = counts();
+  const [move, moveText] = bestMove(c);
+  const pScore = priorityScore(c);
+
+  document.getElementById('metrics').innerHTML = `
+    <div class="metric"><div class="k">Total Leads</div><div class="v">${c.all.length}</div><div class="s">All captured items across storage</div></div>
+    <div class="metric"><div class="k">HOT Leads</div><div class="v">${c.hot}</div><div class="s">Ready for direct action</div></div>
+    <div class="metric"><div class="k">Due Follow-ups</div><div class="v">${c.due}</div><div class="s">Needs attention now</div></div>
+    <div class="metric"><div class="k">Closed</div><div class="v">${c.closed}</div><div class="s">Finished pipeline</div></div>
+  `;
+
+  document.getElementById('topPills').innerHTML = `
+    <span class="pill hot">HOT ${c.hot}</span>
+    <span class="pill warm">WARM ${c.warm}</span>
+    <span class="pill cool">COOL ${c.cool}</span>
+    <span class="pill blue">DUE ${c.due}</span>
+    <span class="pill purple">CLOSED ${c.closed}</span>
+  `;
+
+  document.getElementById('hotPctText').textContent = c.all.length ? Math.round((c.hot / c.all.length) * 100) + '%' : '0%';
+  document.getElementById('duePctText').textContent = c.all.length ? Math.round((c.due / c.all.length) * 100) + '%' : '0%';
+  document.getElementById('closedPctText').textContent = c.all.length ? Math.round((c.closed / c.all.length) * 100) + '%' : '0%';
+
+  document.getElementById('hotBar').style.width = c.all.length ? Math.min(100, (c.hot / c.all.length) * 100) + '%' : '0%';
+  document.getElementById('dueBar').style.width = c.all.length ? Math.min(100, (c.due / c.all.length) * 100) + '%' : '0%';
+  document.getElementById('closedBar').style.width = c.all.length ? Math.min(100, (c.closed / c.all.length) * 100) + '%' : '0%';
+
+  document.getElementById('priorityScore').textContent = pScore;
+  document.getElementById('priorityText').textContent = moveText;
+  document.getElementById('bestMove').textContent = move;
+  document.getElementById('bestMoveText').textContent = moveText;
+
+  const stages = [
+    ['New', c.newCount],
+    ['Contacted', c.contacted],
+    ['Interested', c.interested],
+    ['Negotiation', c.negotiation],
+    ['Closed', c.closed]
+  ];
+  document.getElementById('stageCharts').innerHTML = stages.map(([name, val]) => {
+    const width = c.all.length ? Math.max(4, Math.round((val / c.all.length) * 100)) : 0;
+    return `
+      <div>
+        <div class="barRow">
+          <div class="labelRow"><span>${name}</span><span>${val}</span></div>
+          <div class="meter"><div style="width:${width}%;background:${name === 'Closed' ? 'linear-gradient(90deg,var(--green),#1d6b39)' : name === 'Negotiation' ? 'linear-gradient(90deg,var(--warm),#b88a14)' : 'linear-gradient(90deg,var(--blue),#255ea7)'}"></div></div>
+        </div>
+      </div>`;
+  }).join('');
+
+  const hot = hotLeads().slice(0, 5);
+  document.getElementById('hotLeads').innerHTML = hot.length ? hot.map(l => {
+    return `
+      <div class="lead">
+        <div class="leadTop">
+          <div><span class="pill ${l.score >= 80 ? 'hot' : l.score >= 60 ? 'warm' : 'cool'}">${l.score}/100</span><span class="pill blue">${esc(l.stage)}</span></div>
+          <div class="pill">${new Date(l.createdAt || Date.now()).toLocaleDateString()}</div>
+        </div>
+        <div class="leadText">${esc(l.text || '')}</div>
+        <div class="leadTop" style="margin-top:8px">
+          <span class="pill ${l.nextFollowUp && Number(l.nextFollowUp) <= Date.now() ? 'hot' : 'blue'}">Next: ${l.nextFollowUp ? new Date(l.nextFollowUp).toLocaleString() : '—'}</span>
+          <span class="pill purple">${esc(l.notes ? 'notes' : 'no notes')}</span>
+        </div>
+      </div>`;
+  }).join('') : '<div class="mini">No HOT leads yet. Open Controller or AI and add leads.</div>';
+
+  const due = dueFollowUps().slice(0, 5);
+  document.getElementById('dueLeads').innerHTML = due.length ? due.map(l => {
+    return `
+      <div class="lead">
+        <div class="leadTop">
+          <div><span class="pill hot">DUE NOW</span><span class="pill blue">${esc(l.stage)}</span></div>
+          <div class="pill">${new Date(l.nextFollowUp).toLocaleString()}</div>
+        </div>
+        <div class="leadText">${esc(l.text || '')}</div>
+        <div class="leadTop" style="margin-top:8px">
+          <span class="pill warm">Priority: ${l.score || 0}/100</span>
+          <span class="pill purple">${esc(l.source || 'lead')}</span>
+        </div>
+      </div>`;
+  }).join('') : '<div class="mini">No follow-ups due right now. Great.</div>';
+}
+
+render();
+setInterval(render, 5000);
+</script>
+</body>
+</html>
