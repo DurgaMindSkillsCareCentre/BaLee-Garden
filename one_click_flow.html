@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>1-Click Flow System</title>
+<style>
+  :root{
+    --bg:#050505; --panel:#101010; --line:#2a2a2a; --gold:#c8a84b; --gold2:#8a6d29;
+    --text:#f5efe1; --muted:#9b9b9b; --hot:#ff5f5f; --warm:#ffcf5a; --cool:#8fc98f; --blue:#4aa3ff;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,system-ui,sans-serif}
+  .top{
+    position:sticky;top:0;z-index:10;background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);padding:12px 10px 10px;text-align:center
+  }
+  .title{font-size:20px;font-weight:900;letter-spacing:1px;color:var(--gold)}
+  .sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8a8a8a;font-weight:800;margin-top:3px}
+  .wrap{padding:12px;max-width:1100px;margin:0 auto}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px;
+    box-shadow:0 10px 20px rgba(0,0,0,.18)
+  }
+  .label{display:block;color:var(--gold);font-size:9px;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  .btnbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn{
+    width:100%;border:none;border-radius:12px;padding:12px 10px;font-weight:900;cursor:pointer;
+    text-transform:uppercase;font-size:10px;letter-spacing:.5px
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000}
+  .btn.dark{background:#151515;color:#f0ebe0;border:1px solid #343434}
+  .btn.blue{background:linear-gradient(135deg,#2d8cff,#0a66c2);color:#fff;border:none}
+  .btn.green{background:linear-gradient(135deg,#27ae60,#145a32);color:#fff;border:none}
+  .btn.orange{background:linear-gradient(135deg,#e67e22,#8a4f13);color:#fff;border:none}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;padding:5px 9px;
+    border-radius:999px;background:#111;border:1px solid #2a2a2a;color:#d9d9d9;margin:4px 6px 0 0
+  }
+  .pill.hot{background:#2a0808;border-color:#5c1d1d;color:#ffb2b2}
+  .pill.warm{background:#241c06;border-color:#5a4811;color:#ffe19c}
+  .pill.cool{background:#081b0f;border-color:#174327;color:#a8e5bd}
+  .big{
+    font-size:18px;font-weight:900;line-height:1.35;margin:6px 0 0;color:#fff
+  }
+  .small{font-size:11px;line-height:1.55;color:var(--muted)}
+  .lead{
+    background:#0d0d0d;border:1px solid #262626;border-radius:14px;padding:12px
+  }
+  .leadText{
+    margin-top:8px;font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word
+  }
+  .list{display:grid;gap:8px}
+  .note{
+    color:#8a8a8a;font-size:10px;line-height:1.55;padding:8px 2px 0
+  }
+  .divider{height:1px;background:#232323;margin:12px 0}
+  .kpi{display:flex;flex-wrap:wrap;gap:6px}
+  .footer{padding:12px 2px 18px;color:#8b8b8b;font-size:10px;line-height:1.55}
+  .mono{font-family:monospace}
+  .linkrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .linkrow a{
+    display:block;text-align:center;text-decoration:none;border-radius:11px;padding:10px 8px;
+    border:1px solid #2b2b2b;background:#111;color:#fff;font-size:11px;font-weight:800
+  }
+  @media(min-width:900px){
+    .btnbar{grid-template-columns:repeat(4,1fr)}
+    .linkrow{grid-template-columns:repeat(4,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="title">1-CLICK FLOW SYSTEM</div>
+  <div class="sub">run the full daily pipeline without changing your other files</div>
+</div>
+
+<div class="wrap">
+  <div class="card">
+    <span class="label">Mission control</span>
+    <div class="big">One button. One lead. One flow.</div>
+    <div class="small">This page reads your existing browser storage and helps you move the best lead through AI → CRM → Closing in the shortest path possible.</div>
+    <div style="height:10px"></div>
+    <div class="btnbar">
+      <button class="btn primary" onclick="runFlow()">⚡ Run 1-Click Flow</button>
+      <button class="btn blue" onclick="copyHotLead()">📋 Copy HOT Lead</button>
+      <button class="btn green" onclick="openLeadPages()">🚀 Open Lead Pages</button>
+      <button class="btn dark" onclick="refreshNow()">🔄 Refresh</button>
+    </div>
+    <div style="height:8px"></div>
+    <div class="kpi" id="kpis"></div>
+  </div>
+
+  <div class="card">
+    <span class="label">Next best action</span>
+    <div class="big" id="nextAction">Loading…</div>
+    <div class="small" id="nextActionText">Reading your lead data.</div>
+    <div class="divider"></div>
+    <div class="small mono" id="selectedLead">No lead selected yet.</div>
+  </div>
+
+  <div class="card">
+    <span class="label">Top lead queue</span>
+    <div class="list" id="queue"></div>
+  </div>
+
+  <div class="card">
+    <span class="label">Quick links</span>
+    <div class="linkrow">
+      <a href="ai.html" target="_blank" rel="noopener noreferrer">AI</a>
+      <a href="crm.html" target="_blank" rel="noopener noreferrer">CRM</a>
+      <a href="closing.html" target="_blank" rel="noopener noreferrer">Closing</a>
+      <a href="controller.html" target="_blank" rel="noopener noreferrer">Controller</a>
+    </div>
+    <div style="height:8px"></div>
+    <div class="linkrow">
+      <a href="insights.html" target="_blank" rel="noopener noreferrer">Insights</a>
+      <a href="memory_sync_pro.html" target="_blank" rel="noopener noreferrer">Memory Sync</a>
+      <a href="realtime_sync.html" target="_blank" rel="noopener noreferrer">Realtime Sync</a>
+      <a href="original.html" target="_blank" rel="noopener noreferrer">Original</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    No files are modified by this page. It only orchestrates the existing 9-file system from one place.
+  </div>
+</div>
+
+<script>
+function safeParse(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    if(!raw) return fallback;
+    const val = JSON.parse(raw);
+    return Array.isArray(val) ? val : fallback;
+  }catch{
+    return fallback;
+  }
+}
+
+function allLeadObjects(){
+  const closing = safeParse('closingProLeads_v1', []);
+  const legacy = safeParse('leads', []);
+  const mem = safeParse('dealIntelMemory_v1', []);
+  const out = [];
+
+  for(const l of closing){
+    if(l && typeof l === 'object'){
+      out.push({
+        source:'closing',
+        text:l.text || '',
+        score:Number(l.score || 0),
+        stage:l.stage || 'New',
+        label:l.label || ((Number(l.score || 0) >= 80) ? 'HOT' : (Number(l.score || 0) >= 60) ? 'WARM' : 'COOL'),
+        nextFollowUp:l.nextFollowUp || 0,
+        createdAt:l.createdAt || Date.now(),
+        notes:l.notes || ''
+      });
+    }
+  }
+
+  for(const l of legacy){
+    if(l && typeof l === 'object'){
+      out.push({
+        source:'legacy',
+        text:l.text || '',
+        score:Number(l.score || 0),
+        stage:l.stage || 'New',
+        label:l.label || ((Number(l.score || 0) >= 80) ? 'HOT' : (Number(l.score || 0) >= 60) ? 'WARM' : 'COOL'),
+        nextFollowUp:l.nextFollowUp || 0,
+        createdAt:l.createdAt || l.time || Date.now(),
+        notes:l.notes || ''
+      });
+    }else if(typeof l === 'string' && l.trim()){
+      out.push({
+        source:'legacy',
+        text:l,
+        score:0,
+        stage:'New',
+        label:'COOL',
+        nextFollowUp:0,
+        createdAt:Date.now(),
+        notes:''
+      });
+    }
+  }
+
+  for(const m of mem){
+    if(m && typeof m === 'object'){
+      out.push({
+        source:'memory',
+        text:m.text || '',
+        score:0,
+        stage:'Discovery',
+        label:'COOL',
+        nextFollowUp:0,
+        createdAt:m.ts ? (new Date(m.ts).getTime() || Date.now()) : Date.now(),
+        notes:''
+      });
+    }
+  }
+
+  const seen = new Set();
+  return out.filter(x => {
+    const k = (x.text || '').trim().toLowerCase();
+    if(!k || seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+}
+
+function sortedLeads(){
+  return allLeadObjects().sort((a,b) => {
+    const sa = Number(a.score || 0);
+    const sb = Number(b.score || 0);
+    if (sb !== sa) return sb - sa;
+    return (Number(b.createdAt || 0) - Number(a.createdAt || 0));
+  });
+}
+
+function hotLeads(){
+  return sortedLeads().filter(l => l.stage !== 'Closed');
+}
+
+function dueFollowUps(){
+  const now = Date.now();
+  return sortedLeads().filter(l => l.stage !== 'Closed' && l.nextFollowUp && Number(l.nextFollowUp) <= now);
+}
+
+function esc(s){
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function summary(){
+  const all = allLeadObjects();
+  const hot = all.filter(l => (l.score || 0) >= 80 || l.label === 'HOT').length;
+  const warm = all.filter(l => (l.score || 0) >= 60 && (l.score || 0) < 80 || l.label === 'WARM').length;
+  const cool = all.filter(l => (l.score || 0) < 60).length;
+  const closed = all.filter(l => l.stage === 'Closed').length;
+  return {all, hot, warm, cool, closed, due: dueFollowUps().length};
+}
+
+function bestLead(){
+  return hotLeads()[0] || null;
+}
+
+function nextActionText(){
+  const due = dueFollowUps()[0];
+  const hot = bestLead();
+  if(due) return {
+    title: 'Follow-up now',
+    body: due.text,
+    pill: 'DUE'
+  };
+  if(hot){
+    if((hot.score || 0) >= 80) return {title:'Call this HOT lead', body:hot.text, pill:'HOT'};
+    if((hot.score || 0) >= 60) return {title:'Ask 1 question', body:hot.text, pill:'WARM'};
+  }
+  return {title:'Generate leads first', body:'Open AI and create new opportunities.', pill:'READY'};
+}
+
+function render(){
+  const s = summary();
+  document.getElementById('kpis').innerHTML = `
+    <span class="pill hot">HOT ${s.hot}</span>
+    <span class="pill warm">WARM ${s.warm}</span>
+    <span class="pill cool">COOL ${s.cool}</span>
+    <span class="pill">CLOSED ${s.closed}</span>
+    <span class="pill">DUE ${s.due}</span>
+  `;
+
+  const na = nextActionText();
+  document.getElementById('nextAction').textContent = na.title;
+  document.getElementById('nextActionText').textContent = na.body;
+  document.getElementById('selectedLead').textContent = na.body || 'No lead selected yet.';
+
+  const q = hotLeads().slice(0, 6);
+  document.getElementById('queue').innerHTML = q.length ? q.map((l, i) => `
+    <div class="lead">
+      <div>
+        <span class="pill ${(l.score||0)>=80 ? 'hot' : (l.score||0)>=60 ? 'warm' : 'cool'}">${l.label} • ${l.score}/100</span>
+        <span class="pill">${esc(l.stage)}</span>
+      </div>
+      <div class="leadText">${esc(l.text)}</div>
+      <div style="height:8px"></div>
+      <div class="btnbar">
+        <button class="btn dark" onclick="copyLead(${i})">Copy</button>
+        <button class="btn green" onclick="openWhatsApp(${i})">WhatsApp</button>
+      </div>
+    </div>
+  `).join('') : '<div class="small">No leads yet. Use AI to generate or paste lead text.</div>';
+}
+
+function copyLead(i){
+  const lead = hotLeads()[i];
+  if(!lead) return;
+  navigator.clipboard?.writeText(lead.text);
+}
+
+function openWhatsApp(i){
+  const lead = hotLeads()[i];
+  if(!lead) return;
+  const msg = `Hi, regarding your requirement: ${lead.text}\n\nI have a premium commercial corner plot near Alagar Kovil, Madurai. Shall I share details?`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
+}
+
+function copyHotLead(){
+  const lead = bestLead();
+  if(!lead) return alert('No hot lead found.');
+  navigator.clipboard?.writeText(lead.text);
+}
+
+function openLeadPages(){
+  const lead = bestLead();
+  if(lead) navigator.clipboard?.writeText(lead.text);
+  window.open('ai.html','_blank','noopener,noreferrer');
+  window.open('crm.html','_blank','noopener,noreferrer');
+  window.open('closing.html','_blank','noopener,noreferrer');
+}
+
+function refreshNow(){
+  render();
+}
+
+function runFlow(){
+  const lead = bestLead();
+  if(!lead){
+    alert('No lead found yet. Open AI and create a lead first.');
+    return;
+  }
+  localStorage.setItem('controllerSelectedLead_v1', lead.text);
+  navigator.clipboard?.writeText(lead.text);
+
+  const msg = `Hi, regarding your requirement: ${lead.text}\n\nI have a premium commercial corner plot near Alagar Kovil, Madurai. Shall I share details?`;
+  window.open('crm.html','_blank','noopener,noreferrer');
+  window.open('closing.html','_blank','noopener,noreferrer');
+  window.open('ai.html','_blank','noopener,noreferrer');
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
+}
+
+render();
+setInterval(render, 4000);
+</script>
+</body>
+</html>
