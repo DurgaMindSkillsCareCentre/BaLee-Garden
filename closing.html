@@ -1,72 +1,469 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Closing System</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Deal Closing PRO</title>
 <style>
-body{margin:0;background:#050505;color:#fff;font-family:Arial}
-.section{padding:12px}
-.title{color:#C8A84B;font-weight:bold;text-align:center;margin:10px}
-.card{background:#111;padding:10px;margin:8px;border-radius:8px}
-.btn{width:100%;padding:10px;margin:4px 0;background:#000;color:#C8A84B;border:1px solid #333}
+  :root{
+    --bg:#050505; --panel:#111; --panel2:#0d0d0d; --line:#2a2a2a;
+    --gold:#c8a84b; --gold2:#8a6d29; --text:#f5efe1; --muted:#9d9d9d;
+    --hot:#ff5f5f; --warm:#ffcf5a; --cool:#8fc98f; --blue:#4aa3ff; --green:#27ae60;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+  .top{
+    position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);box-shadow:0 10px 28px rgba(0,0,0,.45);
+    padding:12px 12px 10px;text-align:center
+  }
+  .title{font-weight:900;color:var(--gold);font-size:20px;letter-spacing:1px}
+  .sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8a8a8a;font-weight:800;margin-top:3px}
+  .wrap{padding:12px;max-width:1200px;margin:0 auto}
+  .grid{display:grid;grid-template-columns:1fr;gap:10px}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px;
+    box-shadow:0 10px 20px rgba(0,0,0,.2)
+  }
+  .label{display:block;color:var(--gold);font-size:9px;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  input,select,textarea{
+    width:100%;border:1px solid #323232;background:#090909;color:#fff;border-radius:12px;
+    padding:11px 12px;font-size:14px;outline:none
+  }
+  textarea{min-height:92px;resize:vertical}
+  .row{display:grid;grid-template-columns:1fr;gap:8px}
+  .btnbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn{
+    width:100%;border:none;border-radius:12px;padding:12px 10px;font-weight:900;cursor:pointer;
+    text-transform:uppercase;font-size:10px;letter-spacing:.5px
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000}
+  .btn.dark{background:#151515;color:#f0ebe0;border:1px solid #343434}
+  .btn.blue{background:linear-gradient(135deg,#2d8cff,#0a66c2);color:#fff}
+  .btn.green{background:linear-gradient(135deg,#27ae60,#145a32);color:#fff}
+  .btn.orange{background:linear-gradient(135deg,#e67e22,#8a4f13);color:#fff}
+  .btn.red{background:linear-gradient(135deg,#a61b1b,#5b0f0f);color:#fff}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;padding:5px 9px;
+    border-radius:999px;background:#111;border:1px solid #2a2a2a;color:#d9d9d9
+  }
+  .pill.hot{background:#2a0808;border-color:#5c1d1d;color:#ffb2b2}
+  .pill.warm{background:#241c06;border-color:#5a4811;color:#ffe19c}
+  .pill.cool{background:#081b0f;border-color:#174327;color:#a8e5bd}
+  .pill.blue{background:#08111d;border-color:#173a66;color:#a6d1ff}
+  .stats{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .bar{
+    display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid #222;background:#080808
+  }
+  .bar .btn{flex:1;min-width:92px}
+  .headerline{
+    padding:12px 12px 0;text-align:center;color:var(--gold);font-weight:900;font-size:15px
+  }
+  .list{display:grid;gap:10px}
+  .lead{
+    background:#0d0d0d;border:1px solid #262626;border-radius:16px;padding:12px
+  }
+  .leadTop{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
+  .leadText{margin-top:8px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+  .mini{font-size:11px;color:var(--muted);line-height:1.45}
+  .stageTrack{
+    display:flex;flex-wrap:wrap;gap:6px;margin-top:10px
+  }
+  .stage{
+    padding:7px 10px;border-radius:999px;border:1px solid #2b2b2b;background:#111;color:#d4d4d4;font-size:10px;font-weight:800
+  }
+  .stage.on.hot{background:#2a0808;color:#ffb2b2;border-color:#5c1d1d}
+  .stage.on.warm{background:#241c06;color:#ffe19c;border-color:#5a4811}
+  .stage.on.cool{background:#081b0f;color:#a8e5bd;border-color:#174327}
+  .leadActs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .leadActs .btn{padding:9px 8px;font-size:9px}
+  .note{
+    color:#8a8a8a;font-size:10px;line-height:1.55;padding:12px
+  }
+  .follow{
+    display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px
+  }
+  .followItem{
+    border:1px solid #242424;background:#090909;border-radius:12px;padding:10px
+  }
+  .followItem b{display:block;color:#fff;margin-bottom:4px}
+  .right{float:right}
+  .split{
+    display:grid;grid-template-columns:1fr;gap:10px
+  }
+  .table{
+    width:100%;border-collapse:collapse
+  }
+  .table th,.table td{
+    border-bottom:1px solid #212121;padding:8px 6px;font-size:12px;text-align:left;vertical-align:top
+  }
+  .table th{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
+  .searchrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .searchrow a{
+    display:block;text-decoration:none;text-align:center;padding:10px 9px;border-radius:11px;
+    border:1px solid #2c2c2c;background:#111;color:#fff;font-size:11px;font-weight:800
+  }
+  .footer{padding:14px 12px 20px;color:#8b8b8b;font-size:10px;line-height:1.55}
+  .smallcaps{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#9b9b9b;font-weight:800}
+  .bigscore{font-size:22px;font-weight:900;color:var(--gold)}
+  @media(min-width:900px){
+    .grid{grid-template-columns:1.05fr .95fr}
+    .split{grid-template-columns:1.2fr .8fr}
+    .leadActs{grid-template-columns:repeat(4,1fr)}
+    .btnbar{grid-template-columns:repeat(4,1fr)}
+    .searchrow{grid-template-columns:repeat(4,1fr)}
+    .follow{grid-template-columns:repeat(2,1fr)}
+  }
 </style>
 </head>
-
 <body>
+  <div class="top">
+    <div class="title">DEAL CLOSING PRO</div>
+    <div class="sub">Pipeline • follow-up • negotiation • close</div>
+  </div>
 
-<div class="title">💰 DEAL CLOSING SYSTEM</div>
+  <div class="bar">
+    <button class="btn primary" onclick="addLead()">Add Lead</button>
+    <button class="btn blue" onclick="exportCSV()">Export CSV</button>
+    <button class="btn orange" onclick="clearClosed()">Clear Closed</button>
+    <button class="btn dark" onclick="toggleShowAll()">Show All / HOT</button>
+  </div>
 
-<div class="section">
+  <div class="wrap">
+    <div class="grid">
+      <div class="card">
+        <span class="label">Add lead</span>
+        <textarea id="leadInput" placeholder="Paste buyer requirement, phone number, note, or enquiry text..."></textarea>
+        <div style="height:10px"></div>
+        <div class="btnbar">
+          <button class="btn primary" onclick="scoreAndAdd()">Score + Add</button>
+          <button class="btn dark" onclick="pasteClipboard()">Paste Clipboard</button>
+          <button class="btn blue" onclick="openFromTop()">Open in WhatsApp</button>
+          <button class="btn green" onclick="moveSelected('contacted')">Mark Contacted</button>
+        </div>
+        <div style="height:10px"></div>
+        <div class="stats" id="stats"></div>
+        <div style="height:10px"></div>
+        <div class="mini">Lead score = urgency + intent + location + commercial fit. HOT leads appear first. All data stays in your browser.</div>
+      </div>
 
-<div class="card">
-<b>Add Lead</b>
-<textarea id="lead" style="width:100%;height:60px"></textarea>
-<button class="btn" onclick="addLead()">Add</button>
-</div>
+      <div class="card">
+        <span class="label">Follow-up engine</span>
+        <div class="follow">
+          <div class="followItem">
+            <b>Today’s follow-ups</b>
+            <div id="followToday" class="mini">No items yet.</div>
+          </div>
+          <div class="followItem">
+            <b>Priority rule</b>
+            <div class="mini">
+              80+ = Call now<br>
+              60–79 = WhatsApp now<br>
+              40–59 = Follow-up today<br>
+              below 40 = keep in memory
+            </div>
+          </div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="searchrow">
+          <a href="#" onclick="quickSearch('commercial land wanted Madurai')">Google</a>
+          <a href="#" onclick="quickSearch('commercial land wanted Madurai','fb')">Facebook</a>
+          <a href="#" onclick="quickSearch('commercial land wanted Madurai','rd')">Reddit</a>
+          <a href="#" onclick="quickSearch('commercial land wanted Madurai','olx')">OLX</a>
+        </div>
+      </div>
+    </div>
 
-<div id="pipeline"></div>
+    <div style="height:12px"></div>
 
-</div>
+    <div class="card">
+      <span class="label">Pipeline</span>
+      <div class="smallcaps">New → Contacted → Interested → Negotiation → Closed</div>
+      <div style="height:8px"></div>
+      <div class="stats">
+        <span class="pill" id="pillTotal">Total 0</span>
+        <span class="pill hot" id="pillHot">HOT 0</span>
+        <span class="pill warm" id="pillWarm">WARM 0</span>
+        <span class="pill cool" id="pillCool">COOL 0</span>
+        <span class="pill blue" id="pillClosed">CLOSED 0</span>
+      </div>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <div class="list" id="leadList"></div>
+  </div>
+
+  <div class="footer">
+    This page is frontend-only. It gives you pipeline tracking, lead scoring, follow-up logic, WhatsApp actions, CSV export, and persistent local storage without changing your other files.
+  </div>
 
 <script>
+let leads = JSON.parse(localStorage.getItem('closingProLeads_v1') || '[]');
+let showAll = true;
+let selectedIndex = -1;
 
-let leads=[];
+function save(){
+  localStorage.setItem('closingProLeads_v1', JSON.stringify(leads));
+  render();
+}
+function nowISO(){ return new Date().toISOString(); }
+function clean(s){ return String(s || '').trim(); }
+
+function scoreLead(text){
+  const t = clean(text).toLowerCase();
+  let s = 20;
+  if(/urgent|immediate|asap/.test(t)) s += 25;
+  if(/need|required|wanted|looking for/.test(t)) s += 20;
+  if(/buyer|investor|developer|franchise/.test(t)) s += 15;
+  if(/commercial|plot|land|site/.test(t)) s += 10;
+  if(/madurai|alagar|highway|junction|frontage/.test(t)) s += 10;
+  if(/nri|global|overseas/.test(t)) s += 10;
+  if(/hospital|petrol|showroom|warehouse|hotel|restaurant|school|it/.test(t)) s += 10;
+  return Math.min(100, s);
+}
+function scoreLabel(score){
+  if(score >= 80) return ['HOT','hot'];
+  if(score >= 60) return ['WARM','warm'];
+  return ['COOL','cool'];
+}
+function stageColor(stage, score){
+  if(stage === 'Closed') return 'cool';
+  if(stage === 'Negotiation') return 'warm';
+  if(stage === 'Interested') return 'blue';
+  if(stage === 'Contacted') return 'blue';
+  return score >= 80 ? 'hot' : score >= 60 ? 'warm' : 'cool';
+}
+function daysSince(ts){
+  const ms = Date.now() - ts;
+  return Math.floor(ms / 86400000);
+}
+function followState(lead){
+  const d = daysSince(lead.createdAt);
+  if(lead.stage === 'Closed') return 'Done';
+  if(lead.stage === 'Negotiation') return d >= 1 ? 'Follow up today' : 'Negotiating';
+  if(lead.stage === 'Interested') return d >= 1 ? 'Call today' : 'Interested';
+  if(lead.stage === 'Contacted') return d >= 1 ? 'Ping again' : 'Contacted';
+  return d >= 1 ? 'Act now' : 'New';
+}
 
 function addLead(){
-let text=document.getElementById("lead").value;
-if(!text) return;
-leads.push({text,stage:"New"});
-render();
+  const text = clean(document.getElementById('leadInput').value);
+  if(!text) return;
+  const score = scoreLead(text);
+  const [label] = scoreLabel(score);
+  leads.unshift({
+    id: Date.now(),
+    text,
+    score,
+    label,
+    stage: 'New',
+    notes: '',
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    nextFollowUp: Date.now() + 86400000
+  });
+  document.getElementById('leadInput').value = '';
+  save();
 }
-
-function move(i){
-let stages=["New","Contacted","Interested","Negotiation","Closed"];
-let idx=stages.indexOf(leads[i].stage);
-if(idx<stages.length-1){
-leads[i].stage=stages[idx+1];
+function scoreAndAdd(){
+  const text = clean(document.getElementById('leadInput').value);
+  if(!text) return;
+  addLead();
 }
-render();
+async function pasteClipboard(){
+  try{
+    const t = await navigator.clipboard.readText();
+    document.getElementById('leadInput').value = t;
+  }catch(e){
+    alert('Clipboard not allowed in this browser.');
+  }
 }
-
+function moveSelected(stage){
+  if(selectedIndex < 0 || !leads[selectedIndex]) return alert('Select a lead first by tapping its stage button.');
+  leads[selectedIndex].stage = stage === 'contacted' ? 'Contacted' : stage;
+  leads[selectedIndex].updatedAt = Date.now();
+  if(stage === 'contacted') leads[selectedIndex].nextFollowUp = Date.now() + 86400000;
+  save();
+}
+function setStage(i, stage){
+  if(!leads[i]) return;
+  leads[i].stage = stage;
+  leads[i].updatedAt = Date.now();
+  if(stage === 'Contacted') leads[i].nextFollowUp = Date.now() + 86400000;
+  if(stage === 'Interested') leads[i].nextFollowUp = Date.now() + 43200000;
+  if(stage === 'Negotiation') leads[i].nextFollowUp = Date.now() + 21600000;
+  save();
+}
+function nextStage(i){
+  const stages = ['New','Contacted','Interested','Negotiation','Closed'];
+  const cur = leads[i].stage || 'New';
+  const idx = stages.indexOf(cur);
+  leads[i].stage = stages[Math.min(stages.length - 1, idx + 1)];
+  leads[i].updatedAt = Date.now();
+  if(leads[i].stage !== 'Closed') leads[i].nextFollowUp = Date.now() + (leads[i].stage === 'Negotiation' ? 21600000 : 86400000);
+  save();
+}
+function quickWhatsApp(text){
+  const msg = `Hi, regarding your requirement: ${text}\n\nI have a strong matching commercial property near Alagar Kovil, Madurai. Shall I share details?`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
+}
+function openFromTop(){
+  const lead = leads.find(l => l.stage !== 'Closed') || leads[0];
+  if(!lead) return;
+  quickWhatsApp(lead.text);
+}
+function openLeadWhatsApp(i){
+  if(!leads[i]) return;
+  quickWhatsApp(leads[i].text);
+}
+function addNote(i){
+  const note = prompt('Add note / negotiation update', leads[i].notes || '');
+  if(note === null) return;
+  leads[i].notes = note.trim();
+  leads[i].updatedAt = Date.now();
+  save();
+}
+function selectLead(i){
+  selectedIndex = i;
+  render();
+}
+function clearClosed(){
+  if(!confirm('Remove all closed leads?')) return;
+  leads = leads.filter(l => l.stage !== 'Closed');
+  save();
+}
+function toggleShowAll(){
+  showAll = !showAll;
+  render();
+}
+function exportCSV(){
+  const rows = [
+    ['id','text','score','label','stage','notes','createdAt','updatedAt','nextFollowUp'],
+    ...leads.map(l => [l.id, l.text, l.score, l.label, l.stage, (l.notes||'').replace(/"/g,'""'), new Date(l.createdAt).toISOString(), new Date(l.updatedAt).toISOString(), new Date(l.nextFollowUp).toISOString()])
+  ];
+  const csv = rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'closing-pro-leads.csv';
+  a.click();
+}
+function quickSearch(q, mode='g'){
+  const url = mode==='fb'
+    ? `https://www.facebook.com/search/posts/?q=${encodeURIComponent(q)}`
+    : mode==='rd'
+      ? `https://www.reddit.com/search/?q=${encodeURIComponent(q)}`
+      : mode==='olx'
+        ? `https://www.olx.in/items/q-${encodeURIComponent(q.replace(/\s+/g,'-'))}`
+        : `https://www.google.com/search?q=${encodeURIComponent(q)}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
 function render(){
-let html="";
-leads.forEach((l,i)=>{
-html+=`
-<div class="card">
-<b>${l.stage}</b><br>${l.text}
-<button class="btn" onclick="move(${i})">Next Stage</button>
-<button class="btn" onclick="contact('${l.text}')">WhatsApp</button>
-</div>`;
+  const total = leads.length;
+  const hot = leads.filter(l => l.label === 'HOT').length;
+  const warm = leads.filter(l => l.label === 'WARM').length;
+  const cool = leads.filter(l => l.label === 'COOL').length;
+  const closed = leads.filter(l => l.stage === 'Closed').length;
+
+  document.getElementById('pillTotal').textContent = `Total ${total}`;
+  document.getElementById('pillHot').textContent = `HOT ${hot}`;
+  document.getElementById('pillWarm').textContent = `WARM ${warm}`;
+  document.getElementById('pillCool').textContent = `COOL ${cool}`;
+  document.getElementById('pillClosed').textContent = `CLOSED ${closed}`;
+
+  const todayFollow = leads
+    .filter(l => l.stage !== 'Closed' && (Date.now() >= l.nextFollowUp))
+    .slice(0, 6);
+
+  document.getElementById('followToday').innerHTML = todayFollow.length
+    ? todayFollow.map(l => `<div class="mini" style="margin:6px 0;"><b>${escapeHtml(l.label)} • ${l.score}/100</b><br>${escapeHtml(l.text)}</div>`).join('')
+    : 'No items due right now.';
+
+  const list = document.getElementById('leadList');
+  const display = showAll ? leads : leads.filter(l => l.label === 'HOT' || l.stage !== 'Closed');
+  list.innerHTML = display.length ? display.map((l, i) => {
+    const idx = leads.indexOf(l);
+    const color = stageColor(l.stage, l.score);
+    const follow = followState(l);
+    const selected = selectedIndex === idx ? ' style="outline:2px solid #c8a84b; box-shadow:0 0 0 1px #c8a84b inset;"' : '';
+    return `
+      <div class="lead"${selected}>
+        <div class="leadTop">
+          <div>
+            <span class="pill ${l.label === 'HOT' ? 'hot' : l.label === 'WARM' ? 'warm' : 'cool'}">${l.label} • ${l.score}/100</span>
+            <span class="pill blue">${l.stage}</span>
+            <span class="pill ${color}">${follow}</span>
+          </div>
+          <div class="pill">${new Date(l.createdAt).toLocaleDateString()}</div>
+        </div>
+        <div class="leadText">${escapeHtml(l.text)}</div>
+        ${l.notes ? `<div class="mini" style="margin-top:8px;"><b>Notes:</b> ${escapeHtml(l.notes)}</div>` : ''}
+        <div class="mini" style="margin-top:8px;">
+          Next follow-up: ${new Date(l.nextFollowUp).toLocaleString()}
+        </div>
+        <div class="stageTrack">
+          <span class="stage ${l.stage==='New'?'on '+color:''}">New</span>
+          <span class="stage ${l.stage==='Contacted'?'on blue':''}">Contacted</span>
+          <span class="stage ${l.stage==='Interested'?'on blue':''}">Interested</span>
+          <span class="stage ${l.stage==='Negotiation'?'on '+(l.score>=60?'warm':'blue'):''}">Negotiation</span>
+          <span class="stage ${l.stage==='Closed'?'on cool':''}">Closed</span>
+        </div>
+        <div class="leadActs">
+          <button class="btn dark" onclick="selectLead(${idx})">Select</button>
+          <button class="btn blue" onclick="nextStage(${idx})">Next Stage</button>
+          <button class="btn green" onclick="openLeadWhatsApp(${idx})">WhatsApp</button>
+          <button class="btn orange" onclick="addNote(${idx})">Note</button>
+          <button class="btn red" onclick="setStage(${idx}, 'Closed')">Close</button>
+          <button class="btn dark" onclick="setStage(${idx}, 'Negotiation')">Negotiation</button>
+        </div>
+      </div>`;
+  }).join('') : '<div class="lead">No leads yet. Paste one above.</div>';
+}
+
+function addLeadWithAuto(){
+  const text = clean(document.getElementById('leadInput').value);
+  if(!text) return;
+  const score = scoreLead(text);
+  leads.unshift({
+    id: Date.now(),
+    text,
+    score,
+    label: scoreLabel(score)[0],
+    stage: 'New',
+    notes: '',
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+    nextFollowUp: Date.now() + 86400000
+  });
+  document.getElementById('leadInput').value = '';
+  save();
+}
+
+setInterval(() => {
+  // gently surface due follow-ups
+  const due = leads.filter(l => l.stage !== 'Closed' && Date.now() >= l.nextFollowUp);
+  const item = document.getElementById('followToday');
+  if(item){
+    if(due.length){
+      item.style.borderLeft = '3px solid #c8a84b';
+    }else{
+      item.style.borderLeft = 'none';
+    }
+  }
+}, 30000);
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)){
+    addLeadWithAuto();
+  }
 });
-document.getElementById("pipeline").innerHTML=html;
+
+function escapeHtml(s){
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-function contact(t){
-let msg="Hi, regarding your requirement: "+t;
-window.open("https://wa.me/?text="+encodeURIComponent(msg));
-}
-
+render();
 </script>
-
 </body>
 </html>
