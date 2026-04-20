@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closing System</title>
+<style>
+body{margin:0;background:#050505;color:#fff;font-family:Arial}
+.section{padding:12px}
+.title{color:#C8A84B;font-weight:bold;text-align:center;margin:10px}
+.card{background:#111;padding:10px;margin:8px;border-radius:8px}
+.btn{width:100%;padding:10px;margin:4px 0;background:#000;color:#C8A84B;border:1px solid #333}
+</style>
+</head>
+
+<body>
+
+<div class="title">💰 DEAL CLOSING SYSTEM</div>
+
+<div class="section">
+
+<div class="card">
+<b>Add Lead</b>
+<textarea id="lead" style="width:100%;height:60px"></textarea>
+<button class="btn" onclick="addLead()">Add</button>
+</div>
+
+<div id="pipeline"></div>
+
+</div>
+
+<script>
+
+let leads=[];
+
+function addLead(){
+let text=document.getElementById("lead").value;
+if(!text) return;
+leads.push({text,stage:"New"});
+render();
+}
+
+function move(i){
+let stages=["New","Contacted","Interested","Negotiation","Closed"];
+let idx=stages.indexOf(leads[i].stage);
+if(idx<stages.length-1){
+leads[i].stage=stages[idx+1];
+}
+render();
+}
+
+function render(){
+let html="";
+leads.forEach((l,i)=>{
+html+=`
+<div class="card">
+<b>${l.stage}</b><br>${l.text}
+<button class="btn" onclick="move(${i})">Next Stage</button>
+<button class="btn" onclick="contact('${l.text}')">WhatsApp</button>
+</div>`;
+});
+document.getElementById("pipeline").innerHTML=html;
+}
+
+function contact(t){
+let msg="Hi, regarding your requirement: "+t;
+window.open("https://wa.me/?text="+encodeURIComponent(msg));
+}
+
+</script>
+
+</body>
+</html>
