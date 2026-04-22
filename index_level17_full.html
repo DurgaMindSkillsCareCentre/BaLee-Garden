@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Buyer System Level 17</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {background:#000;color:#fff;font-family:Arial;text-align:center}
+button {margin:8px;padding:12px;border-radius:10px;border:none;background:#111;color:#ffd700;width:90%}
+.section {margin-top:20px}
+textarea {width:90%;height:120px;background:#111;color:#fff}
+</style>
+</head>
+
+<body>
+
+<h2>BUYER SYSTEM LEVEL 17 (FULL COMBINED)</h2>
+
+<div class="section">
+<h3>CORE BUTTONS</h3>
+<button onclick="fbSearch()">FB Buyer Search</button>
+<button onclick="fbApp()">FB App Search</button>
+<button onclick="fbGroups()">FB Groups</button>
+<button onclick="googleSearch()">Google Search</button>
+<button onclick="comboScanner()">Combo Scanner</button>
+</div>
+
+<div class="section">
+<h3>INTELLIGENCE</h3>
+<button onclick="sectorIntel()">Sector Intel</button>
+<button onclick="deepExtract()">Deep Extract</button>
+<button onclick="autoDetect()">Auto Detect</button>
+</div>
+
+<div class="section">
+<h3>INPUT</h3>
+<textarea id="input" placeholder="Paste text here..."></textarea>
+</div>
+
+<div class="section">
+<h3>OUTPUT</h3>
+<textarea id="output" placeholder="Detected buyers..."></textarea>
+</div>
+
+<script>
+
+function fbSearch(){
+window.open("https://www.facebook.com/search/posts/?q=looking%20for%20land%20madurai","_blank");
+}
+
+function fbApp(){
+window.open("https://www.facebook.com/search/top?q=land%20madurai","_blank");
+}
+
+function fbGroups(){
+window.open("https://www.facebook.com/search/groups/?q=real%20estate%20madurai","_blank");
+}
+
+function googleSearch(){
+window.open("https://www.google.com/search?q=looking%20for%20land%20madurai","_blank");
+}
+
+function comboScanner(){
+const queries=["looking for land madurai","need plot madurai","investor land tamil nadu"];
+queries.forEach(q=>{
+window.open("https://www.google.com/search?q="+encodeURIComponent(q));
+window.open("https://www.facebook.com/search/posts/?q="+encodeURIComponent(q));
+});
+}
+
+function sectorIntel(){
+window.open("https://www.google.com/search?q=hotel+land+requirement+madurai");
+window.open("https://www.google.com/search?q=warehouse+land+madurai");
+}
+
+function autoDetect(){
+let text=document.getElementById("input").value.toLowerCase();
+let lines=text.split("\n");
+let buyers=lines.filter(l=>l.includes("looking")||l.includes("need")||l.includes("buy")||l.includes("require"));
+document.getElementById("output").value=buyers.join("\n");
+}
+
+function deepExtract(){
+autoDetect();
+}
+
+</script>
+
+</body>
+</html>
