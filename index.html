@@ -187,7 +187,12 @@
   <button onclick="openFile('memory_sync_pro.html')">Open Memory</button>
   <button onclick="openFile('closing.html')">💰 Closing</button>
   <button onclick="openFile('one_click_flow.html')">⚡ 1-Click Flow</button>
-
+  
+<button onclick="openLevel19()" 
+style="background:linear-gradient(135deg,#ffd700,#b8860b);
+color:#000;font-weight:bold;">
+🚀 Level 19 Conversion
+</button>
   <button onclick="openFBSearches()">🚀 FB Buyer Search</button>
   <button onclick="openFBAppSearch()">📱 FB App Search</button>
   <button onclick="openFBGroupSearch()">👥 FB Groups</button>
@@ -1168,6 +1173,15 @@ function refreshAll(){ location.reload(); }
 
 setInterval(updateCounts, 5000);
 updateCounts();
+  function openLevel19(){
+  let data = "";
+
+  // Try to capture from your existing input box
+  let input = document.querySelector("textarea");
+  if(input) data = input.value;
+
+  window.open("index_level19.html?data=" + encodeURIComponent(data), "_blank");
+  }
 </script>
 </body>
 </html>
