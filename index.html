@@ -1176,9 +1176,19 @@ updateCounts();
   function openLevel19(){
   let data = "";
 
-  // Try to capture from your existing input box
-  let input = document.querySelector("textarea");
-  if(input) data = input.value;
+  // Try multiple sources (important for your system)
+  let input1 = document.querySelector("textarea");
+  let input2 = document.getElementById("fbInput");
+  let input3 = document.getElementById("output");
+
+  if(input3 && input3.value) data = input3.value;
+  else if(input1 && input1.value) data = input1.value;
+  else if(input2 && input2.value) data = input2.value;
+
+  if(!data){
+    alert("Paste or extract buyer data first");
+    return;
+  }
 
   window.open("index_level19.html?data=" + encodeURIComponent(data), "_blank");
   }
