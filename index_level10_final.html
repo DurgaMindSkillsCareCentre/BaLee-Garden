@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>FINAL BUYER SYSTEM LEVEL 10</title>
+<style>
+  :root{
+    --bg:#050505;
+    --panel:#0f0f0f;
+    --line:#262626;
+    --gold:#c8a84b;
+    --gold2:#8a6d29;
+    --text:#f3efe4;
+    --muted:#9a9a9a;
+    --hot:#ff6666;
+    --warm:#ffd166;
+    --cool:#8fc98f;
+    --blue:#4aa3ff;
+    --green:#27ae60;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,system-ui,sans-serif;padding-bottom:190px}
+  .header{
+    position:sticky;top:0;z-index:100;
+    background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
+    padding:12px 10px 10px;
+    text-align:center;
+  }
+  .title{color:var(--gold);font-weight:900;font-size:20px;letter-spacing:1px}
+  .sub{color:#8c8c8c;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:800;margin-top:3px}
+  .tabs{
+    display:flex;overflow-x:auto;background:#050505;border-bottom:1px solid #222;
+    position:sticky;top:74px;z-index:95
+  }
+  .tab{
+    flex:none;background:transparent;border:none;color:#666;padding:13px 14px;
+    font-weight:900;text-transform:uppercase;font-size:10px;white-space:nowrap
+  }
+  .tab.on{color:var(--gold);border-bottom:2px solid var(--gold);background:#0d0d0d}
+  .bar{
+    display:flex;gap:5px;padding:10px;background:#111;flex-wrap:wrap;border-bottom:1px solid #1f1f1f
+  }
+  .bar button{
+    flex:1;min-width:90px;padding:10px;background:#000;color:var(--gold);
+    border:1px solid #333;border-radius:10px;font-weight:900
+  }
+  .panel{display:none}
+  .panel.on{display:block}
+  iframe{
+    width:100%;
+    height:calc(100vh - 245px);
+    border:none;
+    display:block;
+    background:#050505;
+  }
+  .note{
+    padding:10px 12px 0;
+    font-size:11px;
+    color:#cfcfcf;
+  }
+  .pill{
+    display:inline-block;
+    margin-top:8px;
+    padding:5px 9px;
+    border-radius:999px;
+    border:1px solid #2a2a2a;
+    background:#111;
+    color:#d9d9d9;
+    font-size:10px;
+    font-weight:800;
+  }
+  .foot{
+    color:#888;font-size:10px;line-height:1.5;padding:10px 12px 16px;
+    border-top:1px solid #1d1d1d;background:#080808
+  }
+  #leadBox{
+    position:fixed;left:0;right:0;bottom:0;z-index:999;
+    background:#0b0b0b;border-top:2px solid var(--gold);
+    padding:10px;box-shadow:0 -10px 25px rgba(0,0,0,.6)
+  }
+  #leadBox .lbl{color:var(--gold);font-weight:900;font-size:12px;margin-bottom:6px}
+  #leadText{
+    width:100%;height:84px;background:#000;color:#fff;border:1px solid #333;border-radius:10px;
+    padding:8px;resize:vertical
+  }
+  #leadMeta{font-size:11px;color:#9a9a9a;margin-top:6px}
+  .status{
+    display:flex;flex-wrap:wrap;gap:6px;margin-top:8px
+  }
+  .mini{
+    display:inline-block;padding:5px 8px;border-radius:999px;border:1px solid #2b2b2b;background:#111;
+    font-size:10px;font-weight:800;color:#d4d4d4
+  }
+  .mini.hot{background:#2a0808;border-color:#5c1d1d;color:#ffb2b2}
+  .mini.warm{background:#241c06;border-color:#5a4811;color:#ffe19c}
+  .mini.cool{background:#081b0f;border-color:#174327;color:#a8e5bd}
+  .mini.blue{background:#08111d;border-color:#173a66;color:#a6d1ff}
+  .box{
+    padding:10px 12px 0;
+    font-size:11px;
+    color:#cfcfcf;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">FINAL BUYER SYSTEM LEVEL 10</div>
+    <div class="sub">Original • CRM • AI • Memory • Closing • One-Click</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab on" data-tab="original">Original</button>
+    <button class="tab" data-tab="crm">CRM</button>
+    <button class="tab" data-tab="ai">AI</button>
+    <button class="tab" data-tab="memory">Memory</button>
+  </div>
+
+  <div class="bar">
+    <button onclick="openTab('original')">Open Original</button>
+    <button onclick="openTab('crm')">Open CRM</button>
+    <button onclick="openTab('ai')">Open AI</button>
+    <button onclick="openTab('memory')">Open Memory</button>
+    <button onclick="window.open('closing.html','_blank','noopener,noreferrer')">💰 Closing</button>
+    <button onclick="window.open('one_click_flow.html','_blank','noopener,noreferrer')">⚡ 1-Click</button>
+    <button onclick="toggleBuyerMode()">🎯 Buyer Mode</button>
+    <button onclick="extractBuyer()">🧠 Extract</button>
+    <button onclick="extractPhones()">📞 Phones</button>
+    <button onclick="sendWA()">📲 WhatsApp</button>
+    <button onclick="sendDirectWA()">📲 WA #</button>
+    <button onclick="saveCRM()">💾 Save CRM</button>
+    <button onclick="scheduleFollow()">⏰ Follow-Up</button>
+    <button onclick="showFollowUps()">🔔 Alerts</button>
+    <button onclick="showTop()">🔥 Top Leads</button>
+    <button onclick="openBuyerSearch()">🚀 Buyer Search</button>
+  </div>
+
+  <div class="panel on" id="panel-original">
+    <iframe src="original.html" id="frame-original" loading="eager"></iframe>
+  </div>
+
+  <div class="panel" id="panel-crm">
+    <iframe src="crm.html" id="frame-crm" loading="eager"></iframe>
+  </div>
+
+  <div class="panel" id="panel-ai">
+    <iframe src="ai.html" id="frame-ai" loading="eager"></iframe>
+  </div>
+
+  <div class="panel" id="panel-memory">
+    <iframe src="memory_sync_pro.html" id="frame-memory" loading="eager"></iframe>
+  </div>
+
+  <div class="note">
+    Buyer Mode highlights intent words and hides seller noise where same-origin access allows.
+    <span class="pill">cache-buster enabled</span>
+  </div>
+
+  <div class="box">
+    <div class="status" id="sysStatus">
+      <span class="mini blue" id="leadCount">Leads: 0</span>
+      <span class="mini hot" id="hotCount">HOT: 0</span>
+      <span class="mini warm" id="warmCount">WARM: 0</span>
+      <span class="mini cool" id="coolCount">COOL: 0</span>
+      <span class="mini" id="dueCount">Follow-up due: 0</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    Keep <b>original.html</b>, <b>crm.html</b>, <b>ai.html</b>, <b>closing.html</b>, and <b>memory_sync_pro.html</b> in the same root.
+  </div>
+
+  <div id="leadBox">
+    <div class="lbl">BUYER CAPTURE</div>
+    <textarea id="leadText" placeholder="Extracted buyer lines will appear here..."></textarea>
+    <div id="leadMeta">Ready…</div>
+  </div>
+
+<script>
+function refreshFrame(id, baseSrc){
+  const f = document.getElementById(id);
+  if(!f) return;
+  f.src = baseSrc + '?ts=' + Date.now();
+}
+function openTab(name){
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  const panel = document.getElementById('panel-' + name);
+  if(panel) panel.classList.add('on');
+  if(name === 'memory') refreshFrame('frame-memory', 'memory_sync_pro.html');
+  if(name === 'crm') refreshFrame('frame-crm', 'crm.html');
+  if(name === 'ai') refreshFrame('frame-ai', 'ai.html');
+}
+document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => openTab(btn.dataset.tab)));
+
+let buyerMode = false;
+let extractedPhones = [];
+
+function toggleBuyerMode(){
+  buyerMode = !buyerMode;
+  alert(buyerMode ? "BUYER MODE ON ✅" : "BUYER MODE OFF ❌");
+  applyBuyerFilter();
+}
+
+function activeDoc(){
+  const f = document.querySelector('.panel.on iframe');
+  if(!f) return null;
+  try{ return f.contentDocument || f.contentWindow.document; }catch(e){ return null; }
+}
+
+function applyBuyerFilter(){
+  const frames = ['frame-original','frame-crm','frame-ai'];
+  frames.forEach(id=>{
+    const iframe = document.getElementById(id);
+    if(!iframe) return;
+    try{
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if(!doc) return;
+      const nodes = doc.querySelectorAll('body *');
+      nodes.forEach(el=>{
+        const text = (el.innerText || '').toLowerCase();
+        if(!text) return;
+
+        const isBuyer =
+          text.includes('looking') ||
+          text.includes('need') ||
+          text.includes('required') ||
+          text.includes('budget') ||
+          text.includes('want to buy') ||
+          text.includes('investor') ||
+          text.includes('urgent');
+
+        const isSeller =
+          text.includes('for sale') ||
+          text.includes('plot available') ||
+          text.includes('selling') ||
+          text.includes('dtcp');
+
+        if(buyerMode){
+          if(isBuyer){
+            el.style.background = '#0f2d1c';
+            el.style.color = '#7CFF9E';
+          } else if(isSeller){
+            el.style.display = 'none';
+          }
+        } else {
+          el.style.background = '';
+          el.style.color = '';
+          el.style.display = '';
+        }
+      });
+    }catch(e){}
+  });
+}
+
+function scoreLead(text){
+  let t = (text || '').toLowerCase();
+  let s = 0;
+  if(t.includes('urgent')) s += 30;
+  if(t.includes('budget')) s += 25;
+  if(t.includes('investor')) s += 20;
+  if(t.includes('commercial')) s += 15;
+  if(t.includes('madurai') || t.includes('alagar')) s += 10;
+  const band = s >= 70 ? 'HOT' : s >= 40 ? 'WARM' : 'COOL';
+  const m = text.match(/(\d+[\-–]\d+|\d+)\s*(cr|crore|lakh|lac)/i);
+  const budget = m ? m[0] : 'NA';
+  return {score:s, band, budget, summary:`Score ${s} → ${band} • Budget: ${budget}`};
+}
+
+function cacheLead(item){
+  const q = JSON.parse(localStorage.getItem('lead_queue') || '[]');
+  q.unshift(item);
+  localStorage.setItem('lead_queue', JSON.stringify(q.slice(0,10)));
+}
+
+function extractBuyer(){
+  const doc = activeDoc();
+  if(!doc){ alert('Open a tab with content first'); return; }
+  const nodes = doc.querySelectorAll('body *');
+  const buyerKeys = ['looking','need','required','budget','want to buy','investor','urgent'];
+  const hits = [];
+  nodes.forEach(el=>{
+    const t = (el.innerText || '').toLowerCase().trim();
+    if(t.length < 25) return;
+    if(buyerKeys.some(k => t.includes(k))){
+      if(t.includes('for sale') || t.includes('available') || t.includes('dtcp')) return;
+      hits.push(el.innerText.trim());
+    }
+  });
+  const best = hits.slice(0,3).join('\n\n---\n\n') || 'No clear buyer lines found. Open comments and try again.';
+  document.getElementById('leadText').value = best;
+  const meta = scoreLead(best);
+  document.getElementById('leadMeta').innerText = meta.summary;
+  cacheLead({text: best, meta});
+  updateCounts();
+}
+
+function extractPhones(){
+  const doc = activeDoc();
+  if(!doc){ alert('Open content'); return; }
+  const text = doc.body.innerText || '';
+  const matches = text.match(/(\+91[\s-]?\d{10}|\b\d{10}\b)/g);
+  if(!matches){ alert('No phone numbers found'); return; }
+  extractedPhones = [...new Set(matches.map(s => s.replace(/\s+/g,'')))];
+  alert('Found:\n' + extractedPhones.join('\n'));
+}
+
+function sendWA(){
+  const txt = document.getElementById('leadText').value.trim();
+  if(!txt){ alert('No lead extracted'); return; }
+  const msg = 'Hi, saw your requirement. We have a premium commercial corner plot on Alagar Kovil highway (strong frontage). Fits your need. Shall I share details & location?';
+  const url = 'https://wa.me/?text=' + encodeURIComponent(msg + '\n\nRef:\n' + txt.slice(0,300));
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+function sendDirectWA(){
+  if(!extractedPhones.length){ alert('No phone extracted'); return; }
+  const num = extractedPhones[0].replace(/\D/g,'');
+  const msg = 'Hi, saw your requirement. We have a premium commercial corner plot on Alagar Kovil highway. Shall I share details?';
+  window.open(`https://wa.me/91${num}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+}
+
+function saveCRM(){
+  const txt = document.getElementById('leadText').value.trim();
+  if(!txt){ alert('No lead extracted'); return; }
+  const meta = scoreLead(txt);
+  const item = {
+    text: `Investor – ${meta.band} – commercial – Alagar Kovil – ${meta.budget} – ${meta.band}`,
+    raw: txt,
+    meta,
+    ts: Date.now()
+  };
+  const db = JSON.parse(localStorage.getItem('leads_db') || '[]');
+  db.unshift(item);
+  localStorage.setItem('leads_db', JSON.stringify(db));
+
+  const queue = JSON.parse(localStorage.getItem('queue') || '[]');
+  queue.unshift(txt);
+  localStorage.setItem('queue', JSON.stringify(queue.slice(0,5)));
+
+  alert('Saved to CRM ✅');
+  updateCounts();
+}
+
+function scheduleFollow(){
+  const txt = document.getElementById('leadText').value.trim();
+  if(!txt){ alert('No lead'); return; }
+  const follow = {
+    text: txt,
+    time: Date.now() + (2 * 60 * 60 * 1000)
+  };
+  const arr = JSON.parse(localStorage.getItem('followups') || '[]');
+  arr.push(follow);
+  localStorage.setItem('followups', JSON.stringify(arr));
+  alert('Follow-up scheduled in 2 hours');
+  updateCounts();
+}
+
+function showFollowUps(){
+  const arr = JSON.parse(localStorage.getItem('followups') || '[]');
+  const now = Date.now();
+  const due = arr.filter(f => f.time <= now);
+  if(!due.length){ alert('No pending follow-ups'); return; }
+  alert('Follow-up NOW:\n\n' + due.map(d => d.text.slice(0,100)).join('\n\n'));
+}
+
+function showTop(){
+  const q = JSON.parse(localStorage.getItem('lead_queue') || '[]');
+  if(!q.length){ alert('No leads yet'); return; }
+  const view = q.slice(0,5).map((l,i)=>`${i+1}. ${l.meta.band} (${l.meta.score})\n${l.text.slice(0,120)}...`).join('\n\n');
+  alert(view);
+}
+
+function openBuyerSearch(){
+  const queries = [
+    'looking for land Madurai',
+    'commercial land required Madurai',
+    'investor looking Madurai land'
+  ];
+  queries.forEach(q=>{
+    window.open('https://www.google.com/search?q=' + encodeURIComponent(q), '_blank', 'noopener,noreferrer');
+  });
+}
+
+function updateCounts(){
+  const q = JSON.parse(localStorage.getItem('lead_queue') || '[]');
+  const db = JSON.parse(localStorage.getItem('leads_db') || '[]');
+  const follow = JSON.parse(localStorage.getItem('followups') || '[]');
+  const leads = [...q, ...db.map(x => x.raw || x.text || '')].filter(Boolean);
+  let hot = 0, warm = 0, cool = 0;
+  q.forEach(x => {
+    if(x.meta.band === 'HOT') hot++;
+    else if(x.meta.band === 'WARM') warm++;
+    else cool++;
+  });
+  const due = follow.filter(f => f.time <= Date.now()).length;
+  document.getElementById('leadCount').innerText = 'Leads: ' + leads.length;
+  document.getElementById('hotCount').innerText = 'HOT: ' + hot;
+  document.getElementById('warmCount').innerText = 'WARM: ' + warm;
+  document.getElementById('coolCount').innerText = 'COOL: ' + cool;
+  document.getElementById('dueCount').innerText = 'Follow-up due: ' + due;
+}
+
+setInterval(updateCounts, 5000);
+updateCounts();
+</script>
+</body>
+</html>
