@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Buyer System Level 14 — Combined Final</title>
+<style>
+  :root{
+    --bg:#050505;
+    --panel:#0f0f0f;
+    --panel2:#121212;
+    --line:#262626;
+    --gold:#c8a84b;
+    --gold2:#8a6d29;
+    --text:#f3efe4;
+    --muted:#9a9a9a;
+    --hot:#ff6666;
+    --warm:#ffd166;
+    --cool:#8fc98f;
+    --blue:#4aa3ff;
+    --green:#27ae60;
+    --purple:#a66bff;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:Arial,system-ui,sans-serif;
+    padding-bottom:230px;
+  }
+  .top{
+    position:sticky;top:0;z-index:100;
+    background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
+    padding:12px 10px 10px;text-align:center;
+  }
+  .title{color:var(--gold);font-weight:900;font-size:20px;letter-spacing:1px}
+  .sub{color:#8c8c8c;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:800;margin-top:3px}
+  .bar{
+    display:flex;gap:5px;padding:10px;background:#111;flex-wrap:wrap;border-bottom:1px solid #1f1f1f
+  }
+  .bar button{
+    flex:1;min-width:95px;padding:10px;background:#000;color:var(--gold);
+    border:1px solid #333;border-radius:10px;font-weight:900;font-size:10px
+  }
+  .wrap{padding:10px}
+  .split{display:grid;grid-template-columns:1fr;gap:10px}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:12px;margin-bottom:10px
+  }
+  .label{display:block;color:var(--gold);font-size:9px;font-weight:900;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+  .small{font-size:11px;line-height:1.5;color:var(--muted)}
+  .big{font-size:18px;font-weight:900;color:#fff;line-height:1.35}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .btn{
+    width:100%;border:none;border-radius:12px;padding:12px 10px;font-weight:900;cursor:pointer;
+    text-transform:uppercase;font-size:10px;letter-spacing:.5px;background:#151515;color:#f0ebe0;border:1px solid #343434
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none}
+  .btn.blue{background:linear-gradient(135deg,#2d8cff,#0a66c2);color:#fff;border:none}
+  .btn.green{background:linear-gradient(135deg,#27ae60,#145a32);color:#fff;border:none}
+  .btn.orange{background:linear-gradient(135deg,#e67e22,#8a4f13);color:#fff;border:none}
+  .btn.red{background:linear-gradient(135deg,#a61b1b,#5b0f0f);color:#fff;border:none}
+  .btn.purple{background:linear-gradient(135deg,#7b61ff,#4c2bcf);color:#fff;border:none}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;padding:5px 9px;
+    border-radius:999px;background:#111;border:1px solid #2a2a2a;color:#d9d9d9;margin:4px 6px 0 0
+  }
+  .pill.hot{background:#2a0808;border-color:#5c1d1d;color:#ffb2b2}
+  .pill.warm{background:#241c06;border-color:#5a4811;color:#ffe19c}
+  .pill.cool{background:#081b0f;border-color:#174327;color:#a8e5bd}
+  .pill.blue{background:#08111d;border-color:#173a66;color:#a6d1ff}
+  .pill.purple{background:#120a1d;border-color:#4a2d72;color:#d7b8ff}
+  .input, textarea{
+    width:100%;border:1px solid #313131;background:#080808;color:#fff;border-radius:12px;
+    padding:10px;font-size:14px;outline:none
+  }
+  textarea{min-height:92px;resize:vertical;font-family:monospace}
+  .stats{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .lead{
+    border:1px solid #262626;background:#0d0d0d;border-radius:14px;padding:12px;margin-top:8px
+  }
+  .leadTop{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+  .leadText{margin-top:8px;font-size:13px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+  .sectionTitle{font-weight:900;font-size:15px;margin:0 0 10px;color:#fff}
+  .note{color:#8a8a8a;font-size:10px;line-height:1.55;padding:10px 12px 18px}
+  .footer{
+    color:#888;font-size:10px;line-height:1.5;padding:10px 12px 16px;border-top:1px solid #1d1d1d;background:#080808
+  }
+  #leadBox{
+    position:fixed;left:0;right:0;bottom:0;z-index:999;
+    background:#0b0b0b;border-top:2px solid var(--gold);
+    padding:10px;box-shadow:0 -10px 25px rgba(0,0,0,.6)
+  }
+  #leadMeta{font-size:11px;color:#9a9a9a;margin-top:6px}
+  .miniRow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .mini{
+    display:inline-block;padding:5px 8px;border-radius:999px;border:1px solid #2b2b2b;background:#111;
+    font-size:10px;font-weight:800;color:#d4d4d4
+  }
+  .mini.hot{background:#2a0808;border-color:#5c1d1d;color:#ffb2b2}
+  .mini.warm{background:#241c06;border-color:#5a4811;color:#ffe19c}
+  .mini.cool{background:#081b0f;border-color:#174327;color:#a8e5bd}
+  .mini.blue{background:#08111d;border-color:#173a66;color:#a6d1ff}
+  .mini.purple{background:#120a1d;border-color:#4a2d72;color:#d7b8ff}
+  .queueItem{
+    background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:8px;
+  }
+  .queueItem b{display:block;margin-bottom:4px}
+  @media (min-width: 900px){
+    .split{grid-template-columns:1.2fr .8fr}
+    .grid{grid-template-columns:repeat(4,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="title">BUYER SYSTEM LEVEL 14</div>
+  <div class="sub">combined final • all v13 features + direct facebook groups + smarter filters</div>
+</div>
+
+<div class="bar">
+  <!-- Search layer -->
+  <button onclick="openFBSearches()">🚀 FB Buyer Search</button>
+  <button onclick="openFBAppSearch()">📱 FB App Search</button>
+  <button onclick="openFBGroupSearch()">👥 FB Groups</button>
+  <button onclick="openSmartFBGroups()">🧠 Smart Groups</button>
+  <button onclick="openGoogleSearch()">🌐 Google Search</button>
+  <button onclick="openBuyerSearch()">🛰 Auto Buyer Finder</button>
+
+  <!-- Filter layer -->
+  <button onclick="toggleBuyerMode()">🎯 Buyer Mode</button>
+  <button onclick="autoDetect()">⚡ Auto Detect</button>
+  <button onclick="runAIBuyerFilter()">🧠 AI Filter</button>
+  <button onclick="extractPhones()">📞 Phones</button>
+
+  <!-- Conversion layer -->
+  <button onclick="generateReply()">✉️ AI Reply</button>
+  <button onclick="openWhatsApp()">💬 WhatsApp</button>
+  <button onclick="sendDirectWA()">📲 WA #</button>
+  <button onclick="saveLeadToCRM()">💾 Save CRM</button>
+  <button onclick="viewCRM()">📊 View CRM</button>
+  <button onclick="scheduleFollow()">⏰ Follow-Up</button>
+  <button onclick="showFollowUps()">🔔 Alerts</button>
+  <button onclick="showTop()">🔥 Top Leads</button>
+  <button onclick="clearAll()">❌ Clear</button>
+</div>
+
+<div class="wrap">
+  <div class="split">
+    <div class="card">
+      <span class="label">Mission control</span>
+      <div class="big">Find buyer text fast, filter sellers out, score the lead, contact by WhatsApp, store in CRM, and follow up later.</div>
+      <div class="small" style="margin-top:8px;">
+        Use this as a working lead machine. Paste visible post text, comments, chats, or search snippets into the input box below.
+      </div>
+      <div class="miniRow" id="stats">
+        <span class="pill blue" id="leadCount">Leads: 0</span>
+        <span class="pill hot" id="hotCount">HOT: 0</span>
+        <span class="pill warm" id="warmCount">WARM: 0</span>
+        <span class="pill cool" id="coolCount">COOL: 0</span>
+        <span class="pill" id="dueCount">Follow-up due: 0</span>
+      </div>
+      <div style="height:10px"></div>
+
+      <span class="label">Current page content</span>
+      <textarea id="fbInput" placeholder="Paste Facebook / Google / OLX / discussion text here..."></textarea>
+
+      <div style="height:10px"></div>
+      <span class="label">Detected buyers</span>
+      <textarea id="buyerOutput" placeholder="Auto detected buyer lines appear here..."></textarea>
+
+      <div style="height:10px"></div>
+      <span class="label">Phones</span>
+      <textarea id="phoneOutput" placeholder="Phone numbers appear here..."></textarea>
+
+      <div style="height:10px"></div>
+      <span class="label">How to use (fast flow)</span>
+      <div class="small">
+        1) Open buyer search tabs.<br>
+        2) Open a buyer post or group discussion.<br>
+        3) Copy visible text and paste here.<br>
+        4) Click Auto Detect or AI Filter.<br>
+        5) Click Phones if numbers are visible.<br>
+        6) Click WhatsApp and Save CRM.<br>
+        7) Schedule follow-up and check alerts later.
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="label">Best lead queue</span>
+      <div class="small">Top leads are stored locally so you can review and act later.</div>
+      <div id="leadList"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="label">Practical rule</span>
+    <div class="small">
+      Search → Open buyer discussion → Paste visible text → Filter buyers → Extract phones → WhatsApp → Save CRM → Follow-up.
+    </div>
+  </div>
+</div>
+
+<div class="note">
+  Level 14 combines all prior features and adds the Facebook app search, Facebook group search, smart FB group search, and AI buyer filtering in one file.
+</div>
+
+<div class="footer">
+  Upload this as <b>index.html</b> in the same root as your other files.
+</div>
+
+<div id="leadBox">
+  <div class="label">BUYER CAPTURE STATUS</div>
+  <textarea id="leadText" placeholder="Buyer lead / extracted text will appear here..."></textarea>
+  <div id="leadMeta">Ready…</div>
+</div>
+
+<script>
+let buyerMode = false;
+let extractedPhones = [];
+
+function escapeHtml(s) {
+  return String(s || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function updateCounts() {
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  const follow = JSON.parse(localStorage.getItem("followups") || "[]");
+  const now = Date.now();
+
+  let hot = 0, warm = 0, cool = 0;
+  q.forEach(x => {
+    if (!x.meta) return;
+    if (x.meta.band === "HOT") hot++;
+    else if (x.meta.band === "WARM") warm++;
+    else cool++;
+  });
+
+  const due = follow.filter(f => f.time <= now).length;
+
+  document.getElementById("leadCount").innerText = "Leads: " + (q.length + crm.length);
+  document.getElementById("hotCount").innerText = "HOT: " + hot;
+  document.getElementById("warmCount").innerText = "WARM: " + warm;
+  document.getElementById("coolCount").innerText = "COOL: " + cool;
+  document.getElementById("dueCount").innerText = "Follow-up due: " + due;
+
+  renderLeadList();
+}
+
+function renderLeadList() {
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  const box = document.getElementById("leadList");
+  const top = q.slice(0, 5);
+
+  box.innerHTML = top.length ? top.map((l) => {
+    const cls = l.meta.band === "HOT" ? "hot" : l.meta.band === "WARM" ? "warm" : "cool";
+    return `
+      <div class="queueItem">
+        <div>
+          <span class="pill ${cls}">${l.meta.band} • ${l.meta.score}/100</span>
+          <span class="pill blue">${l.meta.budget || "NA"}</span>
+          <span class="pill purple">${new Date(l.ts || Date.now()).toLocaleTimeString()}</span>
+        </div>
+        <b>${escapeHtml((l.text || "").slice(0, 110))}</b>
+      </div>`;
+  }).join("") : '<div class="small" style="margin-top:8px;">No leads yet. Use Buyer Search and paste visible text here.</div>';
+}
+
+function scoreText(text) {
+  let t = (text || "").toLowerCase();
+  let s = 0;
+  if (t.includes("urgent")) s += 30;
+  if (t.includes("budget")) s += 25;
+  if (t.includes("investor")) s += 20;
+  if (t.includes("commercial")) s += 15;
+  if (t.includes("madurai") || t.includes("alagar")) s += 10;
+  if (t.includes("highway") || t.includes("frontage")) s += 10;
+  const band = s >= 70 ? "HOT" : s >= 40 ? "WARM" : "COOL";
+  const m = text.match(/(\d+[\-–]\d+|\d+)\s*(cr|crore|lakh|lac)/i);
+  const budget = m ? m[0] : "NA";
+  return { score: s, band, budget, summary: `Score ${s} → ${band} • Budget: ${budget}` };
+}
+
+function cacheLead(item) {
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  q.unshift(item);
+  localStorage.setItem("lead_queue", JSON.stringify(q.slice(0, 20)));
+}
+
+function openGoogleSearch() {
+  const queries = [
+    "looking for land Madurai",
+    "commercial land required Madurai",
+    "investor looking Madurai land"
+  ];
+  queries.forEach(q => window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function openFBSearches() {
+  const queries = [
+    "need land Madurai",
+    "looking for land Madurai",
+    "buy land Madurai",
+    "commercial land requirement Madurai",
+    "investment land Madurai",
+    "NRI land investment Tamil Nadu"
+  ];
+  queries.forEach(q => window.open("https://www.google.com/search?q=site:facebook.com+" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function openFBAppSearch() {
+  const queries = [
+    "looking for land Madurai",
+    "need land Madurai",
+    "commercial land requirement Madurai",
+    "investor looking land Madurai",
+    "plot needed Madurai highway"
+  ];
+  queries.forEach(q => window.open("https://www.facebook.com/search/posts/?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function openFBGroupSearch() {
+  const queries = [
+    "Madurai land buyers",
+    "Madurai real estate investors",
+    "Tamil Nadu land investors",
+    "NRI real estate investors India",
+    "commercial land buyers Madurai"
+  ];
+  queries.forEach(q => window.open("https://www.facebook.com/search/groups/?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function openSmartFBGroups() {
+  const queries = [
+    '"looking for land" Madurai',
+    '"need land" Madurai',
+    '"commercial land requirement" Madurai',
+    '"investor looking" Madurai land',
+    '"plot needed" Madurai highway',
+    '"budget" "land" Madurai',
+    '"looking to buy" Madurai property'
+  ];
+  queries.forEach(q => {
+    const url = "https://www.google.com/search?q=site:facebook.com/groups " + encodeURIComponent(q) + "&tbs=qdr:d";
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
+}
+
+function openBuyerSearch() {
+  openFBSearches();
+  window.open("https://www.google.com/search?q=site:reddit.com+looking+land+Madurai", "_blank", "noopener,noreferrer");
+  window.open("https://www.google.com/search?q=site:quora.com+land+Madurai+looking+buy", "_blank", "noopener,noreferrer");
+  window.open("https://www.facebook.com/search/posts/?q=looking%20land%20Madurai", "_blank", "noopener,noreferrer");
+  window.open("https://www.facebook.com/search/groups/?q=madurai%20real%20estate", "_blank", "noopener,noreferrer");
+  window.open("https://www.google.com/search?q=site:olx.in+looking+land+Madurai", "_blank", "noopener,noreferrer");
+
+  document.getElementById("leadText").value =
+`Buyer search starters:
+looking for land Madurai
+commercial land required Madurai
+investor looking Madurai land
+need plot near highway Madurai`;
+  document.getElementById("leadMeta").innerText = "Auto Buyer Finder opened buyer-intent tabs.";
+}
+
+function toggleBuyerMode() {
+  buyerMode = !buyerMode;
+  alert(buyerMode ? "BUYER MODE ON ✅" : "BUYER MODE OFF ❌");
+  autoDetect();
+}
+
+function autoDetect() {
+  const input = document.getElementById("fbInput").value.toLowerCase();
+  const lines = input.split(/\n+/).map(s => s.trim()).filter(Boolean);
+
+  const buyerKeywords = [
+    "looking for", "need land", "need plot", "need commercial",
+    "require land", "required", "want to buy", "buy land",
+    "investment", "investor", "budget", "urgent", "commercial"
+  ];
+
+  const sellerKeywords = [
+    "for sale", "plot available", "selling", "dtcp", "approved",
+    "open plot for sale", "land for sale"
+  ];
+
+  let buyerLines = [];
+
+  for (const line of lines) {
+    const t = line.toLowerCase();
+    const isBuyer = buyerKeywords.some(k => t.includes(k));
+    const isSeller = sellerKeywords.some(k => t.includes(k));
+
+    if (buyerMode) {
+      if (isBuyer && !isSeller) buyerLines.push(line);
+    } else {
+      if (isBuyer && !isSeller) buyerLines.push(line);
+    }
+  }
+
+  const out = buyerLines.length ? buyerLines.join("\n") : "No buyer leads found";
+  document.getElementById("buyerOutput").value = out;
+  document.getElementById("leadText").value = out;
+
+  const meta = scoreText(out);
+  document.getElementById("leadMeta").innerText = meta.summary;
+  cacheLead({ text: out, meta, ts: Date.now() });
+  updateCounts();
+}
+
+function runAIBuyerFilter() {
+  const input = document.getElementById("fbInput").value.toLowerCase();
+  const lines = input.split(/\n+/).map(s => s.trim()).filter(Boolean);
+
+  const buyerKeywords = [
+    "looking for", "need", "requirement", "want to buy",
+    "searching", "interested in buying", "budget",
+    "investment", "buyer", "purchase", "land required", "commercial"
+  ];
+
+  const sellerKeywords = [
+    "for sale", "selling", "available", "price",
+    "contact broker", "agent", "we have land", "offer", "discount"
+  ];
+
+  let buyers = [];
+
+  lines.forEach(line => {
+    let isBuyer = buyerKeywords.some(k => line.includes(k));
+    let isSeller = sellerKeywords.some(k => line.includes(k));
+
+    if (isBuyer && !isSeller) {
+      let score = 0;
+      if (line.includes("urgent")) score += 30;
+      if (line.includes("budget")) score += 25;
+      if (line.includes("commercial")) score += 20;
+      if (line.includes("madurai")) score += 15;
+      if (line.includes("highway")) score += 10;
+      let type = "COOL";
+      if (score >= 60) type = "HOT";
+      else if (score >= 30) type = "WARM";
+      buyers.push(`[${type}] ${line}`);
+    }
+  });
+
+  const output = buyers.length ? buyers.join("\n\n") : "No strong buyer signals found.";
+  document.getElementById("buyerOutput").value = output;
+  document.getElementById("leadText").value = output;
+  document.getElementById("leadMeta").innerText = buyers.length ? "AI Buyer Filter applied." : "No buyer signals found.";
+  cacheLead({ text: output, meta: scoreText(output), ts: Date.now() });
+  updateCounts();
+}
+
+function extractPhones() {
+  const text = document.getElementById("fbInput").value || document.getElementById("buyerOutput").value;
+  const matches = text.match(/(\+91[\s-]?)?[6789]\d{9}/g);
+  extractedPhones = matches ? [...new Set(matches.map(s => s.replace(/\s+/g, "")))] : [];
+  document.getElementById("phoneOutput").value = extractedPhones.length ? extractedPhones.join("\n") : "No phones found";
+  if (!extractedPhones.length) alert("No phone numbers found");
+}
+
+function sendWA() {
+  const txt = document.getElementById("buyerOutput").value.trim() || document.getElementById("leadText").value.trim();
+  if (!txt) { alert("No lead extracted"); return; }
+  const msg = "Hi, saw your requirement. We have a premium commercial corner plot on Alagar Kovil highway (strong frontage). Fits your need. Shall I share details & location?";
+  const url = "https://wa.me/?text=" + encodeURIComponent(msg + "\n\nRef:\n" + txt.slice(0,300));
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+function sendDirectWA() {
+  if (!extractedPhones.length) { alert("No phone extracted"); return; }
+  const num = extractedPhones[0].replace(/\D/g, "");
+  const msg = "Hi, saw your requirement. We have a premium commercial corner plot on Alagar Kovil highway. Shall I share details?";
+  window.open(`https://wa.me/91${num}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+}
+
+function generateReply() {
+  const lead = document.getElementById("buyerOutput").value.split("\n")[0] || document.getElementById("leadText").value.split("\n")[0];
+  if (!lead) { alert("No lead"); return; }
+  const msg = "Hi, I saw your requirement. We have a premium commercial corner plot on Alagar Kovil highway. Would you like photos, exact location and budget details?";
+  document.getElementById("buyerOutput").value = (document.getElementById("buyerOutput").value || "") + "\n\nReply:\n" + msg;
+  document.getElementById("leadText").value = msg;
+}
+
+function saveLeadToCRM() {
+  const lead = document.getElementById("buyerOutput").value.trim() || document.getElementById("leadText").value.trim();
+  if (!lead) { alert("No lead to save"); return; }
+  const meta = scoreText(lead);
+  const item = { lead, raw: lead, meta, date: new Date().toISOString() };
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  crm.unshift(item);
+  localStorage.setItem("crm", JSON.stringify(crm));
+
+  alert("Saved to CRM");
+  updateCounts();
+  showTop();
+}
+
+function viewCRM() {
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  if (!crm.length) { alert("No leads saved"); return; }
+  const text = crm.map(l => `${l.date} → ${l.lead}`).join("\n\n");
+  document.getElementById("buyerOutput").value = text;
+  document.getElementById("leadText").value = text;
+  document.getElementById("leadMeta").innerText = "CRM loaded.";
+}
+
+function scheduleFollow() {
+  const txt = document.getElementById("buyerOutput").value.trim() || document.getElementById("leadText").value.trim();
+  if (!txt) { alert("No lead"); return; }
+  const follow = { text: txt, time: Date.now() + (2 * 60 * 60 * 1000) };
+  const arr = JSON.parse(localStorage.getItem("followups") || "[]");
+  arr.unshift(follow);
+  localStorage.setItem("followups", JSON.stringify(arr.slice(0,50)));
+  updateCounts();
+  alert("Follow-up scheduled in 2 hours");
+}
+
+function showFollowUps() {
+  const arr = JSON.parse(localStorage.getItem("followups") || "[]");
+  const due = arr.filter(f => f.time <= Date.now());
+  if (!due.length) { alert("No pending follow-ups"); return; }
+  alert("Follow-up NOW:\n\n" + due.map(d => d.text.slice(0,100)).join("\n\n"));
+}
+
+function showTop() {
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  const items = [];
+
+  q.slice(0,5).forEach((l, i) => {
+    items.push(`${i+1}. ${l.meta.band} (${l.meta.score})\n${(l.text || "").slice(0,120)}...`);
+  });
+
+  crm.slice(0,3).forEach((l, i) => {
+    items.push(`CRM ${i+1}. ${l.meta?.band || "NA"} • ${(l.lead || "").slice(0,120)}...`);
+  });
+
+  alert(items.length ? items.join("\n\n") : "No leads yet");
+}
+
+function clearAll() {
+  document.getElementById("fbInput").value = "";
+  document.getElementById("buyerOutput").value = "";
+  document.getElementById("phoneOutput").value = "";
+  document.getElementById("leadText").value = "";
+  document.getElementById("leadMeta").innerText = "Ready…";
+}
+
+function updateCounts() {
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  const follow = JSON.parse(localStorage.getItem("followups") || "[]");
+  const now = Date.now();
+
+  let hot = 0, warm = 0, cool = 0;
+  q.forEach(x => {
+    if (!x.meta) return;
+    if (x.meta.band === "HOT") hot++;
+    else if (x.meta.band === "WARM") warm++;
+    else cool++;
+  });
+
+  const due = follow.filter(f => f.time <= now).length;
+
+  document.getElementById("leadCount").innerText = "Leads: " + (q.length + crm.length);
+  document.getElementById("hotCount").innerText = "HOT: " + hot;
+  document.getElementById("warmCount").innerText = "WARM: " + warm;
+  document.getElementById("coolCount").innerText = "COOL: " + cool;
+  document.getElementById("dueCount").innerText = "Follow-up due: " + due;
+
+  renderLeadList();
+}
+
+setInterval(updateCounts, 5000);
+updateCounts();
+</script>
+</body>
+</html>
