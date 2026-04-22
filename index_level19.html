@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Level 19 Conversion System</title>
+<style>
+body{background:#000;color:#fff;font-family:Arial;margin:0}
+.header{padding:15px;text-align:center;background:#111;border-bottom:2px solid gold}
+button{width:100%;margin:5px 0;padding:12px;border:none;border-radius:8px;font-weight:bold}
+.gold{background:gold;color:#000}
+.blue{background:#0a66c2;color:#fff}
+.green{background:#27ae60;color:#fff}
+.red{background:#a61b1b;color:#fff}
+textarea{width:100%;height:120px;background:#111;color:#fff;border:1px solid #333;margin-top:5px}
+.stats{display:flex;justify-content:space-around;margin-top:10px}
+.badge{padding:5px 10px;border-radius:20px}
+.hot{background:red}
+.warm{background:orange}
+.cool{background:green}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h2>LEVEL 19 CONVERSION SYSTEM</h2>
+</div>
+
+<textarea id="input" placeholder="Buyer data..."></textarea>
+
+<button class="blue" onclick="detect()">Auto Detect</button>
+
+<textarea id="output" placeholder="Filtered buyers..."></textarea>
+
+<div class="stats">
+<div class="badge hot" id="hot">HOT:0</div>
+<div class="badge warm" id="warm">WARM:0</div>
+<div class="badge cool" id="cool">COOL:0</div>
+</div>
+
+<button class="green" onclick="sendWA()">WhatsApp</button>
+<button class="red" onclick="save()">Save CRM</button>
+
+<script>
+
+// READ DATA FROM LEVEL 18
+window.onload = function(){
+  let params = new URLSearchParams(window.location.search);
+  let data = params.get("data");
+  if(data){
+    document.getElementById("input").value = decodeURIComponent(data);
+  }
+}
+
+function detect(){
+let text=document.getElementById("input").value.split("\n");
+let buyers=[];
+let hot=0,warm=0,cool=0;
+
+text.forEach(t=>{
+if(t.toLowerCase().includes("need")||t.toLowerCase().includes("looking")){
+buyers.push(t);
+
+if(t.includes("urgent")||t.includes("budget")){
+hot++;
+}else{
+warm++;
+}
+}else{
+cool++;
+}
+});
+
+document.getElementById("output").value=buyers.join("\n");
+document.getElementById("hot").innerText="HOT:"+hot;
+document.getElementById("warm").innerText="WARM:"+warm;
+document.getElementById("cool").innerText="COOL:"+cool;
+}
+
+function sendWA(){
+let msg=document.getElementById("output").value;
+window.open("https://wa.me/?text="+encodeURIComponent(msg));
+}
+
+function save(){
+localStorage.setItem("leads",document.getElementById("output").value);
+alert("Saved");
+}
+
+</script>
+
+</body>
+</html>
