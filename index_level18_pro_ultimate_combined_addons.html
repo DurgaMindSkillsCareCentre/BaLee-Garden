@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Buyer System Level 18 Pro Ultimate</title>
+<style>
+  :root{
+    --bg:#050505;
+    --panel:#0f0f0f;
+    --panel2:#121212;
+    --line:#262626;
+    --gold:#c8a84b;
+    --gold2:#8a6d29;
+    --text:#f3efe4;
+    --muted:#9b9b9b;
+    --hot:#ff6666;
+    --warm:#ffd166;
+    --cool:#8fc98f;
+    --blue:#4aa3ff;
+    --green:#27ae60;
+    --purple:#a66bff;
+    --red:#a61b1b;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,system-ui,sans-serif;
+    padding-bottom:240px;
+  }
+  .top{
+    position:sticky;top:0;z-index:200;
+    background:linear-gradient(180deg,#1a1408,#0f0b03);
+    border-bottom:2px solid var(--gold);
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
+    padding:12px 10px 10px;
+    text-align:center;
+  }
+  .title{color:var(--gold);font-weight:900;font-size:20px;letter-spacing:1px}
+  .sub{color:#8c8c8c;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:800;margin-top:3px}
+  .tabs{
+    display:flex;overflow-x:auto;background:#050505;border-bottom:1px solid #222;
+    position:sticky;top:74px;z-index:190
+  }
+  .tab{
+    flex:none;background:transparent;border:none;color:#666;padding:13px 14px;
+    font-weight:900;text-transform:uppercase;font-size:10px;white-space:nowrap
+  }
+  .tab.on{color:var(--gold);border-bottom:2px solid var(--gold);background:#0d0d0d}
+  .bar{
+    display:flex;gap:5px;padding:10px;background:#111;flex-wrap:wrap;border-bottom:1px solid #1f1f1f
+  }
+  .bar button{
+    flex:1;min-width:92px;padding:10px;background:#000;color:var(--gold);
+    border:1px solid #333;border-radius:10px;font-weight:900;font-size:10px
+  }
+  .wrap{padding:10px}
+  .split{display:grid;grid-template-columns:1fr;gap:10px}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:12px;
+    margin-bottom:10px
+  }
+  .label{
+    display:block;
+    color:var(--gold);
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:6px
+  }
+  .small{font-size:11px;line-height:1.5;color:var(--muted)}
+  .big{font-size:18px;font-weight:900;color:#fff;line-height:1.35}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .btn{
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:12px 10px;
+    font-weight:900;
+    cursor:pointer;
+    text-transform:uppercase;
+    font-size:10px;
+    letter-spacing:.5px;
+    background:#151515;
+    color:#f0ebe0;
+    border:1px solid #343434
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none}
+  .btn.blue{background:linear-gradient(135deg,#2d8cff,#0a66c2);color:#fff;border:none}
+  .btn.green{background:linear-gradient(135deg,#27ae60,#145a32);color:#fff;border:none}
+  .btn.orange{background:linear-gradient(135deg,#e67e22,#8a4f13);color:#fff;border:none}
+  .btn.red{background:linear-gradient(135deg,#a61b1b,#5b0f0f);color:#fff;border:none}
+  .btn.purple{background:linear-gradient(135deg,#7b61ff,#4c2bcf);color:#fff;border:none}
+  .btn.gray{background:linear-gradient(135deg,#1a1a1a,#0c0c0c);color:#ddd;border:1px solid #333}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:10px;font-weight:800;padding:5px 9px;
+    border-radius:999px;background:#111;border:1px solid #2a2a2a;color:#d9d9d9;margin:4px 6px 0 0
+  }
+  .pill.hot{background:#2a0808;border-color:#5c1d1d;color:#ffb2b2}
+  .pill.warm{background:#241c06;border-color:#5a4811;color:#ffe19c}
+  .pill.cool{background:#081b0f;border-color:#174327;color:#a8e5bd}
+  .pill.blue{background:#08111d;border-color:#173a66;color:#a6d1ff}
+  .pill.purple{background:#120a1d;border-color:#4a2d72;color:#d7b8ff}
+  .pill.gray{background:#111;border-color:#333;color:#d4d4d4}
+  textarea, select, input{
+    width:100%;
+    border:1px solid #313131;
+    background:#080808;
+    color:#fff;
+    border-radius:12px;
+    padding:10px;
+    font-size:14px;
+    outline:none
+  }
+  textarea{min-height:96px;resize:vertical;font-family:monospace}
+  .stats{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .lead{
+    border:1px solid #262626;background:#0d0d0d;border-radius:14px;padding:12px;margin-top:8px
+  }
+  .leadTop{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+  .leadText{margin-top:8px;font-size:13px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+  .note{color:#8a8a8a;font-size:10px;line-height:1.55;padding:10px 12px 18px}
+  .footer{
+    color:#888;font-size:10px;line-height:1.5;padding:10px 12px 16px;border-top:1px solid #1d1d1d;background:#080808
+  }
+  #leadBox{
+    position:fixed;left:0;right:0;bottom:0;z-index:999;
+    background:#0b0b0b;border-top:2px solid var(--gold);
+    padding:10px;box-shadow:0 -10px 25px rgba(0,0,0,.6)
+  }
+  #leadMeta{font-size:11px;color:#9a9a9a;margin-top:6px}
+  .miniRow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .mini{
+    display:inline-block;padding:5px 8px;border-radius:999px;border:1px solid #2b2b2b;background:#111;
+    font-size:10px;font-weight:800;color:#d4d4d4
+  }
+  .queueItem{
+    background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:8px
+  }
+  .queueItem b{display:block;margin-bottom:4px}
+  .floatBtn{
+    position:fixed;right:12px;bottom:290px;z-index:1000;
+    width:54px;height:54px;border-radius:50%;
+    border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));
+    color:#000;font-size:24px;font-weight:900;box-shadow:0 10px 24px rgba(0,0,0,.45)
+  }
+  .sectionAnchor{scroll-margin-top:120px}
+  @media (min-width: 900px){
+    .split{grid-template-columns:1.2fr .8fr}
+    .grid{grid-template-columns:repeat(4,1fr)}
+    .grid3{grid-template-columns:repeat(3,1fr)}
+  }
+
+  /* Add-on extensions */
+  #addonExtensions textarea{min-height:84px}
+  #addonExtensions .addonRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #addonExtensions .addonRow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  #addonExtensions .addonPanel{background:#0c0c0c;border:1px solid #333;border-radius:12px;padding:10px;margin-top:8px}
+  #addonExtensions .addonSmall{font-size:10px;color:#a7a7a7;line-height:1.45}
+
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="title">BUYER SYSTEM LEVEL 18 PRO ULTIMATE</div>
+  <div class="sub">frontend only • fast mode + precision mode • no backend</div>
+</div>
+
+<div class="tabs">
+  <button class="tab on" data-tab="home">Home</button>
+  <button class="tab" data-tab="original">Original</button>
+  <button class="tab" data-tab="crm">CRM</button>
+  <button class="tab" data-tab="ai">AI</button>
+  <button class="tab" data-tab="memory">Memory</button>
+  <button class="tab" data-tab="rotation">Rotation</button>
+  <button class="tab" data-tab="intel">Intel</button>
+  <button class="tab" data-tab="fast">Fast Mode</button>
+  <button class="tab" data-tab="precise">Precision</button>
+</div>
+
+<div class="bar">
+  <button onclick="openFile('original.html')">Open Original</button>
+  <button onclick="openFile('crm.html')">Open CRM</button>
+  <button onclick="openFile('ai.html')">Open AI Full</button>
+  <button onclick="openFile('memory_sync_pro.html')">Open Memory</button>
+  <button onclick="openFile('closing.html')">💰 Closing</button>
+  <button onclick="openFile('one_click_flow.html')">⚡ 1-Click Flow</button>
+  
+<button onclick="openLevel19()" 
+style="background:linear-gradient(135deg,#ffd700,#b8860b);
+color:#000;font-weight:bold;">
+🚀 Level 19 Conversion
+</button>
+  <button onclick="openFBSearches()">🚀 FB Buyer Search</button>
+  <button onclick="openFBAppSearch()">📱 FB App Search</button>
+  <button onclick="openFBGroupSearch()">👥 FB Groups</button>
+  <button onclick="openSmartFBGroups()">🧠 Smart Groups</button>
+  <button onclick="openGoogleSearch()">🌐 Google Search</button>
+  <button onclick="openBuyerSearch()">🛰 Auto Buyer Finder</button>
+
+  <button onclick="toggleBuyerMode()">🎯 Buyer Mode</button>
+  <button onclick="autoDetect()">⚡ Auto Detect</button>
+  <button onclick="runAIFilter()">🧠 AI Filter</button>
+  <button onclick="deepExtract()">🔍 Deep Extract</button>
+  <button onclick="extractPhones()">📞 Phones</button>
+
+  <button onclick="generateReply()">✉️ AI Reply</button>
+  <button onclick="openWhatsApp()">💬 WhatsApp</button>
+  <button onclick="sendDirectWA()">📲 WA #</button>
+  <button onclick="saveLeadToCRM()">💾 Save CRM</button>
+  <button onclick="viewCRM()">📊 CRM</button>
+  <button onclick="scheduleFollow()">⏰ Follow-Up</button>
+  <button onclick="showFollowUps()">🔔 Alerts</button>
+  <button onclick="showTop()">🔥 Top Leads</button>
+  <button onclick="clearAll()">❌ Clear</button>
+
+  <button onclick="v15_smartBuyerFB()">🔥 Smart Buyer FB</button>
+  <button onclick="v15_combo()">🚀 Buyer Combo</button>
+  <button onclick="v15_highIntent()">🎯 High Intent</button>
+  <button onclick="v15_instant()">⚡ Instant Leads</button>
+  <button onclick="v16_captureMode()">⚡ Capture</button>
+
+  <button onclick="sectorIntel()">🧭 Sector Intel</button>
+  <button onclick="buyerIntel()">🧠 Buyer Intel</button>
+  <button onclick="assetMatch()">🏗 Asset Match</button>
+  <button onclick="comboScanner()">🎯 Combo Scanner</button>
+</div>
+
+<div class="wrap">
+  <div class="card sectionAnchor" id="home">
+    <span class="label">Mission control</span>
+    <div class="big">Find buyer text fast, filter sellers out, score the lead, contact by WhatsApp, store in CRM, and follow up later.</div>
+    <div class="small" style="margin-top:8px;">
+      This is a frontend-only controller. It keeps the stable original shell concept while adding the buyer engine, rotation scan, sector intel, precision controls, and capture helper in one long-scroll page.
+    </div>
+    <div class="miniRow">
+      <span class="pill blue" id="leadCount">Leads: 0</span>
+      <span class="pill hot" id="hotCount">HOT: 0</span>
+      <span class="pill warm" id="warmCount">WARM: 0</span>
+      <span class="pill cool" id="coolCount">COOL: 0</span>
+      <span class="pill gray" id="dueCount">Follow-up due: 0</span>
+    </div>
+    <div style="height:10px"></div>
+    <div class="small">Use the tabs or scroll. The page is intentionally long so all controls stay visible on mobile without removing existing tools.</div>
+  </div>
+
+  <div class="card sectionAnchor" id="rotation">
+    <span class="label">Rotation scan / buyer radar</span>
+    <div class="big">Rotation switch lot — all 5 clusters</div>
+    <div class="small" style="margin-top:8px;">This restores the missing rotation flow: Social, RE Portals, B2B/OLX, Global/NRI, and Natural Language deep intent.</div>
+    <div style="height:10px"></div>
+    <div class="grid">
+      <button class="btn primary" onclick="launchRotationScan()">🚀 Launch Rotation Scan — All 5 Clusters</button>
+      <button class="btn blue" onclick="rotationSocial()">1. Social</button>
+      <button class="btn green" onclick="rotationRePortals()">2. RE Portals</button>
+      <button class="btn orange" onclick="rotationB2B()">3. B2B / OLX</button>
+      <button class="btn purple" onclick="rotationGlobal()">4. Global / NRI</button>
+      <button class="btn red" onclick="rotationSemantic()">5. Semantic Deep Intent</button>
+    </div>
+  </div>
+
+  <div class="card sectionAnchor" id="precise">
+    <span class="label">Precision mode</span>
+    <div class="big">Advanced sector dropdown + query generator</div>
+    <div class="small" style="margin-top:8px;">Pick the exact buyer type and generate intent-rich search phrases. This is optional and does not replace the fast buttons.</div>
+    <div style="height:10px"></div>
+    <div class="grid3">
+      <div>
+        <label class="label" style="margin-bottom:6px">Sector</label>
+        <select id="sectorPick">
+          <option>commercial</option>
+          <option>hotel</option>
+          <option>petrol bunk</option>
+          <option>warehouse</option>
+          <option>hospital</option>
+          <option>school</option>
+          <option>showroom</option>
+          <option>apartment</option>
+          <option>industrial</option>
+          <option>NRI investor</option>
+          <option>residential</option>
+          <option>retail</option>
+          <option>logistics</option>
+          <option>temple corridor</option>
+          <option>farm land</option>
+        </select>
+      </div>
+      <div>
+        <label class="label" style="margin-bottom:6px">Target area</label>
+        <input id="areaPick" placeholder="Madurai / Alagar Kovil / Tamil Nadu" value="Madurai" />
+      </div>
+      <div>
+        <label class="label" style="margin-bottom:6px">Budget hint</label>
+        <input id="budgetPick" placeholder="2-3 Cr / 1.5 Cr / any" />
+      </div>
+    </div>
+    <div style="height:10px"></div>
+    <div class="grid">
+      <button class="btn primary" onclick="generateSectorQueries()">🎯 Generate Queries</button>
+      <button class="btn blue" onclick="openPrecisionSearch()">🔎 Open Precision Search</button>
+      <button class="btn green" onclick="precisionFB()">📱 Precision FB</button>
+      <button class="btn orange" onclick="precisionGoogle()">🌐 Precision Google</button>
+      <button class="btn purple" onclick="precisionCombo()">🧩 Precision Combo</button>
+      <button class="btn red" onclick="precisionHighIntent()">⚡ High Intent</button>
+    </div>
+    <div style="height:10px"></div>
+    <textarea id="precisionOut" placeholder="Generated precision queries appear here..."></textarea>
+  </div>
+
+  <div class="card sectionAnchor" id="ai">
+    <span class="label">AI engine ultra pro</span>
+    <div class="big">Query intelligence • deal scoring • live feed • smart reply • auto open</div>
+    <div style="height:10px"></div>
+    <textarea id="aiQuery" placeholder="Paste buyer requirement / search snippet / ad copy here..."></textarea>
+    <div style="height:10px"></div>
+    <div class="grid">
+      <button class="btn primary" onclick="generate300Queries()">🔥 Load Buyer Queries</button>
+      <button class="btn blue" onclick="startLiveFeed()">📡 Start Live Feed</button>
+      <button class="btn green" onclick="scorePaste()">⚡ Score Paste</button>
+      <button class="btn orange" onclick="autoOpenPlatforms()">🌐 Auto Open Platforms</button>
+      <button class="btn purple" onclick="hotSuggestions()">💡 Hot Suggestions</button>
+      <button class="btn red" onclick="copyQuery()">📋 Copy Query</button>
+    </div>
+  </div>
+
+  <div class="card sectionAnchor" id="crm">
+    <span class="label">CRM pro version</span>
+    <div class="big">Buyer pipeline • follow-up • WhatsApp closer</div>
+    <div class="small" style="margin-top:8px;">The CRM block keeps your lead storage local in the browser and supports scoring, reply, and export style actions.</div>
+    <div style="height:10px"></div>
+    <textarea id="crmInput" placeholder="Paste buyer text or lead snippet here..."></textarea>
+    <div style="height:10px"></div>
+    <div class="grid">
+      <button class="btn primary" onclick="scoreAdd()">➕ Add Lead</button>
+      <button class="btn blue" onclick="searchPack()">🌍 Search Pack</button>
+      <button class="btn green" onclick="scoreLeadBtn()">⚡ Score Lead</button>
+      <button class="btn orange" onclick="replyLead()">💬 Reply</button>
+      <button class="btn purple" onclick="viewDashboard()">📊 Dashboard</button>
+      <button class="btn red" onclick="exportCSV()">⬇ Export CSV</button>
+    </div>
+  </div>
+
+  <div class="card sectionAnchor" id="memory">
+    <span class="label">Memory sync pro</span>
+    <div class="big">Intelligent merge • clean duplicates • backup</div>
+    <div style="height:10px"></div>
+    <div class="grid">
+      <button class="btn primary" onclick="intelligentMerge()">🔄 Intelligent Merge</button>
+      <button class="btn blue" onclick="cleanDuplicates()">🧹 Clean Duplicates</button>
+      <button class="btn green" onclick="backupMemory()">💾 Backup</button>
+      <button class="btn orange" onclick="loadMemory()">📥 Load Memory</button>
+    </div>
+  </div>
+
+  <div class="card sectionAnchor" id="intel">
+    <span class="label">Buyer add-ons / intel layer</span>
+    <div class="big">Sector • intelligence • assets • deep extract • combo scan</div>
+    <div style="height:10px"></div>
+    <div class="grid3">
+      <button class="btn primary" onclick="sectorIntel()">🧭 Sector Intel</button>
+      <button class="btn blue" onclick="buyerIntel()">🧠 Buyer Intel</button>
+      <button class="btn green" onclick="assetMatch()">🏗 Asset Match</button>
+      <button class="btn orange" onclick="deepExtract()">🔍 Deep Extract</button>
+      <button class="btn purple" onclick="comboScanner()">🎯 Combo Scanner</button>
+      <button class="btn red" onclick="v16_captureMode()">⚡ Capture Mode</button>
+    </div>
+  </div>
+
+  <div class="card sectionAnchor" id="fast">
+    <span class="label">Fast mode / master controls</span>
+    <div class="big">All current buyer acquisition buttons together</div>
+    <div style="height:10px"></div>
+    <div class="grid">
+      <button class="btn primary" onclick="openFBSearches()">🚀 FB Buyer Search</button>
+      <button class="btn blue" onclick="openFBAppSearch()">📱 FB App Search</button>
+      <button class="btn green" onclick="openFBGroupSearch()">👥 FB Groups</button>
+      <button class="btn orange" onclick="openSmartFBGroups()">🧠 Smart Groups</button>
+      <button class="btn purple" onclick="openGoogleSearch()">🌐 Google Search</button>
+      <button class="btn red" onclick="openBuyerSearch()">🛰 Auto Buyer Finder</button>
+      <button class="btn primary" onclick="toggleBuyerMode()">🎯 Buyer Mode</button>
+      <button class="btn blue" onclick="autoDetect()">⚡ Auto Detect</button>
+      <button class="btn green" onclick="runAIFilter()">🧠 AI Filter</button>
+      <button class="btn orange" onclick="extractPhones()">📞 Phones</button>
+      <button class="btn purple" onclick="generateReply()">✉️ AI Reply</button>
+      <button class="btn red" onclick="openWhatsApp()">💬 WhatsApp</button>
+      <button class="btn primary" onclick="sendDirectWA()">📲 WA #</button>
+      <button class="btn blue" onclick="saveLeadToCRM()">💾 Save CRM</button>
+      <button class="btn green" onclick="viewCRM()">📊 CRM</button>
+      <button class="btn orange" onclick="scheduleFollow()">⏰ Follow-Up</button>
+      <button class="btn purple" onclick="showFollowUps()">🔔 Alerts</button>
+      <button class="btn red" onclick="showTop()">🔥 Top Leads</button>
+      <button class="btn gray" onclick="clearAll()">❌ Clear</button>
+      <button class="btn primary" onclick="v15_smartBuyerFB()">🔥 Smart Buyer FB</button>
+      <button class="btn blue" onclick="v15_combo()">🚀 Buyer Combo</button>
+      <button class="btn green" onclick="v15_highIntent()">🎯 High Intent</button>
+      <button class="btn orange" onclick="v15_instant()">⚡ Instant Leads</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="label">How to use</span>
+    <div class="small">
+      1) Use fast buttons for bulk scanning.<br>
+      2) Use precision mode for exact sectors.<br>
+      3) Paste visible buyer text into AI / CRM / input.<br>
+      4) Auto Detect or AI Filter.<br>
+      5) Extract phones if visible.<br>
+      6) WhatsApp and Save CRM.<br>
+      7) Follow-up later.
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="label">Best lead queue</span>
+    <div class="small">Top leads are stored locally so you can review and act later.</div>
+    <div id="leadList"></div>
+  </div>
+</div>
+
+
+<div class="card sectionAnchor" id="addonExtensions">
+  <span class="label">Addon extensions</span>
+  <div class="big">AI buyer scoring • smart closing • follow-up • auto assist lite</div>
+  <div class="small" style="margin-top:8px;">
+    Added as a separate layer on top of your stable Level 18 Pro Ultimate shell. It reads the same buyer data, scores it, generates replies, tracks follow-ups, and opens Level 19 when needed. fileciteturn26file0
+  </div>
+
+  <div class="addonPanel">
+    <div class="addonRow">
+      <button class="btn primary" onclick="addonAnalyze()">🧠 Analyze Buyers</button>
+      <button class="btn blue" onclick="addonSmartClose()">🔥 Smart Closing</button>
+      <button class="btn green" onclick="addonAddLead()">➕ Save Lead</button>
+      <button class="btn orange" onclick="addonSendFollowUp()">📲 Send Follow-up</button>
+      <button class="btn purple" onclick="addonCheckDue()">⏰ Check Due</button>
+      <button class="btn red" onclick="openLevel19()">🚀 Open Level 19</button>
+    </div>
+  </div>
+
+  <div style="height:10px"></div>
+  <label class="label" style="margin-bottom:6px">Addon input source</label>
+  <textarea id="addonSource" placeholder="Paste buyer text here, or leave blank and the addon will read from your main boxes..."></textarea>
+
+  <div style="height:10px"></div>
+  <div class="addonRow">
+    <div>
+      <label class="label" style="margin-bottom:6px">AI scored buyers</label>
+      <textarea id="addonAIResult" placeholder="HOT / WARM / COOL results will appear here..."></textarea>
+    </div>
+    <div>
+      <label class="label" style="margin-bottom:6px">Suggested WhatsApp reply</label>
+      <textarea id="addonAIReply" placeholder="Smart reply will appear here..."></textarea>
+    </div>
+  </div>
+
+  <div style="height:10px"></div>
+  <div class="addonRow3">
+    <button class="btn primary" onclick="addonCopyReply()">📋 Copy Reply</button>
+    <button class="btn blue" onclick="addonOpenWA()">💬 Open WhatsApp</button>
+    <button class="btn green" onclick="addonOpenAssist()">⚡ Auto Assist Lite</button>
+  </div>
+
+  <div style="height:10px"></div>
+  <div class="miniRow">
+    <span class="pill hot" id="addonHot">HOT: 0</span>
+    <span class="pill warm" id="addonWarm">WARM: 0</span>
+    <span class="pill cool" id="addonCool">COOL: 0</span>
+    <span class="pill gray" id="addonDue">DUE: 0</span>
+  </div>
+
+  <div style="height:10px"></div>
+  <label class="label" style="margin-bottom:6px">Lead tracking dashboard</label>
+  <textarea id="addonLeadLog" placeholder="Add leads here and track NEW / CONTACTED / FOLLOW-UP / CLOSED..."></textarea>
+
+  <div style="height:10px"></div>
+  <div class="addonRow">
+    <button class="btn gray" onclick="addonMark('NEW')">NEW</button>
+    <button class="btn gray" onclick="addonMark('CONTACTED')">CONTACTED</button>
+    <button class="btn gray" onclick="addonMark('FOLLOW-UP')">FOLLOW-UP</button>
+    <button class="btn gray" onclick="addonMark('CLOSED')">CLOSED</button>
+  </div>
+
+  <div style="height:10px"></div>
+  <div class="addonSmall">
+    Auto follow-up reminders stay safe: the page will show due items and prepare messages, but WhatsApp sending still needs your tap.
+  </div>
+</div>
+
+<div id="addonAssistPanel" style="display:none;position:fixed;right:12px;bottom:360px;z-index:1200;background:#0d0d0d;border:1px solid #333;border-radius:14px;padding:10px;width:min(92vw,320px);box-shadow:0 14px 30px rgba(0,0,0,.5)">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px">
+    <div style="font-weight:900;color:#ffd36a">Auto Assist Lite</div>
+    <button class="btn gray" style="width:auto;padding:6px 10px" onclick="addonOpenAssist(false)">Close</button>
+  </div>
+  <div class="addonRow">
+    <button class="btn primary" onclick="addonAssistPaste()">📋 Paste</button>
+    <button class="btn blue" onclick="addonAssistQueries()">🔍 Smart Queries</button>
+    <button class="btn green" onclick="addonAssistHighlight()">🎯 Highlight Buyers</button>
+    <button class="btn orange" onclick="addonAnalyze()">⚡ Analyze Now</button>
+  </div>
+  <div class="addonSmall" style="margin-top:8px;">
+    Safe helper panel. No clipboard hijack, no script conflict, no page freeze.
+  </div>
+</div>
+
+<button onclick="addonOpenAssist()" title="Auto Assist Lite" style="position:fixed;right:12px;bottom:290px;z-index:1200;width:54px;height:54px;border:none;border-radius:50%;background:linear-gradient(135deg,#4aa3ff,#0a66c2);color:#fff;font-size:22px;font-weight:900;box-shadow:0 10px 24px rgba(0,0,0,.45)">⚡</button>
+
+
+<div class="note">
+  Level 18 Pro Ultimate is frontend only: no backend, no database, no external API dependency. The page is designed to keep the original shell idea while adding speed mode, precision mode, intel tools, memory controls, and a capture helper.
+</div>
+
+<div class="footer">
+  Upload this as <b>index.html</b> in your GitHub root. Keep your other files unchanged.
+</div>
+
+<div id="leadBox">
+  <div class="label">BUYER CAPTURE STATUS</div>
+  <textarea id="leadText" placeholder="Buyer lead / extracted text will appear here..."></textarea>
+  <div id="leadMeta">Ready…</div>
+</div>
+
+<button class="floatBtn" onclick="v16_captureMode()" title="Quick capture">⚡</button>
+
+<script>
+let buyerMode = false;
+let extractedPhones = [];
+
+function openFile(file){ window.open(file, '_blank', 'noopener,noreferrer'); }
+
+function escapeHtml(s) {
+  return String(s || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function updateCounts() {
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  const follow = JSON.parse(localStorage.getItem("followups") || "[]");
+  const now = Date.now();
+
+  let hot = 0, warm = 0, cool = 0;
+  q.forEach(x => {
+    if (!x.meta) return;
+    if (x.meta.band === "HOT") hot++;
+    else if (x.meta.band === "WARM") warm++;
+    else cool++;
+  });
+  const due = follow.filter(f => f.time <= now).length;
+
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+  set("leadCount", "Leads: " + (q.length + crm.length));
+  set("hotCount", "HOT: " + hot);
+  set("warmCount", "WARM: " + warm);
+  set("coolCount", "COOL: " + cool);
+  set("dueCount", "Follow-up due: " + due);
+
+  renderLeadList();
+  renderFollowList();
+}
+
+function renderLeadList() {
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  const box = document.getElementById("leadList");
+  if (!box) return;
+  const top = q.slice(0, 5);
+
+  box.innerHTML = top.length ? top.map((l) => {
+    const cls = l.meta.band === "HOT" ? "hot" : l.meta.band === "WARM" ? "warm" : "cool";
+    return `
+      <div class="queueItem">
+        <div>
+          <span class="pill ${cls}">${l.meta.band} • ${l.meta.score}/100</span>
+          <span class="pill blue">${l.meta.budget || "NA"}</span>
+          <span class="pill purple">${new Date(l.ts || Date.now()).toLocaleTimeString()}</span>
+        </div>
+        <b>${escapeHtml((l.text || "").slice(0, 110))}</b>
+      </div>`;
+  }).join("") : '<div class="small" style="margin-top:8px;">No leads yet. Use Buyer Search and paste visible text here.</div>';
+}
+
+function renderFollowList(){
+  const box = document.getElementById("followList");
+  if(!box) return;
+  const arr = JSON.parse(localStorage.getItem("followups") || "[]");
+  const due = arr.filter(f => f.time <= Date.now()).slice(0,5);
+  box.textContent = due.length ? due.map(d => d.text.slice(0,180)).join("\n\n") : "No follow-ups due right now.";
+}
+
+function scoreText(text) {
+  let t = (text || "").toLowerCase();
+  let s = 0;
+  if (t.includes("urgent")) s += 30;
+  if (t.includes("budget")) s += 25;
+  if (t.includes("investor")) s += 20;
+  if (t.includes("commercial")) s += 15;
+  if (t.includes("madurai") || t.includes("alagar")) s += 10;
+  if (t.includes("highway") || t.includes("frontage")) s += 10;
+  const band = s >= 70 ? "HOT" : s >= 40 ? "WARM" : "COOL";
+  const m = text.match(/(\d+[\-–]\d+|\d+)\s*(cr|crore|lakh|lac)/i);
+  const budget = m ? m[0] : "NA";
+  return { score: s, band, budget, summary: `Score ${s} → ${band} • Budget: ${budget}` };
+}
+
+function cacheLead(item) {
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  q.unshift(item);
+  localStorage.setItem("lead_queue", JSON.stringify(q.slice(0, 50)));
+}
+
+function openGoogleSearch() {
+  const queries = [
+    "looking for land Madurai",
+    "commercial land required Madurai",
+    "investor looking Madurai land"
+  ];
+  queries.forEach(q => window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function openFBSearches() {
+  const queries = [
+    "need land Madurai",
+    "looking for land Madurai",
+    "buy land Madurai",
+    "commercial land requirement Madurai",
+    "investment land Madurai",
+    "NRI land investment Tamil Nadu"
+  ];
+  queries.forEach(q => window.open("https://www.google.com/search?q=site:facebook.com+" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function openFBAppSearch() {
+  const queries = [
+    "looking for land Madurai",
+    "need land Madurai",
+    "commercial land requirement Madurai",
+    "investor looking land Madurai",
+    "plot needed Madurai highway"
+  ];
+  queries.forEach(q => window.open("https://www.facebook.com/search/posts/?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function openFBGroupSearch() {
+  const queries = [
+    "Madurai land buyers",
+    "Madurai real estate investors",
+    "Tamil Nadu land investors",
+    "NRI real estate investors India",
+    "commercial land buyers Madurai"
+  ];
+  queries.forEach(q => window.open("https://www.facebook.com/search/groups/?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function openSmartFBGroups() {
+  const queries = [
+    '"looking for land" Madurai',
+    '"need land" Madurai',
+    '"commercial land requirement" Madurai',
+    '"investor looking" Madurai land',
+    '"plot needed" Madurai highway',
+    '"budget" "land" Madurai',
+    '"looking to buy" Madurai property'
+  ];
+  queries.forEach(q => {
+    const url = "https://www.google.com/search?q=site:facebook.com/groups " + encodeURIComponent(q) + "&tbs=qdr:d";
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
+}
+
+function openBuyerSearch() {
+  openFBSearches();
+  window.open("https://www.google.com/search?q=site:reddit.com+looking+land+Madurai", "_blank", "noopener,noreferrer");
+  window.open("https://www.google.com/search?q=site:quora.com+land+Madurai+looking+buy", "_blank", "noopener,noreferrer");
+  window.open("https://www.facebook.com/search/posts/?q=looking%20land%20Madurai", "_blank", "noopener,noreferrer");
+  window.open("https://www.facebook.com/search/groups/?q=madurai%20real%20estate", "_blank", "noopener,noreferrer");
+  window.open("https://www.google.com/search?q=site:olx.in+looking+land+Madurai", "_blank", "noopener,noreferrer");
+  document.getElementById("leadText").value =
+`Buyer search starters:
+looking for land Madurai
+commercial land required Madurai
+investor looking Madurai land
+need plot near highway Madurai`;
+  document.getElementById("leadMeta").innerText = "Auto Buyer Finder opened buyer-intent tabs.";
+}
+
+function toggleBuyerMode() {
+  buyerMode = !buyerMode;
+  alert(buyerMode ? "BUYER MODE ON ✅" : "BUYER MODE OFF ❌");
+  autoDetect();
+}
+
+function autoDetect() {
+  const input = document.getElementById("fbInput").value.toLowerCase();
+  const lines = input.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const buyerKeywords = [
+    "looking for", "need land", "need plot", "need commercial",
+    "require land", "required", "want to buy", "buy land",
+    "investment", "investor", "budget", "urgent", "commercial"
+  ];
+  const sellerKeywords = [
+    "for sale", "plot available", "selling", "dtcp", "approved",
+    "open plot for sale", "land for sale"
+  ];
+  let buyerLines = [];
+  for (const line of lines) {
+    const t = line.toLowerCase();
+    const isBuyer = buyerKeywords.some(k => t.includes(k));
+    const isSeller = sellerKeywords.some(k => t.includes(k));
+    if (buyerMode) {
+      if (isBuyer && !isSeller) buyerLines.push(line);
+    } else {
+      if (isBuyer && !isSeller) buyerLines.push(line);
+    }
+  }
+  const out = buyerLines.length ? buyerLines.join("\n") : "No buyer leads found";
+  document.getElementById("buyerOutput").value = out;
+  document.getElementById("leadText").value = out;
+  const meta = scoreText(out);
+  document.getElementById("leadMeta").innerText = meta.summary;
+  cacheLead({ text: out, meta, ts: Date.now() });
+  updateCounts();
+}
+
+function runAIFilter() {
+  const input = document.getElementById("fbInput").value.toLowerCase();
+  const lines = input.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const buyerKeywords = [
+    "looking for", "need", "requirement", "want to buy",
+    "searching", "interested in buying", "budget",
+    "investment", "buyer", "purchase", "land required", "commercial"
+  ];
+  const sellerKeywords = [
+    "for sale", "selling", "available", "price",
+    "contact broker", "agent", "we have land", "offer", "discount"
+  ];
+  let buyers = [];
+  lines.forEach(line => {
+    let isBuyer = buyerKeywords.some(k => line.includes(k));
+    let isSeller = sellerKeywords.some(k => line.includes(k));
+    if (isBuyer && !isSeller) {
+      let score = 0;
+      if (line.includes("urgent")) score += 30;
+      if (line.includes("budget")) score += 25;
+      if (line.includes("commercial")) score += 20;
+      if (line.includes("madurai")) score += 15;
+      if (line.includes("highway")) score += 10;
+      let type = "COOL";
+      if (score >= 60) type = "HOT";
+      else if (score >= 30) type = "WARM";
+      buyers.push(`[${type}] ${line}`);
+    }
+  });
+  const output = buyers.length ? buyers.join("\n\n") : "No strong buyer signals found.";
+  document.getElementById("buyerOutput").value = output;
+  document.getElementById("leadText").value = output;
+  document.getElementById("leadMeta").innerText = buyers.length ? "AI Buyer Filter applied." : "No buyer signals found.";
+  cacheLead({ text: output, meta: scoreText(output), ts: Date.now() });
+  updateCounts();
+}
+
+function deepExtract(){
+  const text = document.getElementById("fbInput").value || document.getElementById("aiQuery").value || "";
+  const lines = text.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const buyers = lines.filter(l => /looking|need|buy|require|budget|urgent|investment|commercial/i.test(l) && !/sale|selling|available|dtcp/i.test(l));
+  const out = buyers.length ? buyers.join("\n") : "No strong buyer signals found.";
+  document.getElementById("buyerOutput").value = out;
+  document.getElementById("leadText").value = out;
+  document.getElementById("leadMeta").innerText = buyers.length ? "Deep extract applied." : "No buyer signals found.";
+  cacheLead({ text: out, meta: scoreText(out), ts: Date.now() });
+  updateCounts();
+}
+
+function extractPhones() {
+  const text = document.getElementById("fbInput").value || document.getElementById("buyerOutput").value;
+  const matches = text.match(/(\+91[\s-]?)?[6789]\d{9}/g);
+  extractedPhones = matches ? [...new Set(matches.map(s => s.replace(/\s+/g, "")))] : [];
+  document.getElementById("phoneOutput").value = extractedPhones.length ? extractedPhones.join("\n") : "No phones found";
+  if (!extractedPhones.length) alert("No phone numbers found");
+}
+
+function sendWA() {
+  const txt = document.getElementById("buyerOutput").value.trim() || document.getElementById("leadText").value.trim();
+  if (!txt) { alert("No lead extracted"); return; }
+  const msg = "Hi, saw your requirement. We have a premium commercial corner plot on Alagar Kovil highway (strong frontage). Fits your need. Shall I share details & location?";
+  const url = "https://wa.me/?text=" + encodeURIComponent(msg + "\n\nRef:\n" + txt.slice(0,300));
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+function openWhatsApp(){ sendWA(); }
+
+function sendDirectWA() {
+  if (!extractedPhones.length) { alert("No phone extracted"); return; }
+  const num = extractedPhones[0].replace(/\D/g, "");
+  const msg = "Hi, saw your requirement. We have a premium commercial corner plot on Alagar Kovil highway. Shall I share details?";
+  window.open(`https://wa.me/91${num}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+}
+
+function generateReply() {
+  const lead = document.getElementById("buyerOutput").value.split("\n")[0] || document.getElementById("leadText").value.split("\n")[0];
+  if (!lead) { alert("No lead"); return; }
+  const msg = "Hi, I saw your requirement. We have a premium commercial corner plot on Alagar Kovil highway. Would you like photos, exact location and budget details?";
+  document.getElementById("buyerOutput").value = (document.getElementById("buyerOutput").value || "") + "\n\nReply:\n" + msg;
+  document.getElementById("leadText").value = msg;
+}
+
+function saveLeadToCRM() {
+  const lead = document.getElementById("buyerOutput").value.trim() || document.getElementById("leadText").value.trim();
+  if (!lead) { alert("No lead to save"); return; }
+  const meta = scoreText(lead);
+  const item = { lead, raw: lead, meta, date: new Date().toISOString() };
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  crm.unshift(item);
+  localStorage.setItem("crm", JSON.stringify(crm));
+  alert("Saved to CRM");
+  updateCounts();
+  showTop();
+}
+
+function viewCRM() {
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  if (!crm.length) { alert("No leads saved"); return; }
+  const text = crm.map(l => `${l.date} → ${l.lead}`).join("\n\n");
+  document.getElementById("buyerOutput").value = text;
+  document.getElementById("leadText").value = text;
+  document.getElementById("leadMeta").innerText = "CRM loaded.";
+}
+
+function scheduleFollow() {
+  const txt = document.getElementById("buyerOutput").value.trim() || document.getElementById("leadText").value.trim();
+  if (!txt) { alert("No lead"); return; }
+  const follow = { text: txt, time: Date.now() + (2 * 60 * 60 * 1000) };
+  const arr = JSON.parse(localStorage.getItem("followups") || "[]");
+  arr.unshift(follow);
+  localStorage.setItem("followups", JSON.stringify(arr.slice(0,50)));
+  updateCounts();
+  alert("Follow-up scheduled in 2 hours");
+}
+
+function showFollowUps() {
+  const arr = JSON.parse(localStorage.getItem("followups") || "[]");
+  const due = arr.filter(f => f.time <= Date.now());
+  if (!due.length) { alert("No pending follow-ups"); return; }
+  alert("Follow-up NOW:\n\n" + due.map(d => d.text.slice(0,100)).join("\n\n"));
+}
+
+function showTop() {
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  const items = [];
+  q.slice(0,5).forEach((l, i) => {
+    items.push(`${i+1}. ${l.meta.band} (${l.meta.score})\n${(l.text || "").slice(0,120)}...`);
+  });
+  crm.slice(0,3).forEach((l, i) => {
+    items.push(`CRM ${i+1}. ${l.meta?.band || "NA"} • ${(l.lead || "").slice(0,120)}...`);
+  });
+  alert(items.length ? items.join("\n\n") : "No leads yet");
+}
+
+function clearAll() {
+  ["fbInput","buyerOutput","phoneOutput","leadText","aiQuery","crmInput","precisionOut"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = "";
+  });
+  const meta = document.getElementById("leadMeta");
+  if (meta) meta.innerText = "Ready…";
+}
+
+function v15_smartBuyerFB() {
+  const queries = [
+    '"looking for land" "Madurai" -sale -broker -agent',
+    '"need land urgently" "Madurai"',
+    '"want to buy commercial land" "Madurai"',
+    '"investor looking land" "Madurai"',
+    '"plot required immediately" "Madurai"'
+  ];
+  queries.forEach(q => window.open("https://www.google.com/search?q=site:facebook.com/groups+" + encodeURIComponent(q) + "&tbs=qdr:d", "_blank", "noopener,noreferrer"));
+}
+
+function v15_combo() {
+  const all = [
+    'site:facebook.com/groups "need land" Madurai',
+    'site:olx.in "need land" Madurai',
+    'site:indiamart.com "buyer requirement" land Madurai'
+  ];
+  all.forEach(q => window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function v15_highIntent() {
+  const queries = [
+    '"urgent land requirement" Madurai',
+    '"immediate purchase land" Madurai',
+    '"buyer looking land today" Madurai',
+    '"ready to invest land" Madurai'
+  ];
+  queries.forEach(q => window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function v15_instant() {
+  const queries = [
+    '"contact me" land buyer Madurai',
+    '"call me" land requirement Madurai',
+    '"whatsapp me" land Madurai buyer',
+    '"phone number" land buyer Madurai'
+  ];
+  queries.forEach(q => window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function v16_captureMode() {
+  alert("Capture Mode ON\n\n1. Copy any text from Facebook / OLX / Google\n2. Tap this button again\n3. It will auto-read clipboard, detect buyer lines, extract phones, and suggest WhatsApp");
+  if (!navigator.clipboard || !navigator.clipboard.readText) {
+    alert("Clipboard API not available in this browser.");
+    return;
+  }
+  navigator.clipboard.readText()
+    .then(text => {
+      if (!text) {
+        alert("Nothing copied");
+        return;
+      }
+      document.getElementById("fbInput").value = text;
+      v16_autoProcess(text);
+    })
+    .catch(() => {
+      alert("Clipboard access denied.\n\nManually paste once into the input box, then use Auto Detect / AI Filter.");
+    });
+}
+
+function v16_autoProcess(text) {
+  const lines = String(text || "").toLowerCase().split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const buyerKeys = ["looking", "need", "buy", "require", "investment", "budget", "urgent", "commercial", "want to buy"];
+  const sellerKeys = ["sale", "available", "dtcp", "offer", "price", "selling"];
+  const buyers = [];
+  lines.forEach(l => {
+    const isBuyer = buyerKeys.some(k => l.includes(k));
+    const isSeller = sellerKeys.some(k => l.includes(k));
+    if (isBuyer && !isSeller) buyers.push("🔥 " + l);
+  });
+  if (buyers.length === 0) {
+    document.getElementById("buyerOutput").value = "No buyer detected";
+  } else {
+    document.getElementById("buyerOutput").value = buyers.join("\n\n");
+    document.getElementById("leadText").value = buyers.join("\n\n");
+    document.getElementById("leadMeta").innerText = "V16 capture processed.";
+    saveLeadToCRM();
+    v16_autoWhatsApp();
+  }
+  v16_extractPhones(text);
+  updateCounts();
+}
+
+function v16_extractPhones(text) {
+  const phones = String(text || "").match(/(\+91[\s-]?)?[6789]\d{9}/g);
+  if (phones) {
+    extractedPhones = [...new Set(phones.map(s => s.replace(/\s+/g, "")))];
+    document.getElementById("phoneOutput").value = extractedPhones.join("\n");
+  }
+}
+
+function v16_autoWhatsApp() {
+  const msg = encodeURIComponent("Hi, I saw your requirement. We have premium commercial corner plot near Alagar Kovil highway. Can I share details?");
+  setTimeout(() => window.open("https://wa.me/?text=" + msg, "_blank", "noopener,noreferrer"), 800);
+}
+
+function launchRotationScan(){ rotationSocial(); rotationRePortals(); rotationB2B(); rotationGlobal(); rotationSemantic(); }
+
+function rotationSocial(){
+  ["site:facebook.com/groups \"looking for land\" Madurai","site:facebook.com/groups \"need land\" Madurai"]
+    .forEach(x => window.open("https://www.google.com/search?q=" + encodeURIComponent(x), "_blank", "noopener,noreferrer"));
+}
+function rotationRePortals(){
+  ["site:99acres.com \"looking for land\" Madurai","site:magicbricks.com \"need land\" Madurai"]
+    .forEach(x => window.open("https://www.google.com/search?q=" + encodeURIComponent(x), "_blank", "noopener,noreferrer"));
+}
+function rotationB2B(){
+  ["site:olx.in \"looking for land\" Madurai","site:indiamart.com \"buyer requirement\" land Madurai"]
+    .forEach(x => window.open("https://www.google.com/search?q=" + encodeURIComponent(x), "_blank", "noopener,noreferrer"));
+}
+function rotationGlobal(){
+  ["site:reddit.com \"looking for land\" Madurai","site:quora.com \"looking for land\" Madurai","NRI land investment Tamil Nadu Madurai"]
+    .forEach(x => window.open("https://www.google.com/search?q=" + encodeURIComponent(x), "_blank", "noopener,noreferrer"));
+}
+function rotationSemantic(){
+  ['"looking to buy" "Madurai" "land"','"budget" "Madurai" "commercial land"','"urgent" "commercial plot" "Madurai highway"']
+    .forEach(x => window.open("https://www.google.com/search?q=" + encodeURIComponent(x), "_blank", "noopener,noreferrer"));
+}
+
+function sectorIntel(){
+  ["petrol bunk land requirement Tamil Nadu","hotel land requirement Madurai","warehouse land needed Madurai highway","school land requirement Tamil Nadu","commercial investor looking land India"]
+    .forEach(x => window.open("https://www.google.com/search?q=" + encodeURIComponent(x), "_blank", "noopener,noreferrer"));
+}
+
+function buyerIntel(){
+  const input = document.getElementById("fbInput").value || document.getElementById("aiQuery").value || "";
+  const meta = scoreText(input);
+  const target = document.getElementById("buyerOutput");
+  if(target && input) target.value = `[${meta.band}] ${input}`;
+  document.getElementById("leadMeta").innerText = meta.summary;
+}
+
+function assetMatch(){
+  const t = (document.getElementById("fbInput").value || document.getElementById("buyerOutput").value || "").toLowerCase();
+  let out = "General investment fit";
+  if(t.includes("highway")) out = "Best for logistics / petrol bunk / highway retail";
+  else if(t.includes("temple")) out = "Best for hotel / shops / spiritual tourism";
+  else if(t.includes("corner")) out = "Best for commercial showroom / branded outlet";
+  else if(t.includes("residential")) out = "Best for residential or plotting buyers";
+  else if(t.includes("warehouse")) out = "Best for storage / logistics";
+  alert(out);
+}
+
+function comboScanner(){
+  const queries=["looking for land madurai","need plot madurai","investor land tamil nadu"];
+  queries.forEach(q=>{
+    window.open("https://www.google.com/search?q="+encodeURIComponent(q),"_blank","noopener,noreferrer");
+    window.open("https://www.facebook.com/search/posts/?q="+encodeURIComponent(q),"_blank","noopener,noreferrer");
+  });
+}
+
+function generateSectorQueries(){
+  const sector = document.getElementById("sectorPick").value;
+  const area = document.getElementById("areaPick").value || "Madurai";
+  const budget = document.getElementById("budgetPick").value.trim();
+  const queries = [
+    `looking for ${sector} ${area}${budget ? " " + budget : ""}`,
+    `need ${sector} land ${area}${budget ? " " + budget : ""}`,
+    `${sector} investor ${area} land${budget ? " " + budget : ""}`,
+    `want to buy ${sector} land ${area}${budget ? " " + budget : ""}`
+  ];
+  document.getElementById("precisionOut").value = queries.join("\n");
+}
+
+function openPrecisionSearch(){
+  const txt = document.getElementById("precisionOut").value.trim();
+  if(!txt){ generateSectorQueries(); }
+  const queries = (document.getElementById("precisionOut").value || "").split("\n").filter(Boolean);
+  queries.forEach(q => window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function precisionFB(){
+  if(!document.getElementById("precisionOut").value.trim()) generateSectorQueries();
+  const queries = (document.getElementById("precisionOut").value || "").split("\n").filter(Boolean);
+  queries.forEach(q => window.open("https://www.facebook.com/search/posts/?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function precisionGoogle(){
+  if(!document.getElementById("precisionOut").value.trim()) generateSectorQueries();
+  const queries = (document.getElementById("precisionOut").value || "").split("\n").filter(Boolean);
+  queries.forEach(q => window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer"));
+}
+
+function precisionCombo(){
+  generateSectorQueries();
+  precisionGoogle();
+  precisionFB();
+}
+
+function precisionHighIntent(){
+  const sector = document.getElementById("sectorPick").value;
+  const area = document.getElementById("areaPick").value || "Madurai";
+  const q = [
+    `"urgent" "${sector}" "${area}"`,
+    `"ready to buy" "${sector}" "${area}"`,
+    `"budget" "${sector}" "${area}" buyer`,
+    `"contact me" "${sector}" "${area}" land`
+  ];
+  document.getElementById("precisionOut").value = q.join("\n");
+  q.forEach(x => window.open("https://www.google.com/search?q=" + encodeURIComponent(x), "_blank", "noopener,noreferrer"));
+}
+
+function generate300Queries(){
+  const base = [
+    "looking for land Madurai",
+    "commercial land required Madurai",
+    "investor looking Madurai land",
+    "need plot near highway Madurai",
+    "NRI land investment Tamil Nadu"
+  ];
+  document.getElementById("aiQuery").value = base.join("\n");
+}
+
+function startLiveFeed(){
+  const q = (document.getElementById("aiQuery").value || "looking for land Madurai").split("\n").filter(Boolean)[0];
+  window.open("https://www.google.com/search?q=" + encodeURIComponent(q), "_blank", "noopener,noreferrer");
+}
+
+function scorePaste(){
+  const txt = document.getElementById("aiQuery").value || "";
+  const score = scoreText(txt);
+  document.getElementById("leadMeta").innerText = "AI Score: " + score.summary;
+}
+
+function autoOpenPlatforms(){
+  openFBSearches();
+  openFBAppSearch();
+  openFBGroupSearch();
+}
+
+function hotSuggestions(){
+  document.getElementById("aiQuery").value =
+`urgent land buyer Madurai
+need commercial plot near highway
+investor with 2-3 crore budget
+NRI looking for land in Tamil Nadu`;
+}
+
+function copyQuery(){
+  const txt = document.getElementById("aiQuery").value || "";
+  navigator.clipboard?.writeText(txt).then(()=>alert("Copied"), ()=>alert("Copy failed"));
+}
+
+function searchPack(){ openBuyerSearch(); }
+
+function scoreLeadBtn(){
+  const txt = document.getElementById("crmInput").value || "";
+  const sc = scoreText(txt);
+  document.getElementById("crmInput").value = `[${sc.band}] ${txt}`;
+  document.getElementById("leadMeta").innerText = sc.summary;
+}
+
+function replyLead(){
+  const txt = document.getElementById("crmInput").value || "";
+  const sc = scoreText(txt);
+  const asset = (function(){
+    const t = txt.toLowerCase();
+    if(t.includes("highway")) return "highway asset";
+    if(t.includes("corner")) return "corner commercial asset";
+    if(t.includes("temple")) return "temple corridor asset";
+    if(t.includes("warehouse")) return "warehouse / logistics asset";
+    return "commercial asset";
+  })();
+  document.getElementById("leadText").value = `Hi, we have a premium ${asset} near Alagar Kovil. ${sc.band} lead fit. Shall I share details?`;
+  sendWA();
+}
+
+function viewDashboard(){ showTop(); }
+
+function exportCSV(){
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  const csv = ["date,lead,score,band,budget"].concat(crm.map(x => {
+    const lead = String(x.lead || "").replace(/"/g,'""');
+    const s = x.meta?.score ?? "";
+    const b = x.meta?.band ?? "";
+    const budget = x.meta?.budget ?? "";
+    return `"${x.date || ""}","${lead}","${s}","${b}","${budget}"`;
+  })).join("\n");
+  const blob = new Blob([csv], {type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "crm_export.csv";
+  a.click();
+}
+
+function scoreAdd(){ saveLeadToCRM(); }
+function pasteClipboard(){ v16_captureMode(); }
+function openInWhatsApp(){ sendWA(); }
+function markContacted(){ alert("Marked contacted locally (add a note in CRM if needed)."); }
+
+function showPlatform(p){
+  const map = {
+    google: "https://www.google.com/search?q=looking+for+land+Madurai",
+    facebook: "https://www.facebook.com/search/posts/?q=looking%20for%20land%20Madurai",
+    reddit: "https://www.google.com/search?q=site:reddit.com+looking+for+land+Madurai",
+    olx: "https://www.google.com/search?q=site:olx.in+looking+for+land+Madurai"
+  };
+  window.open(map[p] || map.google, "_blank", "noopener,noreferrer");
+}
+
+function intelligentMerge(){
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  const leadQueue = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  const merged = [...crm, ...leadQueue];
+  localStorage.setItem("merged_memory", JSON.stringify(merged));
+  alert("Merged to local memory");
+}
+
+function cleanDuplicates(){
+  const crm = JSON.parse(localStorage.getItem("crm") || "[]");
+  const seen = new Set();
+  const out = [];
+  crm.forEach(x => {
+    const key = String(x.lead || x.raw || "").toLowerCase().replace(/\s+/g, " ").trim();
+    if(!seen.has(key)){ seen.add(key); out.push(x); }
+  });
+  localStorage.setItem("crm", JSON.stringify(out));
+  updateCounts();
+  alert("Duplicates cleaned");
+}
+
+function backupMemory(){
+  const payload = {
+    crm: JSON.parse(localStorage.getItem("crm") || "[]"),
+    lead_queue: JSON.parse(localStorage.getItem("lead_queue") || "[]"),
+    followups: JSON.parse(localStorage.getItem("followups") || "[]"),
+    ts: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "buyer_memory_backup.json";
+  a.click();
+}
+
+function loadMemory(){
+  alert("Use backup JSON restore manually if needed. Local browser memory is already active.");
+}
+
+function openTabByAnchor(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const t = btn.dataset.tab;
+    if(t === 'home') openTabByAnchor('home');
+    else if(t === 'rotation') openTabByAnchor('rotation');
+    else if(t === 'intel') openTabByAnchor('intel');
+    else if(t === 'ai') openTabByAnchor('ai');
+    else if(t === 'crm') openTabByAnchor('crm');
+    else if(t === 'memory') openTabByAnchor('memory');
+    else if(t === 'fast') openTabByAnchor('fast');
+    else if(t === 'precise') openTabByAnchor('precise');
+    document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b === btn));
+  });
+});
+
+function oneClickFlow(){
+  const txt = document.getElementById("crmInput").value || document.getElementById("fbInput").value || document.getElementById("buyerOutput").value || "";
+  if(!txt){
+    openBuyerSearch();
+    alert("Open a buyer result, copy visible text, then use capture or auto detect.");
+    return;
+  }
+  document.getElementById("fbInput").value = txt;
+  autoDetect();
+  saveLeadToCRM();
+  sendWA();
+}
+
+function copyHotLead(){
+  const q = JSON.parse(localStorage.getItem("lead_queue") || "[]");
+  const hot = q.find(x => x.meta?.band === "HOT") || q[0];
+  if(!hot){ alert("No hot lead"); return; }
+  navigator.clipboard?.writeText(hot.text || "").then(()=>alert("Hot lead copied"), ()=>alert("Copy failed"));
+}
+
+function openLeadPages(){
+  openFile("original.html");
+  openFile("crm.html");
+  openFile("ai.html");
+  openFile("memory_sync_pro.html");
+  openFile("closing.html");
+}
+
+function refreshAll(){ location.reload(); }
+
+setInterval(updateCounts, 5000);
+updateCounts();
+  function openLevel19(){
+  let data = "";
+
+  // Try multiple sources (important for your system)
+  let input1 = document.querySelector("textarea");
+  let input2 = document.getElementById("fbInput");
+  let input3 = document.getElementById("output");
+
+  if(input3 && input3.value) data = input3.value;
+  else if(input1 && input1.value) data = input1.value;
+  else if(input2 && input2.value) data = input2.value;
+
+  if(!data){
+    alert("Paste or extract buyer data first");
+    return;
+  }
+
+  window.open("index_level19.html?data=" + encodeURIComponent(data), "_blank");
+  }
+
+// ===== Add-on extensions (safe, isolated) =====
+let addonLeads = JSON.parse(localStorage.getItem('addonLeads') || '[]');
+
+function addonGetSourceText(){
+  const direct = document.getElementById('addonSource');
+  if(direct && direct.value.trim()) return direct.value;
+
+  const fields = [
+    document.getElementById('buyerOutput'),
+    document.getElementById('fbInput'),
+    document.getElementById('aiQuery'),
+    document.getElementById('crmInput'),
+    document.getElementById('leadText')
+  ];
+
+  for(const el of fields){
+    if(el && el.value && el.value.trim()) return el.value;
+  }
+  return '';
+}
+
+function addonScoreLine(line){
+  const t = line.toLowerCase();
+  let score = 0;
+  if(t.includes('urgent') || t.includes('immediate')) score += 4;
+  if(t.includes('budget') || /\b\d+\s*(cr|crore|lakh|lac)\b/i.test(line)) score += 3;
+  if(t.includes('looking') || t.includes('need') || t.includes('want to buy')) score += 3;
+  if(t.includes('investor') || t.includes('investment')) score += 2;
+  if(t.includes('commercial') || t.includes('business') || t.includes('showroom') || t.includes('hotel')) score += 3;
+  if(t.includes('madurai') || t.includes('alagar')) score += 2;
+  if(t.includes('highway') || t.includes('corner')) score += 2;
+  if(t.includes('sale') || t.includes('available') || t.includes('selling')) score -= 5;
+  const band = score >= 8 ? 'HOT' : score >= 5 ? 'WARM' : 'COOL';
+  return {score, band};
+}
+
+function addonAnalyze(){
+  const src = addonGetSourceText();
+  if(!src){ alert('Paste buyer data first'); return; }
+
+  const lines = src.split(/\n+/).map(s => s.trim()).filter(Boolean);
+  const out = [];
+  let hot=0, warm=0, cool=0;
+  for(const line of lines){
+    const m = addonScoreLine(line);
+    if(m.score < 0) continue;
+    out.push(`[${m.band}] ${line}`);
+    if(m.band === 'HOT') hot++;
+    else if(m.band === 'WARM') warm++;
+    else cool++;
+  }
+
+  const aiRes = document.getElementById('addonAIResult');
+  if(aiRes) aiRes.value = out.length ? out.join('\n') : 'No buyer signals found.';
+
+  const best = out.find(x => x.startsWith('[HOT]')) || out[0] || '';
+  const reply = best
+    ? "Hi, I saw your requirement. I have a premium corner commercial plot near Alagar Kovil highway, Madurai. Strong frontage, commercial fit. Shall I share details?"
+    : "Let me know your exact requirement. I can share suitable commercial land options in Madurai.";
+
+  const aiReply = document.getElementById('addonAIReply');
+  if(aiReply) aiReply.value = reply;
+
+  const set = (id,val)=>{ const el=document.getElementById(id); if(el) el.innerText = val; };
+  set('addonHot', `HOT: ${hot}`);
+  set('addonWarm', `WARM: ${warm}`);
+  set('addonCool', `COOL: ${cool}`);
+}
+
+function addonSmartClose(){
+  const src = document.getElementById('addonAIResult')?.value || '';
+  if(!src){ addonAnalyze(); return; }
+  const hot = src.split('\n').filter(x => x.startsWith('[HOT]'));
+  const out = document.getElementById('addonAIResult');
+  if(out) out.value = hot.length ? hot.join('\n') : src;
+  const reply = hot.length
+    ? "Hi, this is a strong fit for your requirement. The Alagar Kovil highway corner plot has high commercial visibility. Can I send exact location and details?"
+    : "If you are still exploring, I can share a suitable commercial land option in Madurai.";
+  const r = document.getElementById('addonAIReply');
+  if(r) r.value = reply;
+}
+
+function addonCopyReply(){
+  const txt = document.getElementById('addonAIReply');
+  if(!txt || !txt.value.trim()){ alert('No reply to copy'); return; }
+  txt.select();
+  document.execCommand('copy');
+  alert('Reply copied');
+}
+
+function addonOpenWA(){
+  const txt = document.getElementById('addonAIReply')?.value || '';
+  if(!txt.trim()){ alert('No reply to send'); return; }
+  window.open('https://wa.me/?text=' + encodeURIComponent(txt), '_blank', 'noopener,noreferrer');
+}
+
+function addonAddLead(){
+  const src = document.getElementById('addonSource');
+  let text = src && src.value.trim() ? src.value.trim() : addonGetSourceText();
+  if(!text){ alert('Enter lead text first'); return; }
+  const m = addonScoreLine(text);
+  addonLeads.unshift({ text, status:'NEW', score:m.score, band:m.band, created:Date.now(), lastTouch:0 });
+  localStorage.setItem('addonLeads', JSON.stringify(addonLeads));
+  addonRenderLeads();
+}
+
+function addonMark(status){
+  const src = addonGetSourceText();
+  if(!src){ alert('Paste or detect lead first'); return; }
+  let lead = addonLeads.find(l => l.text === src);
+  if(!lead){
+    const m = addonScoreLine(src);
+    lead = { text: src, status: status, score:m.score, band:m.band, created:Date.now(), lastTouch:Date.now() };
+    addonLeads.unshift(lead);
+  }else{
+    lead.status = status;
+    lead.lastTouch = Date.now();
+  }
+  if(status === 'FOLLOW-UP') lead.lastTouch = Date.now();
+  localStorage.setItem('addonLeads', JSON.stringify(addonLeads));
+  addonRenderLeads();
+}
+
+function addonRenderLeads(){
+  const log = document.getElementById('addonLeadLog');
+  if(!log) return;
+  const stats = {NEW:0, CONTACTED:0, 'FOLLOW-UP':0, CLOSED:0};
+  addonLeads.forEach(l => { if(stats[l.status] !== undefined) stats[l.status]++; });
+  log.value = addonLeads.map(l => `${l.status || 'NEW'} • ${l.band || 'COOL'} • ${l.text}`).join('\n\n');
+  const set = (id,val)=>{ const el=document.getElementById(id); if(el) el.innerText = val; };
+  set('addonDue', `DUE: ${addonLeads.filter(l => l.status === 'CONTACTED' && Date.now() - (l.lastTouch || l.created) > 6*60*60*1000).length}`);
+}
+
+function addonCheckDue(){
+  addonRenderLeads();
+  const due = addonLeads.filter(l => l.status === 'CONTACTED' && Date.now() - (l.lastTouch || l.created) > 6*60*60*1000);
+  if(!due.length){ alert('No follow-ups due'); return; }
+  alert("Follow-up due:\n\n" + due.map(d => d.text.slice(0,120)).join('\n\n'));
+}
+
+function addonSendFollowUp(){
+  const due = addonLeads.find(l => l.status === 'CONTACTED' && Date.now() - (l.lastTouch || l.created) > 6*60*60*1000) || addonLeads[0];
+  if(!due){ alert('No lead available'); return; }
+  const msg = `Hi, just following up regarding your requirement. I still have the premium corner commercial plot near Alagar Kovil highway, Madurai. Let me know if you want details.`;
+  due.status = 'FOLLOW-UP';
+  due.lastTouch = Date.now();
+  localStorage.setItem('addonLeads', JSON.stringify(addonLeads));
+  addonRenderLeads();
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener,noreferrer');
+}
+
+function addonOpenAssist(force){
+  const panel = document.getElementById('addonAssistPanel');
+  if(!panel) return;
+  const show = typeof force === 'boolean' ? force : !panel.style.display || panel.style.display === 'none';
+  panel.style.display = show ? 'block' : 'none';
+}
+
+function addonAssistPaste(){
+  const text = prompt('Paste buyer text here:');
+  if(!text) return;
+  const src = document.getElementById('addonSource');
+  if(src) src.value = text;
+  alert('Text pasted into add-on source box.');
+}
+
+function addonAssistQueries(){
+  const q = [
+    'looking for land Madurai',
+    'need commercial plot Madurai',
+    'investor looking land Tamil Nadu',
+    'urgent land requirement Madurai',
+    'budget 2cr land Madurai',
+    'need highway land Madurai',
+    'NRI investor land India',
+    'want to buy land Madurai'
+  ];
+  const ai = document.getElementById('aiQuery');
+  if(ai) ai.value = q.join('\n');
+  const src = document.getElementById('addonSource');
+  if(src && !src.value.trim()) src.value = q.join('\n');
+}
+
+function addonAssistHighlight(){
+  const src = document.getElementById('addonSource');
+  if(!src || !src.value.trim()){ alert('Paste text first'); return; }
+  src.value = src.value
+    .replace(/looking/gi, 'LOOKING')
+    .replace(/need/gi, 'NEED')
+    .replace(/urgent/gi, 'URGENT')
+    .replace(/investor/gi, 'INVESTOR');
+  alert('Buyer keywords highlighted');
+}
+
+function addonAutoReminderTick(){
+  const due = addonLeads.filter(l => l.status === 'CONTACTED' && Date.now() - (l.lastTouch || l.created) > 6*60*60*1000);
+  const el = document.getElementById('addonDue');
+  if(el) el.innerText = `DUE: ${due.length}`;
+}
+
+setInterval(addonAutoReminderTick, 60000);
+addonRenderLeads();
+
+</script>
+</body>
+</html>
